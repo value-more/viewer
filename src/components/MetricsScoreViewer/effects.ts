@@ -8,23 +8,29 @@ export const getScoreChartData = ({ t, config, data } : { t: TFunction, config: 
     const area2 = Object.keys(data.details).map( k => config[k].areas[1] );
     return {
         labels: Object.keys(config).map( k => t(`ticker.metrics.categories.${k}`)),
+        options: {
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+        },
         datasets: [
             {
                 label: t('ticker.metrics.categories.score'),
                 data: scores,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgb(54, 162, 235)',
-                pointBackgroundColor: 'rgb(54, 162, 235)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(54, 162, 235)',
-                fill: { value: MIN }
+                backgroundColor: '#37576B80',
+                borderColor: '#37576B80',
+                fill: { value: MIN },
+                pointRadius: 0,
+                hitRadius: 0
             },
             {
                 label: '',
                 data: area1,
                 fill: { value: MIN },
                 pointRadius: 0,
+                hitRadius: 0,
                 backgroundColor: 'grey',
                 borderColor: 'grey'
             },
@@ -33,6 +39,7 @@ export const getScoreChartData = ({ t, config, data } : { t: TFunction, config: 
                 data: area2,
                 fill: "-1",
                 pointRadius: 0,
+                hitRadius: 0,
                 backgroundColor: '#BBB',
                 borderColor: '#BBB'
             }

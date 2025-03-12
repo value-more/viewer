@@ -98,16 +98,16 @@
   src: local("Orkney Bold Italic"), url("./fonts/Orkney-Bold-Italic.woff2") format("woff2"), url("./fonts/Orkney-Bold-Italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 :root {
-  --blue-50:#f5f7f7;
-  --blue-100:#cfd7d9;
-  --blue-200:#a9b7bb;
-  --blue-300:#83979c;
-  --blue-400:#5d777e;
-  --blue-500:#375760;
-  --blue-600:#2f4a52;
-  --blue-700:#273d43;
-  --blue-800:#1e3035;
-  --blue-900:#162326;
+  --blue-50:#f5f7f8;
+  --blue-100:#cfd7db;
+  --blue-200:#a9b7bf;
+  --blue-300:#8397a3;
+  --blue-400:#5d7787;
+  --blue-500:#37576b;
+  --blue-600:#2f4a5b;
+  --blue-700:#273d4b;
+  --blue-800:#1e303b;
+  --blue-900:#16232b;
   --red-50:#f7f3f3;
   --red-100:#d7c4c3;
   --red-200:#b89694;
