@@ -400,7 +400,8 @@
             "title": "Vertrauen",
             "main": "Haupt",
             "sure": "Genehmigt (grün)",
-            "unsure": "Unsicher (gelb)"
+            "unsure": "Unsicher (gelb)",
+            "years": "Jahre (fehlende Elemente)"
         }
     },
     "analysis": {
