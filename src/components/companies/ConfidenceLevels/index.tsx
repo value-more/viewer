@@ -6,8 +6,9 @@ import { ProgressSpinner } from 'primereact/progressspinner'
 import { InfoIcon } from '../../InfoIcon'
 
 interface Data {
-    data: { cat: string; key: string; main: number; sure: number; unsure: number; }[];
+    data: { cat: string; key: string; main: number; sure: number; unsure: number;  }[];
     global: { main: number; sure: number; unsure: number; }
+    years: { year: number; n: number; p: number; }[]
 }
 
 interface Timeframe {
@@ -25,6 +26,7 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({ timeframe: p
     const { cik } = useParams()
     const [data, setData] = useState<Data | null>();
     const [displayDetails, setDisplayDetails] = useState<string | null>(null);
+    const [displayYears, setDisplayYears] = useState<boolean>(false);
     const [timeframe, setTimeframe] = useState<Timeframe>(parentTimeframe);
 
     useEffect(() => {
@@ -67,12 +69,20 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({ timeframe: p
                             <div 
                                 key={key} 
                                 className={'cursor-pointer select-none ' + (key === 'sure' ? 'text-green-500' : key === 'unsure' ? 'text-yellow-500' : '') + (key === displayDetails ? ' font-bold' : '')}
-                                onClick={() => setDisplayDetails(displayDetails === key ? null : key)}
+                                onClick={() => { setDisplayDetails(displayDetails === key ? null : key); setDisplayYears(false); }}
                             >
                                 {t(`ticker.confidence.${key}`)}: {(data.global as any)[key].toLocaleString( language, { minimumFractionDigits: 2, maximumFractionDigits: 2 } )}% 
                                 <i className='pi pi-angle-down'></i>
                             </div>
                         ))}
+                        {!!data.years?.length && (
+                        <div 
+                            className={'cursor-pointer select-none' + ('years' === displayDetails ? ' font-bold' : '')}
+                            onClick={() => { setDisplayDetails(null); setDisplayYears(!displayYears); }}
+                        >
+                            {t(`ticker.confidence.years`)}
+                            <i className='pi pi-angle-down'></i>
+                        </div>)}
                     </div>
                 </div>
             )}
@@ -80,7 +90,15 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({ timeframe: p
                 <div className='flex gap-4 flex-wrap ml-4 mr-4 mt-3'>
                     {data.data.map( d => (<div key={d.key} className='text-center bg-blue-50 pt-2 pb-2 pr-4 pl-4'>
                         <div>{t(`ticker.fundamentals.${d.cat}.${d.key}`)}</div>
-                        <div className={`font-bold ${(d as any)[displayDetails] !== 100 ? 'text-red-600' : 'text-gray-300'}`}>{(d as any)[displayDetails].toLocaleString( language, { minimumFractionDigits: 2, maximumFractionDigits: 2 } )}%</div>
+                        <div className={`font-bold ${(d as any)[displayDetails] !== 100 ? 'text-red-600' : 'text-gray-300'}`}>{(d as any)[displayDetails]?.toLocaleString( language, { minimumFractionDigits: 2, maximumFractionDigits: 2 } )}%</div>
+                    </div>))}
+                </div>
+            )}
+            {displayYears && !!data && (
+                <div className='flex gap-4 flex-wrap ml-4 mr-4 mt-3 justify-content-center'>
+                    {data.years.map( d => (<div key={d.year} className='text-center bg-blue-50 pt-2 pb-2 pr-4 pl-4'>
+                        <div>{d.year}</div>
+                        <div className='font-bold'>{d.n} | {d.p?.toLocaleString( language, { minimumFractionDigits: 2, maximumFractionDigits: 2 } )}%</div>
                     </div>))}
                 </div>
             )}

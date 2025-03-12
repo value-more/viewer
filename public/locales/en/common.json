@@ -399,7 +399,8 @@
             "title": "Confidence levels",
             "main": "Main",
             "sure": "Approved (green)",
-            "unsure": "Unsure (yellow)"
+            "unsure": "Unsure (yellow)",
+            "years": "Years (missing elements)"
         }
     },
     "analysis": {
