@@ -9,6 +9,7 @@ import { Avatar } from 'primereact/avatar';
 import { MenuItem } from 'primereact/menuitem';
 import { IconMenu } from './components/IconMenu'
 import { CompanySearch } from './components/CompanySearch'
+import { Divider } from 'primereact/divider'
 
 interface HeaderProps {
     menu?: MenuItem[];
@@ -37,10 +38,11 @@ export const Header: React.FC<HeaderProps> = ({ menu }) => {
     const end = (
         <div className="flex align-items-center gap-2">
             <CompanySearch />
-            <div className='flex gap-3 mr-2 ml-2'>
+            <div className='flex gap-3 mr-2 ml-2 align-items-center'>
                 <i className='pi pi-bell'></i>
                 <IconMenu icon='language' menu={languageMenuItems} />
                 <ThemeMenu />
+                <Divider layout='vertical' className='h-1rem m-0' />
                 <i className='pi pi-check-circle hover:text-primary cursor-pointer' onClick={() => navigate('/analysis')}></i>
                 <i className='pi pi-cog hover:text-primary cursor-pointer' onClick={() => navigate('/config')}></i>
                 <i className='pi pi-clock hover:text-primary cursor-pointer' onClick={() => setVisibleChangelog(true)}></i>
