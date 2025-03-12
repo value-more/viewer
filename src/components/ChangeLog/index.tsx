@@ -5,7 +5,7 @@ import { Card } from 'primereact/card';
 
 const icons = { fix: 'pi-wrench', improv: 'pi-lightbulb', feat: 'pi-box', refactor: 'pi-hammer' }
 
-export const ReleaseNotes = () => {
+export const ChangeLog = () => {
     const [data, setData] = useState<Logs[]>([]);
 
     useEffect(() => {

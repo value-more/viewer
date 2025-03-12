@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Menubar } from 'primereact/menubar'
 import i18next from 'i18next'
 import { Sidebar } from 'primereact/sidebar'
-import { ReleaseNotes } from './components/ReleaseNotes'
+import { ChangeLog } from './components/ChangeLog'
 import { ThemeMenu } from './components/ThemeMenu'
 import { Avatar } from 'primereact/avatar';
 import { MenuItem } from 'primereact/menuitem';
@@ -55,7 +55,7 @@ export const Header: React.FC<HeaderProps> = ({ menu }) => {
 
             <Sidebar visible={visibleChangelog} onHide={() => setVisibleChangelog(false)} position='right' className='w-6'>
                 <h2 className='mt-0 text-center'>Changelog</h2>
-                <ReleaseNotes />
+                <ChangeLog />
             </Sidebar>
         </div>
     </>)
