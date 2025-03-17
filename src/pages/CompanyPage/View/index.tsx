@@ -47,23 +47,23 @@ export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, dat
         <div className='overflow-auto h-full pl-5 pr-5'>
             <div ref={refs.overview}></div>
             <div className='flex flex-wrap align-items-center bg-default sticky top-0 z-5'>
-                <h1 className='col-7 scrollMarginTop'>{name}</h1>
-                <div className='col-2 flex gap-3 align-items-center'>
+                <h1 className='lg:col-7 sm:col-12 scrollMarginTop'>{name}</h1>
+                <div className='lg:col-2 lg:justify-content-end sm:col-10 flex gap-3 align-items-center pr-5'>
                     <CompanyScore />
                     <CompanyFavorite favorite={data.favorite} cik={cik} size='xl' />
                 </div>
-                <div className='col-3 flex align-items-center gap-3 p-0 mt-1'>
+                <div className='lg:col-3 sm:col-2 flex align-items-center gap-3 p-0 mt-1 line-height-2'>
                     <div><i className='pi pi-bell text-xl' /></div>
                     <div className='text-xs'><Price ticker={data?.tickers?.[0]?.ticker} /></div>
                 </div>
             </div>
             <div className='flex flex-wrap col-12' >
-                <div className='lg:col-9 md:col-12 pr-5'>
+                <div className='lg:col-9 sm:col-12 lg:pr-5'>
                     <div className='border-1 border-solid'>
                         <MetricsScoreViewer cik={cik} displayDetails={false} />
                     </div>
                 </div>
-                <div className='lg:col-3 md:col-12'>
+                <div className='lg:col-3 sm:col-12'>
                     <h2 className='mt-0'>Firmenprofil</h2>
                     <CompanyProfile cik={cik} />
                 </div>
