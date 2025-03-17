@@ -25,7 +25,7 @@ export const CompanySearch: React.FC = () => {
     }
 
     return (
-        <span>
+        <div className='flex align-items-center relative'>
             <AutoComplete
                 placeholder={t('controls.companySearch')}
                 field='label'
@@ -35,7 +35,17 @@ export const CompanySearch: React.FC = () => {
                 onChange={(e) => setValue(e.value)}
                 onSelect={(e) => { setValue(''); navigate(`/company/${e.value.cik}`); } }
                 autoHighlight={true}
+                pt={{ input: { root: { className: 'pr-4' } } }}
             />
-        </span>
+            {value && (
+                <button
+                    className='absolute cursor-pointer right-0 p-2 border-none'
+                    style={{ background: 'transparent' }}
+                    onClick={() => setValue('')}
+                >
+                    ✖
+                </button>
+            )}
+        </div>
     )
 }
