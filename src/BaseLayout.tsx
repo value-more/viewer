@@ -8,7 +8,7 @@ interface BaseLayoutProps {
 }
 
 export const BaseLayout: React.FC<BaseLayoutProps> = ({ menu, children }) => (
-    <div className='overflow-auto h-full'>
+    <div className='overflow-y-auto overflow-x-hidden h-full'>
         <Header menu={menu} />
         <div className='flex-auto' style={{ height: 'calc(100% - 60px)' }}>
             {children}

@@ -51,29 +51,29 @@ export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, dat
 
     return (
     <BaseLayout menu={items}>
-        <div className='overflow-auto h-full pl-5 pr-5'>
+        <div className='h-full pl-5 pr-5 overflow-y-auto overflow-x-hidden'>
             <div ref={refs.overview}></div>
             <div className='flex flex-wrap align-items-center bg-default sticky top-0 z-5'>
-                <h1 className='lg:col-7 sm:col-12 scrollMarginTop'>
+                <h1 className='col-12 lg:col-7 scrollMarginTop'>
                     {name}
                     <i className='pi pi-pencil vertical-align-top text-xs cursor-pointer pl-1' onClick={() => navigate({ pathname: `/company/${cik}/edit` })} />    
                 </h1>
-                <div className='lg:col-2 lg:justify-content-end sm:col-10 flex gap-3 align-items-center pr-5'>
+                <div className='col-10 lg:col-2 lg:justify-content-end flex gap-3 align-items-center pr-5'>
                     <CompanyScore />
                     <CompanyFavorite favorite={data.favorite} cik={cik} size='xl' />
                 </div>
-                <div className='lg:col-3 sm:col-2 flex align-items-center gap-3 p-0 mt-1 line-height-2'>
+                <div className='lg:col-3 col-2 flex align-items-center gap-3 p-0 mt-1 line-height-2'>
                     <div><i className='pi pi-bell text-xl' /></div>
                     <div className='text-xs'><Price ticker={data?.tickers?.[0]?.ticker} /></div>
                 </div>
             </div>
             <div className='flex flex-wrap col-12' >
-                <div className='lg:col-9 sm:col-12 lg:pr-5'>
+                <div className='lg:col-9 col-12 lg:pr-5'>
                     <div className='border-1 border-solid'>
                         <MetricsScoreViewer cik={cik} displayDetails={false} />
                     </div>
                 </div>
-                <div className='lg:col-3 sm:col-12'>
+                <div className='col-12 lg:col-3'>
                     <h2 className='mt-0'>Firmenprofil</h2>
                     <CompanyProfile cik={cik} />
                 </div>
