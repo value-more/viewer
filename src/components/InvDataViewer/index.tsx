@@ -6,6 +6,8 @@ import { api } from '../../api/invData'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { Accordion, AccordionTab } from 'primereact/accordion'
 import { InfoIcon } from '../InfoIcon'
+import { viewerEvents, viewerStores } from './state'
+import { useUnit } from 'effector-react'
 
 interface InvDataViewerProps {
     cik: number;
@@ -18,6 +20,7 @@ interface InvDataViewerProps {
 export const InvDataViewer: React.FC<InvDataViewerProps> = ({ cik, syncTimestamp, overwriteTimestamp, readonly, withIcon }) => {
     const { t } = useTranslation();
     const [configs, setConfigs] = useState<Config[] | undefined>();
+    const indexes = useUnit(viewerStores.$indexes);
 
     useEffect(() => {
         const getConfig = async () => {
@@ -42,7 +45,7 @@ export const InvDataViewer: React.FC<InvDataViewerProps> = ({ cik, syncTimestamp
                     <InfoIcon syncTimestamp={syncTimestamp} editTimestamp={overwriteTimestamp} />
                 </div>)}
             </h2>
-            <Accordion multiple>
+            <Accordion multiple activeIndex={indexes} onTabChange={event => viewerEvents.setIndexes(typeof event.index === 'number' ? [event.index] : event.index)}>
             {configs.map((c, i) => (
                 <AccordionTab key={i} header={t(`ticker.fundamentals.${c.name}.title`)}>
                     <InvDataViewerTable

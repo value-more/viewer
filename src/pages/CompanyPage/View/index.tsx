@@ -15,6 +15,7 @@ import { CompanyValue } from '../../../components/companies/CompanyValue';
 import { CompanyProfile } from '../../../components/CompanyProfile';
 import { useNavigate } from 'react-router';
 import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
+import { viewerEvents } from '../../../components/InvDataViewer/state';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -38,7 +39,10 @@ export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, dat
         { label: t('ticker.metrics.title'), command: () => scrollToItem('diagrams') },
         { label: t('ticker.businessmodel.title'), command: () => scrollToItem('businessModel') },
         { label: t('ticker.value.title'), command: () => scrollToItem('value') },
-        { label: t('ticker.fundamentals.title'), command: () => scrollToItem('data') }
+        { label: t('ticker.fundamentals.title'), command: () => {
+            viewerEvents.setIndexes([0]);
+            setTimeout(() => scrollToItem('data'), 500);
+        }}
     ];
 
     const scrollToItem = ( key: string ) => {
