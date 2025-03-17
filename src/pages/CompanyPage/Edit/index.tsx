@@ -21,6 +21,7 @@ import { Tooltip } from 'primereact/tooltip';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { BaseLayout } from '../../../BaseLayout';
+import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -60,6 +61,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({ cik, name: def
                 <TradingViewSymbolOverview ticker={data?.tickers?.[0]?.ticker || ''} exchange={data?.tickers?.[0]?.exchange || ''} />
             </div>
             <IndicatorsGraph data={data} includeScore withIcon />
+            <MetricsAssessment cik={cik} />
             <InvDataViewer cik={cik} syncTimestamp={data?.timestamp} overwriteTimestamp={data?.overwriteTimestamp} withIcon />
             <BusinessModel cik={cik} withIcon />
             <Moat cik={cik} />

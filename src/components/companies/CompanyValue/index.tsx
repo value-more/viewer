@@ -22,7 +22,7 @@ export const CompanyValue: React.FC<CompanyValueProps> = ({ cik, metrics, withSu
 
     return (
         <div>
-            <h2 className={`${readonly ? '' : 'bg-primary'} p-2 flex`}>
+            <h2 className={`${readonly ? '' : 'bg-primary p-2'} flex`}>
                 <div>
                     {!!withIcon && (<i className='pi pi-tag mr-2' />)}{t('ticker.value.title')}
                 </div>

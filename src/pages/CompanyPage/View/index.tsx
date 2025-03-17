@@ -14,6 +14,7 @@ import { CompanyFavorite } from '../../../components/CompanyFavorite';
 import { CompanyValue } from '../../../components/companies/CompanyValue';
 import { CompanyProfile } from '../../../components/CompanyProfile';
 import { useNavigate } from 'react-router';
+import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -73,23 +74,20 @@ export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, dat
                     <CompanyProfile cik={cik} />
                 </div>
             </div>
-            <div>
+            <div className='mb-5'>
                 <h2>Aktuelle Einschatzung</h2>
-                <div>
-                    Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla <br />
-                    Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla Bla bbla bla bla
-                </div>
+                <MetricsAssessment cik={cik} readonly />
             </div>
-            <div ref={refs.diagrams} className='scrollMarginTop'>
+            <div ref={refs.diagrams} className='scrollMarginTop mb-5'>
                 <IndicatorsGraph data={data} readonly />
             </div>
-            <div ref={refs.businessModel} className='scrollMarginTop'>
+            <div ref={refs.businessModel} className='scrollMarginTop mb-5'>
                 <BusinessModel cik={cik} readonly />
             </div>
-            <div ref={refs.value} className='scrollMarginTop'>
+            <div ref={refs.value} className='scrollMarginTop mb-5'>
                 <CompanyValue cik={cik} withSummary readonly />
             </div>
-            <div ref={refs.data} className='scrollMarginTop'>
+            <div ref={refs.data} className='scrollMarginTop mb-5'>
                 <InvDataViewer cik={cik} readonly />
             </div>
         </div> 
