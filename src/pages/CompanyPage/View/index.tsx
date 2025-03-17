@@ -13,6 +13,7 @@ import { BaseLayout } from '../../../BaseLayout';
 import { CompanyFavorite } from '../../../components/CompanyFavorite';
 import { CompanyValue } from '../../../components/companies/CompanyValue';
 import { CompanyProfile } from '../../../components/CompanyProfile';
+import { useNavigate } from 'react-router';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -22,6 +23,7 @@ interface CompanyPageEditProps {
 
 export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, data }) => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const refs: {[key: string]: React.MutableRefObject<null>} = {
         overview: useRef(null),
         diagrams: useRef(null),
@@ -47,7 +49,10 @@ export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, dat
         <div className='overflow-auto h-full pl-5 pr-5'>
             <div ref={refs.overview}></div>
             <div className='flex flex-wrap align-items-center bg-default sticky top-0 z-5'>
-                <h1 className='lg:col-7 sm:col-12 scrollMarginTop'>{name}</h1>
+                <h1 className='lg:col-7 sm:col-12 scrollMarginTop'>
+                    {name}
+                    <i className='pi pi-pencil vertical-align-top text-xs cursor-pointer pl-1' onClick={() => navigate({ pathname: `/company/${cik}/edit` })} />    
+                </h1>
                 <div className='lg:col-2 lg:justify-content-end sm:col-10 flex gap-3 align-items-center pr-5'>
                     <CompanyScore />
                     <CompanyFavorite favorite={data.favorite} cik={cik} size='xl' />
