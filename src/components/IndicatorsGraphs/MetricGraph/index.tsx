@@ -82,7 +82,7 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
                     </div>
                 </div>
                 {tableVisible && (
-                    <div>
+                    <div className='overflow-auto'>
                         <table className="w-full m-3 mb-0" border={1}>
                             <thead>
                                 <tr>

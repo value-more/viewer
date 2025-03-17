@@ -20,7 +20,7 @@ export const CompanyValueSummary: React.FC = () => {
     const keys = Object.keys(valuesByKey);
 
     return (
-        <div>
+        <div className='overflow-auto'>
             <table className='m-auto'>
                 <thead>
                     <tr>
