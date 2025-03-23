@@ -11,7 +11,6 @@ import { MetricsScoreViewer } from '../../../components/MetricsScoreViewer';
 import { Price } from '../../../components/companies/Price';
 import { BaseLayout } from '../../../BaseLayout';
 import { CompanyFavorite } from '../../../components/CompanyFavorite';
-import { CompanyValue } from '../../../components/companies/CompanyValue';
 import { CompanyProfile } from '../../../components/CompanyProfile';
 import { useNavigate } from 'react-router';
 import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
