@@ -16,6 +16,7 @@ import { CompanyProfile } from '../../../components/CompanyProfile';
 import { useNavigate } from 'react-router';
 import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
 import { viewerEvents } from '../../../components/InvDataViewer/state';
+import { IntrinsicValue } from '../../../components/companies/IntrinsicValue';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -89,7 +90,8 @@ export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, dat
                 <BusinessModel cik={cik} readonly />
             </div>
             <div ref={refs.value} className='scrollMarginTop mb-5'>
-                <CompanyValue cik={cik} withSummary readonly />
+                <h2>{t('ticker.value.title')}</h2>
+                <IntrinsicValue ticker={data?.tickers[0]?.ticker || ''} displayDetails />
             </div>
             <div ref={refs.data} className='scrollMarginTop mb-5'>
                 <InvDataViewer cik={cik} readonly />
