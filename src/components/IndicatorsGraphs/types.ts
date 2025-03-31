@@ -40,3 +40,8 @@ export interface ChartSettings {
     options: object
     additionalData?: ChartAdditionalData[]
 }
+
+export interface ChartTableData {
+    label: string;
+    [year: string]: string;
+}
