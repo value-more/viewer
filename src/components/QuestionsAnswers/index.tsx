@@ -54,7 +54,7 @@ export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({ apiUrls, rea
                     const timestamp = answers[key]?.timestamp;
                     return (
                     <div key={key} className='w-full'>
-                        <h4 className="p-2 flex">
+                        <h4 className="flex">
                             <div>{value}</div>
                             {!readonly && (<div className='ml-auto mr-2 '>
                                 <InfoIcon editTimestamp={timestamp} />
@@ -62,7 +62,7 @@ export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({ apiUrls, rea
                         </h4>
                         {
                             readonly ? 
-                            (<div className='pl-3'>{answers[key]?.answer || ''}</div>) : 
+                            (<div>{answers[key]?.answer || ''}</div>) : 
                             (
                             <InputTextarea 
                                 autoResize 
