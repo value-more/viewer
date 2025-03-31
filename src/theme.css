@@ -8,6 +8,10 @@ h1, h2, h3 {
     color: var(--primary-color);
 }
 
+.border-primary-alpha {
+    border-color: #E0E5EC;
+}
+
 .bg-default {
     background-color: var(--background-color);    
 }
