@@ -33,6 +33,14 @@ h1, h2, h3 {
     background: #d2e6f9;
 }
 
+.p-tabview-nav-link {
+    font-weight: normal;
+}
+
+.p-tabview-nav-link, .p-tabview-nav, .p-tabview-panels {
+    background-color: var(--background-color);
+}
+
 .sm-input .p-inputnumber-input {
     max-width: 5rem;
     text-align: right;

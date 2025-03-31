@@ -141,7 +141,9 @@ const getDatasets = ({ labels, tKeyPrefix, config, data, t } : { labels: string[
             type: config?.type || 'line',
             label: t(`${tKeyPrefix}.dataset${index+1}`),
             borderColor: c.borderColor,
-            data: dataset
+            data: dataset,
+            pointRadius: 0,
+            hitRadius: 0
         }
     });
 }
