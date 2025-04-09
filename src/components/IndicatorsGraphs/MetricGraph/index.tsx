@@ -24,6 +24,7 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
     const [tableData, setTableData] = useState<ChartTableData[]>([]);
 
     useEffect(() => {
+        console.log('hello')
         setValue(null);
         setError(null);
         try {
@@ -42,7 +43,7 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
         } catch( e: any ) {
             setError(e);
         }
-    }, [config, data])
+    }, [config, data, t])
 
     if ( error || data?.metricsErrors?.some( o => o?.key === config?.key ) ) {
         return (<div className='text-center'>
