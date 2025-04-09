@@ -152,7 +152,7 @@ const getAdditionalData = ({ tKeyPrefix, config, data, t } : { tKeyPrefix: strin
     return config.additionalData?.map( c => {
         let value: number | undefined = undefined;
         if ( c.metric ) {
-            value = data?.metrics?.[c.key];
+            value = data?.metrics?.[c.metric];
         } else if ( c.formula ) {
             value = evalFormulaForYear( c.key, c.formula, data );
         }

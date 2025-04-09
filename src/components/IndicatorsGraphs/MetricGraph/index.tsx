@@ -89,7 +89,7 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
                                 value.additionalData.map((ad, k) => (
                                     <div key={k} className={`flex m-1 ${data?.metricsErrors?.some( o => o?.key === ad?.key ) ? 'text-red-500': 'text-primary'}`}>
                                         <div className='mr-1'>{t(`ticker.metrics.chartsAdditionalData.${ad.key}`)}:</div>  
-                                        <div>{formatFromSymbol(language, ad.symbol, ad.value)}</div>
+                                        <div className='ml-auto'>{formatFromSymbol(language, ad.symbol, ad.value)}</div>
                                     </div>
                                 ))
                             }
