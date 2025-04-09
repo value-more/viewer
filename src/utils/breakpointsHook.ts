@@ -23,8 +23,8 @@ const useMediaQuery = (query: string) => {
     return matches; 
 }
 
-export const useIsSmall = () => useMediaQuery(`(min-width: 576px)`); 
-export const useIsMedium = () => useMediaQuery(`(min-width: 768px)`); 
-export const useIsLarge = () => useMediaQuery(`(min-width: 992px)`); 
-export const useIsXLarge = () => useMediaQuery(`(min-width: 1200px)`);
-export const useIsXXLarge = () => useMediaQuery(`(min-width: 1440px)`);
+export const useIsSmallScreen = () => useMediaQuery(`(min-width: 576px)`); 
+export const useIsMediumScreen = () => useMediaQuery(`(min-width: 768px)`); 
+export const useIsLargeScreen = () => useMediaQuery(`(min-width: 992px)`); 
+export const useIsXLargeScreen = () => useMediaQuery(`(min-width: 1200px)`);
+export const useIsXXLargeScreen = () => useMediaQuery(`(min-width: 1440px)`);

@@ -10,6 +10,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { $chartData, setChartData, $globalScore, setGlobalScore } from './stores';
 import { MetricsScores } from '../../models/types';
 import { ScoreText } from '../ScoreText';
+import { useIsSmallScreen } from '../../utils/breakpointsHook';
 
 interface MetricsScoreViewerProps {
     cik: number;
@@ -21,7 +22,8 @@ export const MetricsScoreViewer: React.FC<MetricsScoreViewerProps> = ({ cik, dis
     const reloadGlobalScore = useUnit(metricsScoresStores.$reloadGlobalScore);
     const chartData = useUnit($chartData);
     const globalScore = useUnit($globalScore);
-
+    const isSmall = useIsSmallScreen();
+    
     useEffect(() => {
         if ( !reloadGlobalScore ) return;
 
