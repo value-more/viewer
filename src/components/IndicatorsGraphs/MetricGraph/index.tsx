@@ -24,7 +24,6 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
     const [tableData, setTableData] = useState<ChartTableData[]>([]);
 
     useEffect(() => {
-        console.log('hello')
         setValue(null);
         setError(null);
         try {

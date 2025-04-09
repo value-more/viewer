@@ -33,6 +33,10 @@ h1, h2, h3 {
     top:5.5rem;
 }
 
+canvas {
+    margin: auto;
+}
+
 .p-datatable tr:hover {
     background: #d2e6f9;
 }
