@@ -37,7 +37,7 @@ h1, h2, h3 {
     background: #d2e6f9;
 }
 
-.p-tabview-nav-link {
+.p-tabview-nav-link, .p-menuitem-link {
     font-weight: normal;
 }
 
