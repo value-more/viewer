@@ -21,7 +21,7 @@ export const CompanyValueSummary: React.FC = () => {
 
     return (
         <div className='overflow-auto'>
-            <table className='m-auto'>
+            <table>
                 <thead>
                     <tr>
                         <th></th>

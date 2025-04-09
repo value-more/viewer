@@ -42,7 +42,7 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
         } catch( e: any ) {
             setError(e);
         }
-    }, [config, data])
+    }, [config, data, t])
 
     if ( error || data?.metricsErrors?.some( o => o?.key === config?.key ) ) {
         return (<div className='text-center'>
@@ -83,17 +83,17 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
                     </div>
                     <div className="flex-none align-self-center">
                         <div className='border-1 ml-3 p-1 border-primary-alpha'>
-                        {!!value.additionalData &&
-                            value.additionalData.map((ad, k) => (
-                                <div key={k} className={`m-1 ${data?.metricsErrors?.some( o => o?.key === ad?.key ) ? 'text-red-500': 'text-primary'}`}>
-                                    <div className="font-bold">
-                                        {ad.label}
+                        {!!value.additionalData && (<>
+                            <div className='text-primary m-1 font-bold'>{t(`ticker.metrics.charts.${config.key}.additionalDataTitle`)}</div>
+                            {
+                                value.additionalData.map((ad, k) => (
+                                    <div key={k} className={`flex m-1 ${data?.metricsErrors?.some( o => o?.key === ad?.key ) ? 'text-red-500': 'text-primary'}`}>
+                                        <div className='mr-1'>{t(`ticker.metrics.chartsAdditionalData.${ad.key}`)}:</div>  
+                                        <div className='ml-auto'>{formatFromSymbol(language, ad.symbol, ad.value)}</div>
                                     </div>
-                                    <div>
-                                        {formatFromSymbol(language, ad.symbol, ad.value)}
-                                    </div>
-                                </div>
-                            ))}
+                                ))
+                            }
+                        </>)}
                         </div>
                     </div>
                 </div>

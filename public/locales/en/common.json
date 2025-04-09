@@ -36,28 +36,23 @@
                 "epsGrowth": {
                     "title": "EPS Growth",
                     "dataset1": "Adjusted net income per share",
-                    "cagrAdjustedProfit": "CAGR Adjusted profit",
-                    "cagrEarningsPerShare": "CAGR Earnings per share",
-                    "tenYAvgEarningsPerShare": "10Y-AVG earnings per share"
+                    "additionalDataTitle": "Adjusted Profit"
                 },
                 "operatingIncome": {
                     "title": "Operating income",
                     "dataset1": "Operating income per share",
-                    "cagrOperatingIncome": "CAGR operating income",
-                    "cagrOperatingIncomePerShare": "CAGR operating income per share",
-                    "tenYAvgEbitPerShare": "10Y-AVG EBIT per share"
+                    "additionalDataTitle": "Operating income"
                 },
                 "revenueGrowthVsCOGSGrowth": {
                     "title": "Revenue and Costs Growth",
                     "dataset1": "Revenue per share",
                     "dataset2": "Costs per share",
-                    "cagrRevenue": "CAGR Revenue",
-                    "cagrRevenuePerShare": "CAGR Revenue per share"
+                    "additionalDataTitle": "Revenue"
                 },
                 "cashEquivalents": {
                     "title": "Cash & Equivalents",
                     "dataset1": "Cash & Equivalents",
-                    "cashToShortTermDebtRatio": "Cash to short-term debt ratio"
+                    "additionalDataTitle": "Cash to short-term debt"
                 },
                 "cashflowToLongTermDebtRatio": {
                     "title": "Cashflow to long-term debt ratio",
@@ -97,7 +92,7 @@
                     "title": "Longterm debt to operating income ratio",
                     "dataset1": "Operating income",
                     "dataset2": "Long-term liabilities",
-                    "ltDebtToOpIncomeRatio": "LT debt/OI ratio"
+                    "additionalDataTitle": "LT debt/OI "
                 },
                 "interestExpenseMargin": {
                     "title": "Interest expense margin",
@@ -143,12 +138,12 @@
                     "title": "ROE",
                     "dataset1": "ROE",
                     "dataset2": "> 20% is is super good",
-                     "tenYAvgRoe": "10Y-AVG ROE"
+                    "additionalDataTitle": "ROE"
                 },
                 "invMargin": {
                     "title": "Investment Margin",
                     "dataset1": "Investitionen/Operating Income",
-                    "tenYAvgInvMargin": "10Y-AVG Inv Margin"
+                    "additionalDataTitle": "Inv margin"
                 },
                 "daMargin": {
                     "title": "D&A Margin",
@@ -168,13 +163,19 @@
                 "bookValue":{
                     "title": "Book Value",
                     "dataset1": "Book Value",
-                    "cagrBookValue": "CAGR Book Value" 
+                    "additionalDataTitle": "Book value"
                 },
                 "operatingBookValue":{
                     "title": "Operating Book Value",
                     "dataset1": "Operating Book Value",
-                    "cagrOperatingBookValue": "CAGR Operating Book Value" 
+                    "additionalDataTitle": "Operating book value"
                 }
+            },
+            "chartsAdditionalData": {
+                "cagr": "CAGR",
+                "perShare": "Per share",
+                "average": "Average",
+                "ratio": "Ratio"
             }
         },
         "fundamentals": {

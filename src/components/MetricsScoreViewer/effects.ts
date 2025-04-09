@@ -19,8 +19,8 @@ export const getScoreChartData = ({ t, config, data } : { t: TFunction, config: 
             {
                 label: t('ticker.metrics.categories.score'),
                 data: scores,
-                backgroundColor: '#37576B80',
-                borderColor: '#37576B80',
+                backgroundColor: '#37576B66',
+                borderColor: '#37576B66',
                 fill: { value: MIN },
                 pointRadius: 0,
                 hitRadius: 0
@@ -31,8 +31,8 @@ export const getScoreChartData = ({ t, config, data } : { t: TFunction, config: 
                 fill: { value: MIN },
                 pointRadius: 0,
                 hitRadius: 0,
-                backgroundColor: 'grey',
-                borderColor: 'grey'
+                backgroundColor: '#80808066',
+                borderColor: '#80808066'
             },
             {
                 label: '',
@@ -40,8 +40,8 @@ export const getScoreChartData = ({ t, config, data } : { t: TFunction, config: 
                 fill: "-1",
                 pointRadius: 0,
                 hitRadius: 0,
-                backgroundColor: '#BBB',
-                borderColor: '#BBB'
+                backgroundColor: '#BBBBBB66',
+                borderColor: '#BBBBBB66'
             }
         ]
     }
