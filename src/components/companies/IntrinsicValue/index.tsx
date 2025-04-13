@@ -46,7 +46,7 @@ export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({ ticker, displayD
                     <InfoIcon syncTimestamp={timestamp} />
                 </div>
             </h2>)}
-            <div className='flex mb-3'>
+            <div className='flex mb-3 overflow-auto'>
             {!!items && 
                 (<div>
                     <TabMenu model={items} pt={{ action: { className: 'bg-default' }}} />
