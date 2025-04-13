@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Chart } from 'primereact/chart'
-import { formatFromSymbol, getDisplayedSymbol } from '../../../utils/formatFromSymbol'
+import { getDisplayedSymbol } from '../../../utils/formatFromSymbol'
 import { VotingSelector } from '../VotingSelector'
 import { ChartOptions, ChartSettings, ChartTableData } from '../types'
 import { InvData } from '../../../models/types'
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
+import { AdditionalData } from './AdditionalData'
 
 interface MetricsGraphProps {
     config: ChartOptions;
@@ -42,7 +43,7 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
         } catch( e: any ) {
             setError(e);
         }
-    }, [config, data])
+    }, [config, data, t])
 
     if ( error || data?.metricsErrors?.some( o => o?.key === config?.key ) ) {
         return (<div className='text-center'>
@@ -59,53 +60,37 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
 
     return (
         <div className="w-full">
-            <div>
-                <div className="flex flex-wrap">
-                    <div className="relative flex-auto">
-                        <Chart
-                            type="line"
-                            data={value.data}
-                            options={value.options}
-                        />
-                        <div
-                            className="absolute hover:text-primary cursor-pointer"
-                            style={{ right: '15px', top: '15px' }}
-                            onClick={() => setTableVisible(!tableVisible)}
-                        >
-                            <i className="pi pi-table" />
-                        </div>
-                        {!readonly && (<div
-                            className="absolute"
-                            style={{ left: '15px', top: '10px' }}
-                        >
-                            <VotingSelector graphKey={config.key} />
-                        </div>)}
+            <div className="flex flex-wrap w-full">
+                <div className="relative flex-auto metrics">
+                    <Chart
+                        type="line"
+                        data={value.data}
+                        options={value.options}
+                    />
+                    <div
+                        className="absolute hover:text-primary cursor-pointer"
+                        style={{ right: '15px', top: '15px' }}
+                        onClick={() => setTableVisible(!tableVisible)}
+                    >
+                        <i className="pi pi-table" />
                     </div>
-                    <div className="flex-none align-self-center">
-                        <div className='border-1 ml-3 p-1 border-primary-alpha'>
-                        {!!value.additionalData &&
-                            value.additionalData.map((ad, k) => (
-                                <div key={k} className={`m-1 ${data?.metricsErrors?.some( o => o?.key === ad?.key ) ? 'text-red-500': 'text-primary'}`}>
-                                    <div className="font-bold">
-                                        {ad.label}
-                                    </div>
-                                    <div>
-                                        {formatFromSymbol(language, ad.symbol, ad.value)}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                    {!readonly && (<div
+                        className="absolute"
+                        style={{ left: '15px', top: '10px' }}
+                    >
+                        <VotingSelector graphKey={config.key} />
+                    </div>)}
                 </div>
-                {tableVisible && (
-                    <div className='overflow-auto mt-5'>
-                        <DataTable value={tableData} scrollable showGridlines stripedRows pt={{ column: { headerContent: { className: 'justify-content-center text-primary' } },bodyRow: { className: 'p-row-odd' } }}>
-                            <Column field='label' />
-                            {value.data.labels.map((k: string, i) => (<Column key={k} field={'y'+i} header={k} className='text-center' />))}
-                        </DataTable>
-                    </div>
-                )}
+                {!!value.additionalData && <AdditionalData config={config} value={value} data={data} />}
             </div>
+            {tableVisible && (
+                <div className='overflow-auto mt-5'>
+                    <DataTable value={tableData} scrollable showGridlines stripedRows pt={{ column: { headerContent: { className: 'justify-content-center text-primary' } },bodyRow: { className: 'p-row-odd' } }}>
+                        <Column field='label' />
+                        {value.data.labels.map((k: string, i) => (<Column key={k} field={'y'+i} header={k} className='text-center' />))}
+                    </DataTable>
+                </div>
+            )}
         </div>
     )
 }

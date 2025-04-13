@@ -1,7 +1,7 @@
 body {
     background-color: var(--background-color);
     color: var(--text-color);
-    line-height: 1.7rem;
+    line-height: 2rem;
 }
 
 h1, h2, h3 {
@@ -33,11 +33,12 @@ h1, h2, h3 {
     top:5.5rem;
 }
 
+
 .p-datatable tr:hover {
     background: #d2e6f9;
 }
 
-.p-tabview-nav-link {
+.p-tabview-nav-link, .p-menuitem-link {
     font-weight: normal;
 }
 
@@ -124,4 +125,9 @@ h1, h2, h3 {
 .jsoneditor-field:hover {
     color: var(--highlight-text-color)!important;
     background-color: var(--surface-hover)!important;
+}
+
+.metrics .p-chart canvas {
+    height: 375px!important;
+    width: 100% !important;
 }

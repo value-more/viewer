@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router';
 import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
 import { viewerEvents } from '../../../components/InvDataViewer/state';
 import { IntrinsicValue } from '../../../components/companies/IntrinsicValue';
+import { useIsMediumScreen, useIsXLargeScreen, useIsXXLargeScreen } from '../../../utils/breakpointsHook';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -26,6 +27,9 @@ interface CompanyPageEditProps {
 export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, data }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const isMedium = useIsMediumScreen();
+    const isXLarge = useIsXLargeScreen();
+    const isXXLarge = useIsXXLargeScreen();
     const refs: {[key: string]: React.MutableRefObject<null>} = {
         overview: useRef(null),
         diagrams: useRef(null),
@@ -51,37 +55,47 @@ export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, dat
 
     return (
     <BaseLayout menu={items}>
-        <div className='h-full pl-5 pr-5 overflow-y-auto overflow-x-hidden'>
+        <div className='h-full xl:pl-5 xl:pr-5 pl-2 pr-2 overflow-y-auto overflow-x-hidden'>
             <div ref={refs.overview}></div>
             <div className='flex flex-wrap align-items-center bg-default sticky top-0 z-5'>
-                <h1 className='col-12 lg:col-7 scrollMarginTop'>
+                <h1 className='col-12 md:col-7 scrollMarginTop'>
                     {name}
                     <i className='pi pi-pencil vertical-align-top text-xs cursor-pointer pl-1' onClick={() => navigate({ pathname: `/company/${cik}/edit` })} />    
                 </h1>
-                <div className='col-10 lg:col-2 lg:justify-content-end flex gap-3 align-items-center pr-5'>
+                {isMedium && (<>
+                <div className='col-5 xl:col-2 justify-content-end flex gap-3 align-items-center xl:pr-5'>
                     <CompanyScore />
                     <CompanyFavorite favorite={data.favorite} cik={cik} size='xl' />
                 </div>
-                <div className='lg:col-3 col-2 flex align-items-center gap-3 p-0 mt-1 line-height-2'>
+                {isXLarge && (<div className='col-3 flex align-items-center gap-3 p-0 mt-1 line-height-2'>
                     <div><i className='pi pi-bell text-xl' /></div>
                     <div className='text-xs'><Price ticker={data?.tickers?.[0]?.ticker} /></div>
-                </div>
+                </div>)}
+                </>)}
             </div>
-            <div className='flex flex-wrap col-12' >
-                <div className='lg:col-9 col-12 lg:pr-5'>
+            <div className='flex flex-wrap' >
+                <div className={`${isXXLarge ? 'col-9 pr-5' : 'col-12'}`}>
                     <div className='border-1 border-solid'>
                         <MetricsScoreViewer cik={cik} displayDetails={false} />
                     </div>
                 </div>
-                <div className='col-12 lg:col-3'>
-                    <h2 className='mt-0'>Firmenprofil</h2>
-                    <CompanyProfile cik={cik} />
-                </div>
+                {isXXLarge && (
+                    <div className='col-3'>
+                        <h2 className='mt-0'>Firmenprofil</h2>
+                        <CompanyProfile cik={cik} />
+                    </div>
+                )}
             </div>
             <div className='mb-5'>
                 <h2>Aktuelle Einschatzung</h2>
                 <MetricsAssessment cik={cik} readonly />
             </div>
+            {!isXXLarge && (
+                <div>
+                    <h2 className='mt-0'>Firmenprofil</h2>
+                    <CompanyProfile cik={cik} />
+                </div>
+            )}
             <div ref={refs.diagrams} className='scrollMarginTop mb-5'>
                 <IndicatorsGraph data={data} readonly />
             </div>
