@@ -37,6 +37,11 @@ canvas {
     margin: auto;
 }
 
+.p-chart canvas {
+    height: 375px!important;
+    width: 100% !important;
+}
+
 .p-datatable tr:hover {
     background: #d2e6f9;
 }

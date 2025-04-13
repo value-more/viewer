@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Chart } from 'primereact/chart'
-import { formatFromSymbol, getDisplayedSymbol } from '../../../utils/formatFromSymbol'
+import { getDisplayedSymbol } from '../../../utils/formatFromSymbol'
 import { VotingSelector } from '../VotingSelector'
 import { ChartOptions, ChartSettings, ChartTableData } from '../types'
 import { InvData } from '../../../models/types'
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
+import { AdditionalData } from './AdditionalData'
 
 interface MetricsGraphProps {
     config: ChartOptions;
@@ -81,21 +82,7 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
                             <VotingSelector graphKey={config.key} />
                         </div>)}
                     </div>
-                    <div className="flex-none align-self-center">
-                        <div className='border-1 ml-3 p-1 border-primary-alpha'>
-                        {!!value.additionalData && (<>
-                            <div className='text-primary m-1 font-bold'>{t(`ticker.metrics.charts.${config.key}.additionalDataTitle`)}</div>
-                            {
-                                value.additionalData.map((ad, k) => (
-                                    <div key={k} className={`flex m-1 ${data?.metricsErrors?.some( o => o?.key === ad?.key ) ? 'text-red-500': 'text-primary'}`}>
-                                        <div className='mr-1'>{t(`ticker.metrics.chartsAdditionalData.${ad.key}`)}:</div>  
-                                        <div className='ml-auto'>{formatFromSymbol(language, ad.symbol, ad.value)}</div>
-                                    </div>
-                                ))
-                            }
-                        </>)}
-                        </div>
-                    </div>
+                    {!!value.additionalData && <AdditionalData config={config} value={value} data={data} />}
                 </div>
                 {tableVisible && (
                     <div className='overflow-auto mt-5'>
