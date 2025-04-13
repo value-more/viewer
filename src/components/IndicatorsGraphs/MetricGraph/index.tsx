@@ -60,39 +60,37 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
 
     return (
         <div className="w-full">
-            <div>
-                <div className="flex flex-wrap">
-                    <div className="relative flex-auto">
-                        <Chart
-                            type="line"
-                            data={value.data}
-                            options={value.options}
-                        />
-                        <div
-                            className="absolute hover:text-primary cursor-pointer"
-                            style={{ right: '15px', top: '15px' }}
-                            onClick={() => setTableVisible(!tableVisible)}
-                        >
-                            <i className="pi pi-table" />
-                        </div>
-                        {!readonly && (<div
-                            className="absolute"
-                            style={{ left: '15px', top: '10px' }}
-                        >
-                            <VotingSelector graphKey={config.key} />
-                        </div>)}
+            <div className="flex flex-wrap w-full">
+                <div className="relative flex-auto">
+                    <Chart
+                        type="line"
+                        data={value.data}
+                        options={value.options}
+                    />
+                    <div
+                        className="absolute hover:text-primary cursor-pointer"
+                        style={{ right: '15px', top: '15px' }}
+                        onClick={() => setTableVisible(!tableVisible)}
+                    >
+                        <i className="pi pi-table" />
                     </div>
-                    {!!value.additionalData && <AdditionalData config={config} value={value} data={data} />}
+                    {!readonly && (<div
+                        className="absolute"
+                        style={{ left: '15px', top: '10px' }}
+                    >
+                        <VotingSelector graphKey={config.key} />
+                    </div>)}
                 </div>
-                {tableVisible && (
-                    <div className='overflow-auto mt-5'>
-                        <DataTable value={tableData} scrollable showGridlines stripedRows pt={{ column: { headerContent: { className: 'justify-content-center text-primary' } },bodyRow: { className: 'p-row-odd' } }}>
-                            <Column field='label' />
-                            {value.data.labels.map((k: string, i) => (<Column key={k} field={'y'+i} header={k} className='text-center' />))}
-                        </DataTable>
-                    </div>
-                )}
+                {!!value.additionalData && <AdditionalData config={config} value={value} data={data} />}
             </div>
+            {tableVisible && (
+                <div className='overflow-auto mt-5'>
+                    <DataTable value={tableData} scrollable showGridlines stripedRows pt={{ column: { headerContent: { className: 'justify-content-center text-primary' } },bodyRow: { className: 'p-row-odd' } }}>
+                        <Column field='label' />
+                        {value.data.labels.map((k: string, i) => (<Column key={k} field={'y'+i} header={k} className='text-center' />))}
+                    </DataTable>
+                </div>
+            )}
         </div>
     )
 }
