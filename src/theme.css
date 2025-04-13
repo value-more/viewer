@@ -33,14 +33,6 @@ h1, h2, h3 {
     top:5.5rem;
 }
 
-canvas {
-    margin: auto;
-}
-
-.p-chart canvas {
-    height: 375px!important;
-    width: 100% !important;
-}
 
 .p-datatable tr:hover {
     background: #d2e6f9;
@@ -133,4 +125,9 @@ canvas {
 .jsoneditor-field:hover {
     color: var(--highlight-text-color)!important;
     background-color: var(--surface-hover)!important;
+}
+
+.metrics .p-chart canvas {
+    height: 375px!important;
+    width: 100% !important;
 }

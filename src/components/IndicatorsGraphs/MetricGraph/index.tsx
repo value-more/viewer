@@ -61,7 +61,7 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({ config, data, readon
     return (
         <div className="w-full">
             <div className="flex flex-wrap w-full">
-                <div className="relative flex-auto">
+                <div className="relative flex-auto metrics">
                     <Chart
                         type="line"
                         data={value.data}
