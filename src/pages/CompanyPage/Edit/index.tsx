@@ -56,12 +56,12 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({ cik, name: def
                 <div className='ml-3'><CompanyScore /></div>
             </div>
             <ConfidenceLevels timeframe={{ startYear: parseInt(yearsKeys.slice(-11)[0]), endYear: parseInt(yearsKeys[yearsKeys.length-1]) }} overwriteTimestamp={data?.overwriteTimestamp} />
-            <CompanyProfile cik={cik} edit />
             <IntrinsicValue ticker={data?.tickers[0]?.ticker || ''} withTitle />
             <div>
                 <h3 className="bg-primary p-2" ref={priceOverviewRef}><i className='pi pi-dollar mr-2' />{t('ticker.market.title')}</h3>
                 <TradingViewSymbolOverview ticker={data?.tickers?.[0]?.ticker || ''} exchange={data?.tickers?.[0]?.exchange || ''} />
             </div>
+            <CompanyProfile cik={cik} edit />
             <IndicatorsGraph data={data} includeScore withIcon />
             <MetricsAssessment cik={cik} />
             <InvDataViewer cik={cik} syncTimestamp={data?.timestamp} overwriteTimestamp={data?.overwriteTimestamp} withIcon />
