@@ -10,6 +10,7 @@ import { LoginPage } from './pages/LoginPage'
 import { ProtectedRoute } from './components/routes/ProtectedRoute'
 import { ConfigPage } from './pages/ConfigPage'
 import { AnalysisPage } from './pages/AnalysisPage'
+import { Toasts } from './components/Toasts';
 
 function App() {
     return (
@@ -51,6 +52,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
             </Routes>
         </HashRouter>
+        <Toasts />
     </PrimeReactProvider>
     )
 }

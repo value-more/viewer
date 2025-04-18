@@ -81,7 +81,6 @@ export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, dat
                 </div>
                 {isXXLarge && (
                     <div className='col-3'>
-                        <h2 className='mt-0'>Firmenprofil</h2>
                         <CompanyProfile cik={cik} />
                     </div>
                 )}
@@ -91,10 +90,7 @@ export const CompanyPageView: React.FC<CompanyPageEditProps> = ({ cik, name, dat
                 <MetricsAssessment cik={cik} readonly />
             </div>
             {!isXXLarge && (
-                <div>
-                    <h2 className='mt-0'>Firmenprofil</h2>
-                    <CompanyProfile cik={cik} />
-                </div>
+                <div><CompanyProfile cik={cik} /></div>
             )}
             <div ref={refs.diagrams} className='scrollMarginTop mb-5'>
                 <IndicatorsGraph data={data} readonly />

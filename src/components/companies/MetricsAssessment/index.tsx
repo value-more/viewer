@@ -3,6 +3,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { useState } from "react";
 import { api } from '../../../api/invData';
 import { Divider } from 'primereact/divider';
+import { toasts } from '../../../models/toast';
 
 interface MetricsAssessmentProps {
     cik: number;
@@ -28,6 +29,8 @@ export const MetricsAssessment: React.FC<MetricsAssessmentProps> = ({ cik, reado
             api(`invdata/companies/${cik}/metrics/assessments`, {
                 method: 'POST',
                 body: JSON.stringify({ value })
+            }).then(() => {
+                toasts.showToast({ severity: 'info', summary: 'Metrics assessment updated' });
             })
         }, 750);
         setData(data);

@@ -9,6 +9,7 @@
     "ticker": {
         "overview": "Overview",
         "loader": "Retrieving and verifying data.\nGrab a coffee, it might take a few seconds.",
+        "profile": "Company profile",
         "intrinsicValue": {
             "title": "Intrinsic value",
             "areas": {

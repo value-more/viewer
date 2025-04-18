@@ -22,6 +22,7 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { BaseLayout } from '../../../BaseLayout';
 import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
+import { CompanyProfile } from '../../../components/CompanyProfile';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -55,6 +56,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({ cik, name: def
                 <div className='ml-3'><CompanyScore /></div>
             </div>
             <ConfidenceLevels timeframe={{ startYear: parseInt(yearsKeys.slice(-11)[0]), endYear: parseInt(yearsKeys[yearsKeys.length-1]) }} overwriteTimestamp={data?.overwriteTimestamp} />
+            <CompanyProfile cik={cik} edit />
             <IntrinsicValue ticker={data?.tickers[0]?.ticker || ''} withTitle />
             <div>
                 <h3 className="bg-primary p-2" ref={priceOverviewRef}><i className='pi pi-dollar mr-2' />{t('ticker.market.title')}</h3>
