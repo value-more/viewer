@@ -48,26 +48,26 @@
                     "tenYAvgEarningsPerShare": "10J-AVG Gewinn je Aktie"
                 },
                 "operatingIncome": {
-                    "title": "Operatives Ergebnis Wachstum (EBIT)",
+                    "title": "EBIT Wachstum",
                     "dataset1": "EBIT je Aktie",
-                    "cagrOperatingIncome": "CAGR operatives Ergebnis",
-                    "cagrOperatingIncomePerShare": "CAGR operatives Ergebnis je Aktie",
-                    "tenYAvgEbitPerShare": "10J-AVG operatives Ergebnis je Aktie"
+                    "cagrOperatingIncome": "CAGR EBIT",
+                    "cagrOperatingIncomePerShare": "CAGR EBIT je Aktie",
+                    "tenYAvgEbitPerShare": "10J-AVG EBIT je Aktie"
                 },
                 "revenueGrowthVsCOGSGrowth": {
-                    "title": "Umsatzwachstum vs. COGS-Wachstum",
+                    "title": "Umsatz- u. Kosten-Wachstum",
                     "dataset1": "Umsatz je Aktie",
                     "dataset2": "Umsatzkosten je Aktie",
                     "cagrRevenue": "CAGR Umsatz",
                     "cagrRevenuePerShare": "CAGR Umsatz je Aktie"
                 },
                 "cashEquivalents": {
-                    "title": "Bargeld & Äquivalente",
-                    "dataset1": "Bargeld & Äquivalente",
-                    "cashToShortTermDebtRatio": "Verhältnis Cashflow zu Verschuldung"
+                    "title": "Barmittel & Äquivalente",
+                    "dataset1": "Barmittel",
+                    "cashToShortTermDebtRatio": "Verhältnis Barmittel zu Verschuldung"
                 },
                 "cashflowToLongTermDebtRatio": {
-                    "title": "Cashflow zu langfristiger Verschuldungsquote",
+                    "title": "Cashflow und langfristige Verschuldung",
                     "dataset1": "Freier Cashflow",
                     "dataset2": "Langfristige Verbindlichkeiten"
                 },
@@ -77,11 +77,11 @@
                 },
                 "freeCashflow": {
                     "title": "Free Cashflow",
-                    "dataset1": "Free Cash Flow (%)"
+                    "dataset1": "FCF (%)"
                 },
                 "freeCashflowToRevenueRatio": {
                     "title": "Verhältnis von freiem Cashflow zu Umsatz",
-                    "dataset1": "FCF/Umsatz"
+                    "dataset1": "FCF / Umsatz"
                 },
                 "workingCapitalRatio": {
                     "title": "Liquiditätsgrad",
@@ -90,39 +90,39 @@
                     "dataset3": "WCR < 2.0"
                 },
                 "debtToEquityRatio": {
-                    "title": "Debt to equity ratio",
-                    "dataset1": "Debt/Equity",
-                    "dataset2": "<= 100% is good",
-                    "dataset3": "<= 50% is really good"
+                    "title": "Verhältnis Verschuldung zu Eigenkapital",
+                    "dataset1": "Verbindlichkeiten / Eigenkapital",
+                    "dataset2": "<= 100% ist gut",
+                    "dataset3": "<= 50% ist sehr gut"
                 },
                 "ltDebtToEquityRatio": {
-                    "title": "Long term debt to equity ratio",
-                    "dataset1": "LT Debt/Equity",
+                    "title": "Verhältnis langfristiger Schulden zu Eigenkapital",
+                    "dataset1": "Langfristige Schulden/Eigenkapital",
                     "dataset2": "<= 35% is good"
                 },
                 "ltDebtToOpIncomeRatio": {
-                    "title": "Longterm debt to operating income ratio",
-                    "dataset1": "Operating income",
-                    "dataset2": "Long-term liabilities",
-                    "ltDebtToOpIncomeRatio": "LT debt/OI ratio"
+                    "title": "Verhältnis langfristiger Schulden zu operativem Ertrag",
+                    "dataset1": "Operativer Ertrag",
+                    "dataset2": "Langfristige Schulden",
+                    "ltDebtToOpIncomeRatio": "Verhältnis langfr. Schulden / EBIT"
                 },
                 "interestExpenseMargin": {
-                    "title": "Interest expense margin",
-                    "dataset1": "Interest expense / EBIT",
-                    "dataset2": "< 15 % is good"
+                    "title": "Verhältnis von Zinslast zu operativem Ertrag",
+                    "dataset1": "Zinsen / EBIT",
+                    "dataset2": "< 15% ist gut"
                 },
                 "grossProfitMargin": {
-                    "title": "Bruttogewinnmarge (%)",
+                    "title": "Bruttogewinn zu Umsatz (%)",
                     "dataset1": "Bruttogewinnmarge (%)",
-                    "dataset2": "40 % ist gut"
+                    "dataset2": "> 40% ist gut"
                 },
                 "sgaAMargin": {
                     "title": "Vertriebs- und Verwaltungskosten-Marge",
                     "dataset1": "V&V/Umsatz (%)",
-                    "dataset2": "30 % ist gut"
+                    "dataset2": "< 30% ist gut"
                 }, 
                 "decompositionOfRoe": {
-                    "title": "Aufteilung des ROE",
+                    "title": "Zusammensetzung des ROE",
                     "dataset1": "Anteil Steuern",
                     "dataset2": "Anteil Zinsen",
                     "dataset3": "Anteil operativer Ergebnis",
@@ -131,7 +131,7 @@
                 },
 
                 "dividendPayoutRatio": {
-                    "title": "Ausschüttungsquote",
+                    "title": "Verhältnis von Dividendenzahlung zu bereinigtem Gewinn",
                     "dataset1": "Ausschüttungsquote"
                 }, 
                 "roic": {
@@ -139,39 +139,39 @@
                     "dataset1": "ROIC"
                 },
                 "assetTurnover": {
-                    "title": "Asset turnover",
-                    "dataset1": "Asset turnover"
+                    "title": "Absatz-Umschlag",
+                    "dataset1": "Absatz-Umschlag"
                 },
                 "operatingMargin": {
-                    "title": "Operating Margin",
-                    "dataset1": "Operating Margin",
+                    "title": "Verhältnis von EBIT zu Umsatz",
+                    "dataset1": "EBIT Marge",
                     "dataset2": "AVG OM S&P500"
                 },
                 "roe": {
-                    "title": "ROE",
+                    "title": "Rendite auf das Eigenkapital",
                     "dataset1": "ROE",
                     "dataset2": "> 20% is ist sehr gut",
                     "tenYAvgRoe": "10J-AVG ROE"
                 },
                 "invMargin": {
-                    "title": "Investment Margin",
-                    "dataset1": "Investitionen/Operating Income",
+                    "title": "Verhältnis von Investitionen zu EBIT",
+                    "dataset1": "Investment Margin",
                     "tenYAvgInvMargin": "10J-AVG Inv Margin"
                 },
                 "daMargin": {
-                    "title": "D&A Margin",
-                    "dataset1": "Depreciation and Amortization by gross profit",
-                    "dataset2": "8% is good"
+                    "title": "Verhältnis von Abschreibungen zu Bruttogewinn",
+                    "dataset1": "Abschreibungsmarge",
+                    "dataset2": "< 8% ist gut"
                 },
                 "rdRevenueMargin": {
-                    "title": "R&D Revenue Margin",
-                    "dataset1": "R&D Revenue",
+                    "title": "Verhältnis von Forschung & Entwicklung zu Umsatz",
+                    "dataset1": "F&E-Umsatz Marge",
                     "dataset2": "Obere Grenze",
                     "dataset3": "Untere Grenze"
                 },
                 "rdMargin": {
-                    "title": "R&D Margin",
-                    "dataset1": "R&D/Net income"
+                    "title": "Verhältnis von Forschung & Entwicklung zu Gewinn",
+                    "dataset1": "F&E-Gewinn Marge"
                 },
                 "bookValue":{
                     "title": "Buchwert",
