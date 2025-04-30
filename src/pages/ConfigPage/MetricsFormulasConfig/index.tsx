@@ -4,23 +4,27 @@ import { Button } from 'primereact/button';
 import { Sidebar } from 'primereact/sidebar';
 import { Tests } from './Tests';
 import { Dropdown } from 'primereact/dropdown';
+import { DetailedFormula } from './DetailedFormula';
 
 const profiles = [{ name: 'dev'}, { name: 'prod'}];
 
 export const MetricsFormulasConfig: React.FC = () => {
     const [displayDoc, setDisplayDoc] = useState<boolean>(true);
     const [displaySidebarTests, setDisplaySidebarTests] = useState<boolean>(false);
+    const [displayDetailedFormula, setDisplayDetailedFormula] = useState<boolean>(false);
     const [profile, setProfile] = useState<{ name: string}>({ name: 'dev' });
     return (
         <>
             <div className='flex mb-3 gap-3'>
                 <Button onClick={() => setDisplayDoc(!displayDoc)}>Toggle documentation</Button>
                 <Button onClick={() => setDisplaySidebarTests(true)}>Tests</Button>
+                <Button onClick={() => setDisplayDetailedFormula(true)}>Detailed formula</Button>
                 <div>Profile <Dropdown options={profiles} optionLabel='name' value={profile} onChange={e => setProfile(e.value)} /></div>
             </div>
             { displayDoc && 
             <div className='ml-1 mb-1'>
                 <div className='mb-3'><b>Global metrics will be calculated if at last 10 years are available and yearly metrics depends on required parameters.</b>. Available formula at <a href="https://formulajs.info/functions/" rel='noreferrer' target='_blank'>https://formulajs.info/functions/</a>.</div>
+                <div className='mb-3'>The <b>prod</b> profile is used for the companies. The <b>dev</b> profile is for testing with the tests. Tests are common but results are based on profile.</div>
                 <div className='flex'>
                     <div className='w-6'>
                         <div>Global metrics (metrics)</div>
@@ -47,6 +51,9 @@ export const MetricsFormulasConfig: React.FC = () => {
                 </div>
             </div>}
             <ConfigEditor endpoint='companies/metrics/formulas' profile={profile.name} />
+            <Sidebar visible={displayDetailedFormula} position="right" onHide={() => setDisplayDetailedFormula(false)} className='w-10' showCloseIcon={false}>
+                <DetailedFormula profile={profile.name} />
+            </Sidebar>
             <Sidebar visible={displaySidebarTests} position="right" onHide={() => setDisplaySidebarTests(false)} className='w-24rem'>
                 <Tests profile={profile.name} />
             </Sidebar>

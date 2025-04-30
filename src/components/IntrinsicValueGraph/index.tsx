@@ -11,7 +11,7 @@ const colors = [ '#758B98', '#9CA9B3', '#E5D9CD', '#AB8886', '#8C5A58' ];
 const defaultAreas = [ 20, 40, 60, 80, 100 ];
 
 export const IntrinsicValueGraph = forwardRef<null, IntrinsicValueGraphProps>(({ areas, value, height = 150 }, ref) => {
-    const { t } = useTranslation();
+    const { t, i18n: { language } } = useTranslation();
     const myAreas = areas || defaultAreas;
     const lastAreaValue = myAreas[myAreas.length-1];
 
@@ -48,7 +48,7 @@ export const IntrinsicValueGraph = forwardRef<null, IntrinsicValueGraphProps>(({
                             fill="black"
                             fontSize="12"
                         >
-                        { limit.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
+                        { limit.toLocaleString(language, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
                         </text> 
                     </svg>
                     } 
@@ -71,7 +71,7 @@ export const IntrinsicValueGraph = forwardRef<null, IntrinsicValueGraphProps>(({
                 <rect x="-10" y="0" width="20" height="80" fill="#3A596B" />
                 <polygon points="-10,80 10,80 0,98" fill="#3A596B" />
                 <text x="15" y="5" fill="white" fontSize="13" transform='rotate(90)'>
-                    {'$ ' + value?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    {'$ ' + value?.toLocaleString(language, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </text>
             </svg>
         )}

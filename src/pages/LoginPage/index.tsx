@@ -12,7 +12,7 @@ export const LoginPage: React.FC = () => {
     const [hasToken, setHasToken] = useState<boolean>(false)
 
     useEffect(() => {
-        document.title = "Dive deep into your memory"
+        document.title = "InvData - Login"
     }, []);
 
     const {

@@ -1,7 +1,7 @@
-import { Chart } from 'primereact/chart'
-import React, { useEffect } from 'react'
+import { Chart } from 'primereact/chart';
+import React, { useEffect } from 'react';
 import { useUnit } from 'effector-react';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
 import { chartOptions } from './constants';
 import { api } from '../../api/invData';
 import { getScoreChartData } from './effects';
@@ -13,14 +13,15 @@ import { ScoreText } from '../ScoreText';
 
 interface MetricsScoreViewerProps {
     cik: number;
+    displayDetails?: boolean;
 }
 
-export const MetricsScoreViewer: React.FC<MetricsScoreViewerProps> = ({ cik }) => {
+export const MetricsScoreViewer: React.FC<MetricsScoreViewerProps> = ({ cik, displayDetails = true }) => {
     const { t } = useTranslation()
     const reloadGlobalScore = useUnit(metricsScoresStores.$reloadGlobalScore);
     const chartData = useUnit($chartData);
     const globalScore = useUnit($globalScore);
-
+    
     useEffect(() => {
         if ( !reloadGlobalScore ) return;
 
@@ -40,8 +41,10 @@ export const MetricsScoreViewer: React.FC<MetricsScoreViewerProps> = ({ cik }) =
 
     const values = chartData.datasets[0].data;
 
-    return (<div className='flex justify-content-center gap-7'>
-        <Chart type='radar' data={chartData} options={chartOptions} className='w-30rem' />
+    return (<div className='flex justify-content-center gap-7 p-3'>
+        <Chart type='radar' data={chartData} options={chartOptions} className='flex-1' pt={{ canvas: { className: 'w-full', style: { maxHeight: '480px' } }}} />
+        {displayDetails && (
+        <>
         <div className='flex-none align-content-center'>
             {
                 chartData.labels.map( (k: string, i: number) => (<div key={k} className='flex m-4'>
@@ -53,5 +56,7 @@ export const MetricsScoreViewer: React.FC<MetricsScoreViewerProps> = ({ cik }) =
         <div className='flex-none align-content-center text-3xl'>
             {globalScore !== null && <ScoreText value={globalScore} />}
         </div>
+        </>
+        )}
     </div>)
 }

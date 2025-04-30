@@ -18,6 +18,10 @@ $values
     .on(setValues, (_, state) => state)
     .on(getValuesForActiveCikFx.doneData, (_, state) => state);
 
+const $timestamps = createStore<{ timestamp?: number; configTimestamp?: number; }>({});
+$timestamps
+    .on(getValuesForActiveCikFx.doneData, (_, { timestamp, configTimestamp }) => ({ timestamp, configTimestamp }));
+
 const refresh = createEvent<void>();
 
 sample({
@@ -32,7 +36,8 @@ sample({
 })
 
 export const companyValuesStores = {
-    $values
+    $values,
+    $timestamps
 }
 
 export const companyValuesEvents = {

@@ -1,4 +1,5 @@
 export const formatLargeNumber = (
+    langage: string,
     number?: number,
     indexAbbreviation?: number
 ): string => {
@@ -18,7 +19,7 @@ export const formatLargeNumber = (
     }
 
     const roundedNumber = (number / Math.pow(1000, log1000)).toLocaleString(
-        undefined,
+        langage,
         // disable digits when < kilo
         log1000 > 1 ? {
             minimumFractionDigits: 2,

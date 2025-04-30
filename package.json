@@ -2,8 +2,10 @@
   "name": "inv-data-viewer",
   "version": "0.0.1",
   "private": true,
-  "homepage": "https://quentinv.github.io/InvDataViewer",
+  "homepage": "https://value-more.github.io/viewer",
   "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^2.0.3",
+    "@chatscope/chat-ui-kit-styles": "^1.4.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@testing-library/jest-dom": "^5.17.0",
@@ -27,7 +29,7 @@
     "prettier": "^3.2.5",
     "prettier-eslint": "^16.3.0",
     "primeflex": "^3.3.1",
-    "primereact": "^10.8.5",
+    "primereact": "^10.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
@@ -35,6 +37,7 @@
     "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
+    "uuid": "^11.0.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -49,6 +52,14 @@
     "prettier": "prettier --write src/**/*"
   },
   "proxy": "http://localhost:3005",
+  "devDependencies": {
+    "@xyflow/react": "^12.3.6",
+    "gh-pages": "^6.1.1",
+    "i18next": "^23.10.1",
+    "i18next-http-backend": "^2.5.0",
+    "primeicons": "^7.0.0",
+    "react-i18next": "^14.1.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -60,12 +71,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^6.1.1",
-    "i18next": "^23.10.1",
-    "i18next-http-backend": "^2.5.0",
-    "primeicons": "^7.0.0",
-    "react-i18next": "^14.1.0"
   }
 }

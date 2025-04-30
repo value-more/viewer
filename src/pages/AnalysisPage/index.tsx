@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next';
 import { InputText } from 'primereact/inputtext';
 import { Accordion, AccordionTab } from 'primereact/accordion';
+import { BaseLayout } from '../../BaseLayout';
 
 interface Company {
     title: string; cik: string; timestamp: number;
@@ -25,7 +26,7 @@ export const AnalysisPage: React.FC = () => {
     const [data, setData] = useState<Data|null>(null);
 
     useEffect(() => {
-        document.title = "Find the key in the grass";
+        document.title = "InvData - Analysis";
     }, []);
 
     useEffect(() => {
@@ -43,7 +44,7 @@ export const AnalysisPage: React.FC = () => {
         const name = title?.toLowerCase()
         return (
             <div
-                className="w-20rem h-3rem pt-5 pb-5 pl-2 pr-2 bg-blue-50 hover:bg-blue-100 text-center cursor-pointer align-items-center justify-content-center flex flex-column"
+                className="w-20rem h-3rem pt-5 pb-5 pl-2 pr-2 hover:surface-hover text-center cursor-pointer align-items-center justify-content-center flex flex-column"
                 key={cik}
                 onClick={() => navigate({ pathname: `/company/${cik}` })}
             >
@@ -54,6 +55,7 @@ export const AnalysisPage: React.FC = () => {
     }
 
     return (
+    <BaseLayout>
         <div className="ml-2 m-auto flex flex-column w-full overflow-auto">
             <h3 className="text-center">{t('analysis.title')}</h3>
             <div className='ml-5'>
@@ -78,5 +80,6 @@ export const AnalysisPage: React.FC = () => {
                 </Accordion>
             </div>
         </div>
+    </BaseLayout>
     );
 }

@@ -2,18 +2,14 @@
     "home": {
         "title": "Unternehmen"
     },
-    "menu": {
-        "home": "Startseite",
-        "config": "Konfiguration",
-        "lang": "Sprache",
-        "changelog": "Änderungsprotokoll",
-        "analysis": "Datenanalyse"
-    },
     "controls": {
-        "search": "Suche..."
+        "search": "Suche...",
+        "companySearch": "Firma suchen"
     },
     "ticker": {
+        "overview": "Übersicht",
         "loader": "Daten abrufen und überprüfen.\nHol dir einen Kaffee, es könnte ein paar Sekunden dauern.",
+        "profile": "Firmenprofil",
         "intrinsicValue": {
             "title": "Intrinsic value",
             "areas": {
@@ -24,14 +20,11 @@
                 "4": "sehr teuer"
             }
         },
-        "score": {
-            "unknown": "Noch keine Punktzahl"
-        },
         "market": {
             "title": "Marktanteilspreis"
         },
         "metrics": {
-            "title": "Fundamentaldaten",
+            "title": "Diagramme",
             "categories": {
                 "score": "Score",
                 "growth": "Wachstum",
@@ -39,13 +32,12 @@
                 "debt": "Verschuldungsgrad",
                 "profitability": "Profitabilität"
             },
+            "error": "Ein Fehler ist aufgetreten.",
             "charts": {
                 "epsGrowth": {
                     "title": "Gewinn Wachstum",
                     "dataset1": "Bereinigter Gewinn",
-                    "cagrAdjustedProfit": "CAGR bereinigter Gewinn",
-                    "cagrEarningsPerShare": "CAGR Gewinn je Aktie",
-                    "tenYAvgEarningsPerShare": "10J-AVG Gewinn je Aktie"
+                    "additionalDataTitle": "Bereinigter Gewinn"
                 },
                 "operatingIncome": {
                     "title": "EBIT Wachstum",
@@ -53,13 +45,13 @@
                     "cagrOperatingIncome": "CAGR EBIT",
                     "cagrOperatingIncomePerShare": "CAGR EBIT je Aktie",
                     "tenYAvgEbitPerShare": "10J-AVG EBIT je Aktie"
+                    "additionalDataTitle": "Operatives Ergebnis"
                 },
                 "revenueGrowthVsCOGSGrowth": {
                     "title": "Umsatz- u. Kosten-Wachstum",
                     "dataset1": "Umsatz je Aktie",
                     "dataset2": "Umsatzkosten je Aktie",
-                    "cagrRevenue": "CAGR Umsatz",
-                    "cagrRevenuePerShare": "CAGR Umsatz je Aktie"
+                    "additionalDataTitle": "Umsatz"
                 },
                 "cashEquivalents": {
                     "title": "Barmittel & Äquivalente",
@@ -151,12 +143,13 @@
                     "title": "Rendite auf das Eigenkapital",
                     "dataset1": "ROE",
                     "dataset2": "> 20% is ist sehr gut",
-                    "tenYAvgRoe": "10J-AVG ROE"
+                    "additionalDataTitle": "ROE"
                 },
                 "invMargin": {
                     "title": "Verhältnis von Investitionen zu EBIT",
-                    "dataset1": "Investment Margin",
+                    "dataset1": "Investment Marge",
                     "tenYAvgInvMargin": "10J-AVG Inv Margin"
+                    "additionalDataTitle": "Investment Marge"
                 },
                 "daMargin": {
                     "title": "Verhältnis von Abschreibungen zu Bruttogewinn",
@@ -176,17 +169,23 @@
                 "bookValue":{
                     "title": "Buchwert",
                     "dataset1": "Buchwert",
-                    "cagrBookValue": "CAGR Buchwertwachstum"
+                    "additionalDataTitle": "Buchwertwachstum"
                 },
                 "operatingBookValue":{
                     "title": "Operativer Buchwert",
                     "dataset1": "Operativer Buchwert",
-                    "cagrOperatingBookValue": "CAGR operatives Buchwertwachstum"            
+                    "additionalDataTitle": "Operatives Buchwertwachstum"
+                },
+                "chartsAdditionalData": {
+                    "cagr": "CAGR",
+                    "perShare": "Per share",
+                    "average": "Average",
+                    "ratio": "Ratio"
                 }
             }
         },
         "fundamentals": {
-            "title": "Fundamentals",
+            "title": "Daten",
             "INCOME_STATEMENT": {
                 "title": "Gewinn- und Verlustrechnung",
                 "REVENUE": "Umsatz",
@@ -337,7 +336,7 @@
             }
         },
         "businessmodel": {
-            "title": "Bewertung des Geschäftsmodells",
+            "title": "Geschaftsmodell",
             "select": "Was passt am besten?",
             "options": {
                 "-2": "(--) nicht vorhersehbar < 1 Jahr",
@@ -354,7 +353,7 @@
             "result": "Punktzahl"
         },
         "value": {
-            "title": "Unternehmenswert",
+            "title": "Bewertung",
             "summary": "Zusammenfassung",
             "levels": {
                 "0": "Tatsächlich",
@@ -402,6 +401,13 @@
             "config": {
                 "title": "Konfiguration"
             }
+        },
+        "confidence": {
+            "title": "Vertrauen",
+            "main": "Haupt",
+            "sure": "Genehmigt (grün)",
+            "unsure": "Unsicher (gelb)",
+            "years": "Jahre (fehlende Elemente)"
         }
     },
     "analysis": {

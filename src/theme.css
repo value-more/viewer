@@ -1,7 +1,133 @@
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 2rem;
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+}
+
+.border-primary-alpha {
+    border-color: #E0E5EC;
+}
+
+.bg-default {
+    background-color: var(--background-color);    
+}
+
+.text-warning {
+    color: #c25d1a;
+}
+
+.border-warning {
+    border-color: #c25d1a;
+    border-style: dashed !important;
+}
+
+.top-3 {
+    top: 3rem;
+}
+
+.top-5 {
+    top:5.5rem;
+}
+
+
 .p-datatable tr:hover {
     background: #d2e6f9;
 }
 
+.p-tabview-nav-link, .p-menuitem-link {
+    font-weight: normal;
+}
+
+.p-tabview-nav-link, .p-tabview-nav, .p-tabview-panels {
+    background-color: var(--background-color);
+}
+
 .sm-input .p-inputnumber-input {
     max-width: 5rem;
+    text-align: right;
+}
+
+.md-input .p-inputnumber-input {
+    max-width: 8rem;
+    text-align: right;
+}
+
+.p-submenu-list {
+    z-index: 10;
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar {
+    width: 6px; /* Width of the vertical scrollbar */
+    height: 6px; /* Height of the horizontal scrollbar */
+}
+
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background: rgba(113, 113, 113, 0.5); /* Color of the scrollbar thumb */
+    border-radius: 6px; /* Rounded corners */
+}
+
+/* Style the scrollbar track */
+::-webkit-scrollbar-track {
+    background: rgba(113, 113, 113, 0.1); /* Color of the scrollbar track */
+    border-radius: 6px; /* Rounded corners */
+}
+
+.companyLogo48 {
+    width: 48px;
+    height: 48px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 48px 48px;
+}
+
+.companyLogo128 {
+    width: 128px;
+    height: 128px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 128px 128px;
+}
+
+.scrollMarginTop {
+    scroll-margin-top: 6rem;
+}
+
+/** JSON Editor **/
+.jsoneditor-tree {
+    background-color: var(--surface-card)!important;
+    color: var(--text-color)!important;
+}
+
+.jsoneditor-frame input {
+    color: var(--text-color)!important;
+}
+
+.jsoneditor-navigation-bar {
+    background-color: var(--surface-100)!important;
+    color: var(--text-color)!important;
+}
+
+.jsoneditor-menu {
+    background-color: var(--surface-300)!important;
+    color: var(--text-color)!important;
+}
+
+.jsoneditor-field {
+    color: var(--text-color)!important;
+}
+
+.jsoneditor-field:hover {
+    color: var(--highlight-text-color)!important;
+    background-color: var(--surface-hover)!important;
+}
+
+.metrics .p-chart canvas {
+    height: 375px!important;
+    width: 100% !important;
 }

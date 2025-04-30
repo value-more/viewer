@@ -4,15 +4,17 @@ import { RulesConfig } from './RulesConfig';
 import { ConfigEditor } from './ConfigEditor';
 import { MetricsFormulasConfig } from './MetricsFormulasConfig';
 import { ChartsMetricsConfig } from './ChartsMetricsConfig';
+import { BaseLayout } from '../../BaseLayout';
 
 
 export const ConfigPage: React.FC = () => {
     useEffect(() => {
-        document.title = "Everything is possible";
+        document.title = "InvData - Configuration";
     }, []);
     
     return (
-      <TabView panelContainerStyle={{ height: 'calc(100% - 50px)' }} panelContainerClassName='overflow-auto' className='h-full'>
+    <BaseLayout>
+        <TabView panelContainerStyle={{ height: 'calc(100% - 50px)' }} panelContainerClassName='overflow-auto' className='h-full'>
             <TabPanel header="Fundamentals">
                 <div className="m-0 flex w-full flex-column overflow-auto">
                     <RulesConfig />
@@ -54,5 +56,6 @@ export const ConfigPage: React.FC = () => {
                 </div>
             </TabPanel>
         </TabView>
+    </BaseLayout>
     );
 };

@@ -4,9 +4,10 @@ import { api } from '../../api/invData';
 interface CompanyFavoriteProps {
     cik: number;
     favorite: boolean;
+    size?: 'md' | 'xl';
 }
 
-export const CompanyFavorite: React.FC<CompanyFavoriteProps> = ({ cik, favorite }) => {
+export const CompanyFavorite: React.FC<CompanyFavoriteProps> = ({ cik, favorite, size }) => {
     const [fav, setFav] = useState<boolean>(favorite);
 
     const toggle = async ({ cik } : { cik: number }) => {
@@ -19,7 +20,7 @@ export const CompanyFavorite: React.FC<CompanyFavoriteProps> = ({ cik, favorite 
     }
 
     return <div 
-        className={`cursor-pointer pi pi-bookmark${fav ? '-fill' : ''}`} 
+        className={`cursor-pointer pi pi-bookmark${fav ? '-fill' : ''} text-${size}`} 
         onClick={(event) => { event.stopPropagation(); toggle({ cik }) }}>
     </div>;
 }

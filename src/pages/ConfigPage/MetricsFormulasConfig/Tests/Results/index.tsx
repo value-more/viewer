@@ -8,13 +8,13 @@ interface ResultsProps {
 }
 
 export const Results: React.FC<ResultsProps> = ({ profile }) => {
-    const errors = useUnit($activeConfig)?.results?.[profile]?.errors;
+    const allErrors = useUnit($activeConfig)?.results?.[profile]?.errors;
     const [selected, setSelected] = useState<string>();
 
-    if ( !errors )
+    if ( !allErrors )
         return null;
 
-    const { error, compareMetrics, compareMetricsYears } = errors;
+    const { error, errors, compareMetrics, compareMetricsYears } = allErrors;
 
     const metricsCompare = (obj: { [key: string]: TestConfigResultCompare }) => {
         return Object.keys(obj).sort().map( k => (
@@ -34,12 +34,23 @@ export const Results: React.FC<ResultsProps> = ({ profile }) => {
                 <span>Global error: </span>
                 <span>{ error }</span>
             </div>)}
+            {!!errors?.length && (<div className='mb-3'>
+                <span className='font-bold'>Global errors for metrics most likely due to formula format: </span>
+                <div className='ml-2 mt-2'>
+                    { errors.map( e => (
+                        <div key={e.key}>
+                            <div>Key: {e.key}</div>
+                            <div>Raw error: {e.rawError}</div>
+                        </div>
+                    )) }
+                </div>
+            </div>)}
             {compareMetrics && <div className='mt-2'>
-                <div>Global metrics: </div>
+                <div className='font-bold'>Global metrics: </div>
                 <div className='flex gap-4'>{metricsCompare(compareMetrics)}</div>
             </div>}
             {compareMetricsYears?.length && <div className='mt-2'>
-                <div>Yearly metrics: </div>
+                <div className='font-bold'>Yearly metrics: </div>
                 <div className='flex gap-4 overflow-x-auto'>
                     {compareMetricsYears.map( (obj, index) => (
                         <div key={index}>

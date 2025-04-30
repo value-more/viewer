@@ -44,7 +44,10 @@ export const ChartsMetricsConfig: React.FC = () => {
                                         <div>- <b>constant</b>: to set a contant for each year</div>
                                         <div>- <b>metric</b>: use yearly metric key as value by year. Ex: <b>operatingIncome</b></div>
                                         <div>- <b>data</b>: use any data as value by year. Ex: <b className='text-xs'>BALANCE_SHEET.CASH_AND_CASH_EQUIVALENTS</b></div>
-                                        <div>- <b>formula</b>: to define basic math & javascript to execute for each year. <div className='ml-8'>Does not support the formula lib yet</div></div>
+                                        <div>
+                                            - <b>formula</b>: to define basic math to execute for each year. (not yet for formula lib) 
+                                            <div className='ml-6'><b>ly</b> for last year / <b>metrics</b> for global metrics</div>
+                                        </div>
                                         <div>- <b>borderColor</b>: color of line</div>
                                     </div>
                                 </li>

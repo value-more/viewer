@@ -9,7 +9,6 @@
       name="description"
       content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -25,6 +24,10 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>1, 2, 3 .. Aim for the moon</title>
+    <link id="theme-link" rel="stylesheet" href="" />
+    <script type="text/javascript">
+        document.getElementById('theme-link').href = `%PUBLIC_URL%/themes/${localStorage.getItem('theme') ?? 'mira'}/theme.css`;
+    </script>
     <style>
       html, body, #root {
         width: 100%;
@@ -33,6 +36,7 @@
         margin: 0; /* Optional: Remove default margin */
       }
     </style>
+    <link href="https://value-more.github.io/CompaniesLogos/sec_companies_logos.css?v1.0.0" rel="stylesheet" />
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

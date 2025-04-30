@@ -10,7 +10,7 @@ i18n.use(initReactI18next)
         ns: ['common'],
         defaultNS: 'common',
         backend: {
-            loadPath: '/InvDataViewer/locales/{{lng}}/{{ns}}.json',
+            loadPath: `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
             crossDomain: true,
         },
         interpolation: {

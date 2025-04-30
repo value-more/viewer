@@ -32,7 +32,7 @@ interface SaveScoreFxReq  {
 
 const saveScoresFx = attach({
     source: $cik,
-    mapParams: ( params: CompanyScores, cik: number ) => ({ ...params, cik }),
+    mapParams: ( params: CompanyScores, cik: number ) => ({ businessModel: params?.businessModel?.val, moat: params.moat, cik }),
     effect: createEffect(({ cik, ...rest }: SaveScoreFxReq): Promise<CompanyScores> => {
         return api(`invData/companies/${cik}/scores`, {
             method: 'PUT',

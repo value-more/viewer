@@ -32,10 +32,16 @@ export interface ChartAdditionalData {
     label: string
     value?: number
     symbol: string
+    key: string
 }
 
 export interface ChartSettings {
     data: ChartValueDataType
     options: object
     additionalData?: ChartAdditionalData[]
+}
+
+export interface ChartTableData {
+    label: string;
+    [year: string]: string;
 }

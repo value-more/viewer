@@ -10,6 +10,7 @@ export interface TestConfigResult {
     pass: boolean; 
     errors: {
         error?: string;
+        errors?: { key: string; rawError?: string }[]
         compareMetrics?: {[key: string]: TestConfigResultCompare},
         compareMetricsYears?: {
             year: string;

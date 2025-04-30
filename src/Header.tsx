@@ -1,89 +1,64 @@
 import React, { useState } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Menubar } from 'primereact/menubar'
 import i18next from 'i18next'
-import { useTranslation } from 'react-i18next'
 import { Sidebar } from 'primereact/sidebar'
-import { ReleaseNotes } from './components/ReleaseNotes'
-import { useUnit } from 'effector-react'
-import { navs } from './models/routes'
+import { ChangeLog } from './components/ChangeLog'
+import { ThemeMenu } from './components/ThemeMenu'
+import { Avatar } from 'primereact/avatar';
+import { MenuItem } from 'primereact/menuitem';
+import { IconMenu } from './components/IconMenu'
+import { CompanySearch } from './components/CompanySearch'
+import { Divider } from 'primereact/divider'
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+    menu?: MenuItem[];
+}
+
+export const Header: React.FC<HeaderProps> = ({ menu }) => {
     const navigate = useNavigate()
-    const { t } = useTranslation()
     const [visibleChangelog, setVisibleChangelog] = useState<boolean>();
-    const refs = useUnit(navs.$refs);
 
     const changeLanguage = (lang: string) => {
         localStorage.setItem('lng', lang)
         i18next.changeLanguage(lang)
     }
 
-    const items = [
-        {
-            label: t('menu.home'),
-            icon: 'pi pi-home',
-            command: () => navigate('/'),
-        },
-        {
-            label: t('menu.config'),
-            icon: 'pi pi-cog',
-            command: () => navigate('/config'),
-        },
-        {
-            label: t('menu.analysis'),
-            icon: 'pi pi-check-circle',
-            command: () => navigate('/analysis'),
-        },
-        {
-            label: t('menu.changelog'),
-            icon: 'pi pi-clock',
-            command: () => setVisibleChangelog(true),
-        },
-        {
-            label: t('menu.lang'),
-            icon: 'pi pi-language',
-            items: [
-                { label: 'English', command: () => changeLanguage('en') },
-                { label: 'German', command: () => changeLanguage('de') },
-            ],
-        }
-    ]
+    const languageMenuItems = [
+        { label: 'English', command: () => changeLanguage('en') },
+        { label: 'German', command: () => changeLanguage('de') }
+    ];
 
-    const scrollToItem = ( key: string ) => {
-        refs[key]?.current?.scrollIntoView({ behavior: 'smooth' });
-      };
+    const start = (
+        <div className='flex align-items-center gap-2 mr-2'>
+            <img alt="logo" src={`${process.env.PUBLIC_URL}/logo.png`} height="40" className="mr-2 cursor-pointer" onClick={() => navigate({ pathname: '/' })} />
+        </div>
+    );
+
+    const end = (
+        <div className="flex align-items-center gap-2">
+            <CompanySearch />
+            <div className='flex gap-3 mr-2 ml-2 align-items-center'>
+                <i className='pi pi-bell'></i>
+                <IconMenu icon='language' menu={languageMenuItems} />
+                <ThemeMenu />
+                <Divider layout='vertical' className='h-1rem m-0' />
+                <i className='pi pi-check-circle hover:text-primary cursor-pointer' onClick={() => navigate('/analysis')}></i>
+                <i className='pi pi-cog hover:text-primary cursor-pointer' onClick={() => navigate('/config')}></i>
+                <i className='pi pi-clock hover:text-primary cursor-pointer' onClick={() => setVisibleChangelog(true)}></i>
+            </div>
+            <Avatar icon="pi pi-user" shape="circle" />
+        </div>
+    );
 
     return (<>
-        <div className='h-2rem flex'>
-            <div className='flex-1' >
-                <Menubar
-                    model={items}
-                    className="h-2rem border-transparent flex-1"
-                    style={{ background: 'none' }}
-                />
-            </div>
-            <Routes>
-                <Route 
-                    path="/company/:cik" 
-                    element={
-                        <div className='flex flex-none h-2rem align-content-center justify-content-end flex-wrap gap-4 flex-auto ml-auto pr-6'>
-                            <i className='pi pi-caret-up cursor-pointer hover:text-primary' onClick={() => scrollToItem('companyTitleRef')} />
-                            <i className='pi pi-compass cursor-pointer hover:text-primary' onClick={() => scrollToItem('companyIntrinsicValueRef')} />
-                            <i className='pi pi-dollar cursor-pointer hover:text-primary' onClick={() => scrollToItem('priceOverviewRef')} />
-                            <i className='pi pi-chart-scatter cursor-pointer hover:text-primary' onClick={() => scrollToItem('metricsRef')}  />
-                            <i className='pi pi-database cursor-pointer hover:text-primary' onClick={() => scrollToItem('fundamentalsRef')}  />
-                            <i className='pi pi-briefcase cursor-pointer hover:text-primary' onClick={() => scrollToItem('businessModelRef')}  />
-                            <i className='pi pi-chart-line cursor-pointer hover:text-primary' onClick={() => scrollToItem('moatRef')}  />
-                            <i className='pi pi-tag cursor-pointer hover:text-primary' onClick={() => scrollToItem('companyValueRef')}  />
-                        </div>
-                    } />
-            </Routes>
+        <div className='card flex align-items-center'>
+            <Menubar model={menu} start={start} end={end} className='flex-1' />
+
+            <Sidebar visible={visibleChangelog} onHide={() => setVisibleChangelog(false)} position='right' className='w-6'>
+                <h2 className='mt-0 text-center'>Changelog</h2>
+                <ChangeLog />
+            </Sidebar>
         </div>
-        
-        <Sidebar visible={visibleChangelog} onHide={() => setVisibleChangelog(false)} position='right' className='w-6'>
-            <h2 className='mt-0 text-center'>Changelog</h2>
-            <ReleaseNotes />
-        </Sidebar>
     </>)
 }

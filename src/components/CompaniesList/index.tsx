@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { DataView } from 'primereact/dataview'
 import { Paginator } from 'primereact/paginator'
 import { InputText } from 'primereact/inputtext'
-import { useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { CompanyFavorite } from '../CompanyFavorite'
+import { Link } from 'react-router-dom'
+import { Card } from 'primereact/card';
 
 interface Company {
     cik: number;
     title: string;
     timestamp?: number;
     favorite: boolean;
+    tickers?: string[];
 }
 
 interface CompaniesListProps {
@@ -23,7 +25,6 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
     const [total, setTotal] = useState(0)
     const [filter, setFilter] = useState('')
     const [showFavorites, setShowFavorites] = useState<boolean>(false);
-    const navigate = useNavigate()
     const { t } = useTranslation()
 
     useEffect(() => {
@@ -46,18 +47,43 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
         if ( !company ) 
             return null;
 
-        const { title, cik, timestamp, favorite } = company;
-        const name = title?.toLowerCase()
+        const { title, cik, timestamp, favorite, tickers } = company;
         return (
-            <div
-                className="relative w-20rem h-4rem pt-1 pb-1 pl-4 pr-4 bg-blue-50 hover:bg-blue-100 text-center cursor-pointer align-items-center justify-content-center flex flex-column"
+            <Card
+                className="hover:surface-hover relative w-20rem h-6rem pl-2 pr-4"
                 key={cik}
-                onClick={() => navigate({ pathname: `/company/${cik}` })}
+                pt={{ body: { className: 'p-0 h-full' }, content: { className: 'p-0 pt-1 pb-1 h-full' } }}
             >
-                <div className=' absolute top-0 right-0 pr-1 pt-1'><CompanyFavorite cik={cik} favorite={favorite} /></div>
-                <div>{name ? name[0].toUpperCase() + name.slice(1) : ''}</div>
+                <div className='flex align-items-center h-full'>
+                    <div className={`companyLogo48 ${tickers?.map( t => 't-logo-' + t ).join(' ')}`}></div>
+                    <div className='flex flex-column flex-1 h-full'>
+                        <div className='flex-1 mt-1 text-center text-primary align-content-center'>{title ?? ''}</div>
+                        <div className='flex justify-content-center gap-3 mt-auto'>
+                            <Link style={{ textDecoration: 'none' }} className='text-gray-400 hover:text-primary' to={`/company/${cik}`}><i className='pi pi-eye mr-1' />View</Link>
+                            <Link 
+                                style={{ textDecoration: 'none' }}
+                                className='text-gray-400 hover:text-primary'
+                                to={`/company/${cik}/edit`}
+                                rel="noopener noreferrer"
+                                target='_blank'
+                            >
+                                <i className='pi pi-pencil mr-1' />Edit
+                            </Link>
+                            <Link 
+                                style={{ textDecoration: 'none' }}
+                                className='text-gray-400 hover:text-primary'
+                                to={`/company/${cik}`}
+                                rel="noopener noreferrer"
+                                target='_blank'
+                            >
+                                <i className='pi pi-external-link mr-1' />Tab
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+                <div className='absolute top-0 right-0 pr-1 pt-1 hover:text-primary'><CompanyFavorite cik={cik} favorite={favorite} /></div>
                 {!!timestamp && (<div className='text-sm flex align-items-center mt-2'><i className='pi pi-sync mr-2'></i>{new Date(timestamp).toLocaleString()}</div>)}
-            </div>
+            </Card>
         )
     }
 
@@ -65,7 +91,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
         return (
             <div className="flex">
                 <Paginator
-                    className="w-max ml-8 bg-white border-none"
+                    className="w-max border-none"
                     first={opts.first}
                     rows={opts.rows}
                     totalRecords={total}
@@ -85,20 +111,18 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
     }
 
     return (
-        <div className="card pl-5 pr-5 w-full">
-                <DataView
-                    value={companies}
-                    rows={50}
-                    itemTemplate={itemTemplate}
-                    pt={{
-                        grid: {
-                            className:
-                                'gap-3 align-content-start h-30rem overflow-auto overflow-x-hidden justify-content-center',
-                        },
-                        header: { className: 'bg-white border-none' },
-                    }}
-                    header={header()}
-                />
-            </div>
+        <DataView
+            value={companies}
+            rows={50}
+            itemTemplate={itemTemplate}
+            pt={{
+                grid: {
+                    className:
+                        'gap-4 align-content-start overflow-auto overflow-x-hidden justify-content-center p-1',
+                },
+                header: { className: 'border-none' },
+            }}
+            header={header()}
+        />
     )
 }
