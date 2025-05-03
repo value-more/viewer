@@ -24,21 +24,21 @@ export interface ChartAdditionalDataDef {
     formula?: string;
 }
 
-export type ChartsConfig = {[key: string]: ChartOptions[]};
+export type ChartsConfig = { [key: string]: ChartOptions[] };
 
-export type ChartValueDataType = { labels: string[]; datasets: object[] }
+export type ChartValueDataType = { labels: string[]; datasets: object[] };
 
 export interface ChartAdditionalData {
-    label: string
-    value?: number
-    symbol: string
-    key: string
+    label: string;
+    value?: number;
+    symbol: string;
+    key: string;
 }
 
 export interface ChartSettings {
-    data: ChartValueDataType
-    options: object
-    additionalData?: ChartAdditionalData[]
+    data: ChartValueDataType;
+    options: object;
+    additionalData?: ChartAdditionalData[];
 }
 
 export interface ChartTableData {

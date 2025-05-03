@@ -1,21 +1,22 @@
-import React, { useEffect, useRef, memo } from 'react'
+import React, { useEffect, useRef, memo } from 'react';
 
 interface TradindViewSymbolOverviewProps {
-    ticker: string
-    exchange: string
+    ticker: string;
+    exchange: string;
 }
 
 const pTradingViewSymbolOverview: React.FC<TradindViewSymbolOverviewProps> = ({
-    ticker, exchange
+    ticker,
+    exchange
 }) => {
-    const container = useRef<HTMLDivElement>(null)
+    const container = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const script = document.createElement('script')
+        const script = document.createElement('script');
         script.src =
-            'https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js'
-        script.type = 'text/javascript'
-        script.async = true
+            'https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js';
+        script.type = 'text/javascript';
+        script.async = true;
         script.innerHTML = `
       {
           "symbols": [ [ "${exchange}:${ticker}|1D" ] ],
@@ -33,16 +34,16 @@ const pTradingViewSymbolOverview: React.FC<TradindViewSymbolOverviewProps> = ({
           "lineWidth": 2,
           "lineType": 0,
           "dateRanges": [ "1d|1", "1m|1D", "3m|60", "12m|1D", "60m|1W", "all|1M" ]
-        } `
-        container?.current?.appendChild(script)
-    }, [ticker])
+        } `;
+        container?.current?.appendChild(script);
+    }, [ticker]);
 
     return (
         <div
             className="tradingview-widget-container w-full"
             ref={container}
         ></div>
-    )
-}
+    );
+};
 
-export const TradingViewSymbolOverview = memo(pTradingViewSymbolOverview)
+export const TradingViewSymbolOverview = memo(pTradingViewSymbolOverview);

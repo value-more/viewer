@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { Navigate } from 'react-router'
-import { api } from '../../api/invData'
+import React, { useEffect, useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { Navigate } from 'react-router';
+import { api } from '../../api/invData';
 
 type Inputs = {
-    login: string
-    password: string
-}
+    login: string;
+    password: string;
+};
 
 export const LoginPage: React.FC = () => {
-    const [hasToken, setHasToken] = useState<boolean>(false)
+    const [hasToken, setHasToken] = useState<boolean>(false);
 
     useEffect(() => {
-        document.title = "InvData - Login"
+        document.title = 'InvData - Login';
     }, []);
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
-    } = useForm<Inputs>()
+        formState: { errors }
+    } = useForm<Inputs>();
 
     const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
         const json = await api('invData/login', {
             method: 'POST',
-            body: JSON.stringify(data),
-        })
+            body: JSON.stringify(data)
+        });
         if (json?.token) {
-            localStorage.setItem('token', json.token)
-            setHasToken(true)
+            localStorage.setItem('token', json.token);
+            setHasToken(true);
         }
-    }
+    };
 
     if (hasToken) {
-        return <Navigate to="/" />
+        return <Navigate to="/" />;
     }
 
     return (
@@ -69,5 +69,5 @@ export const LoginPage: React.FC = () => {
                 </div>
             </form>
         </div>
-    )
-}
+    );
+};

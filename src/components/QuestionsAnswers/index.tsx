@@ -1,90 +1,90 @@
-import React, { useEffect, useState } from 'react'
-import { Answers, TranslatedValue, Question } from './types'
-import { api } from '../../api/invData'
-import { InputTextarea } from 'primereact/inputtextarea'
-import { InfoIcon } from '../InfoIcon'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from 'react';
+import { Answers, TranslatedValue, Question } from './types';
+import { api } from '../../api/invData';
+import { InputTextarea } from 'primereact/inputtextarea';
+import { InfoIcon } from '../InfoIcon';
+import { useTranslation } from 'react-i18next';
 
 interface QuestionsAnswersProps {
-    cik: number
+    cik: number;
     /**
      * API for questions config and answers per cik usually
      */
-    apiUrls: { questions: string; answers: string }
-    readonly?: boolean
+    apiUrls: { questions: string; answers: string };
+    readonly?: boolean;
 }
 
-const timeouts: { [key: string]: any } = {}
+const timeouts: { [key: string]: any } = {};
 
 export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({
     cik,
     apiUrls,
-    readonly,
+    readonly
 }) => {
     const {
-        i18n: { language },
-    } = useTranslation()
-    const [questions, setQuestions] = useState<Question[]>([])
-    const [answers, setAnswers] = useState<Answers>({})
+        i18n: { language }
+    } = useTranslation();
+    const [questions, setQuestions] = useState<Question[]>([]);
+    const [answers, setAnswers] = useState<Answers>({});
 
     useEffect(() => {
         const getData = async () => {
-            const res = (await api(`${apiUrls.questions}?limit=1`))?.[0]
+            const res = (await api(`${apiUrls.questions}?limit=1`))?.[0];
             const q = (res?.rules?.questions || []).map(
                 (v: any, i: number) => ({
                     ...v,
-                    value: { de: v.value, en: res?.translations?.[i]?.en },
+                    value: { de: v.value, en: res?.translations?.[i]?.en }
                 })
-            )
-            setQuestions(q)
+            );
+            setQuestions(q);
 
             const data = (await api(`${apiUrls.answers}`)).reduce(
                 (
                     prev: Answers,
                     c: {
-                        questionKey: string
-                        answer: TranslatedValue
-                        timestamp?: number
+                        questionKey: string;
+                        answer: TranslatedValue;
+                        timestamp?: number;
                     }
                 ) => {
                     prev[c.questionKey] = {
                         answer: c.answer,
-                        timestamp: c.timestamp,
-                    }
-                    return prev
+                        timestamp: c.timestamp
+                    };
+                    return prev;
                 },
                 {}
-            )
-            setAnswers(data)
-        }
-        getData()
-    }, [cik])
+            );
+            setAnswers(data);
+        };
+        getData();
+    }, [cik]);
 
     const save = (questionKey: string, answer: string) => {
         setAnswers({
             ...answers,
             [questionKey]: {
                 answer: { de: answer, en: answer },
-                timestamp: Date.now(),
-            },
-        })
+                timestamp: Date.now()
+            }
+        });
 
-        clearTimeout(timeouts[questionKey])
+        clearTimeout(timeouts[questionKey]);
         timeouts[questionKey] = setTimeout(() => {
             api(apiUrls.answers, {
                 method: 'POST',
                 body: JSON.stringify({
                     questionKey,
-                    answer,
-                }),
-            })
-        }, 750)
-    }
+                    answer
+                })
+            });
+        }, 750);
+    };
 
     return (
         <div>
             {questions.map(({ key, value }) => {
-                const timestamp = answers[key]?.timestamp
+                const timestamp = answers[key]?.timestamp;
                 return (
                     <div key={key} className="w-full">
                         <h4 className="flex">
@@ -109,8 +109,8 @@ export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({
                             />
                         )}
                     </div>
-                )
+                );
             })}
         </div>
-    )
-}
+    );
+};

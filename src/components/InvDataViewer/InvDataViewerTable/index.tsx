@@ -1,23 +1,37 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { DataTable } from 'primereact/datatable'
-import { Column, ColumnBodyOptions, ColumnEditorOptions, ColumnEvent } from 'primereact/column'
-import { formatLargeNumber } from '../../../utils/formatLargeNumber'
-import { Button } from 'primereact/button'
-import { SelectButton } from 'primereact/selectbutton'
-import { LabelData } from '../types'
-import { useTranslation } from 'react-i18next'
-import { api } from '../../../api/invData'
-import { ProgressSpinner } from 'primereact/progressspinner'
-import { InputNumber } from 'primereact/inputnumber'
+import React, { useEffect, useRef, useState } from 'react';
+import { DataTable } from 'primereact/datatable';
+import {
+    Column,
+    ColumnBodyOptions,
+    ColumnEditorOptions,
+    ColumnEvent
+} from 'primereact/column';
+import { formatLargeNumber } from '../../../utils/formatLargeNumber';
+import { Button } from 'primereact/button';
+import { SelectButton } from 'primereact/selectbutton';
+import { LabelData } from '../types';
+import { useTranslation } from 'react-i18next';
+import { api } from '../../../api/invData';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { InputNumber } from 'primereact/inputnumber';
 
 interface InvDataViewerTableProps {
     cik: number;
-    dataKey: string
+    dataKey: string;
     structure: LabelData[];
     readonly?: boolean;
 }
 
-type yearsType = { [year: string]: {[dataKey: string]: { [key: string]: { value: number|null|undefined, isValid?: boolean } } } };
+type yearsType = {
+    [year: string]: {
+        [dataKey: string]: {
+            [key: string]: {
+                value: number | null | undefined;
+                isValid?: boolean;
+            };
+        };
+    };
+};
 
 enum NumberFormat {
     K = 1,
@@ -32,64 +46,77 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     structure,
     readonly
 }) => {
-    const { t, i18n: { language } } = useTranslation();
+    const {
+        t,
+        i18n: { language }
+    } = useTranslation();
     const [years, setYears] = useState<yearsType>();
-    const yearsKeys = Object.keys(years || {}).slice(-11)
+    const yearsKeys = Object.keys(years || {}).slice(-11);
     const dt: any = useRef(null);
-    const [numberFormatIndex, setNumberFormatIndex] = useState<NumberFormat>(NumberFormat.K);
+    const [numberFormatIndex, setNumberFormatIndex] = useState<NumberFormat>(
+        NumberFormat.K
+    );
 
     useEffect(() => {
         (async () => {
-            const v = await api(`invData/companies/${cik}/fundamentals/${dataKey}`)
+            const v = await api(
+                `invData/companies/${cik}/fundamentals/${dataKey}`
+            );
             setYears(v);
         })();
     }, [cik, dataKey]);
 
-    if ( !years ) {
-        return (<div className='text-center'>
-            <ProgressSpinner />
-            <div style={{ whiteSpace: 'pre-line' }}>{t('ticker.loader')}</div>
-        </div>);
+    if (!years) {
+        return (
+            <div className="text-center">
+                <ProgressSpinner />
+                <div style={{ whiteSpace: 'pre-line' }}>
+                    {t('ticker.loader')}
+                </div>
+            </div>
+        );
     }
 
-    const updateValue = async (value: { [year: string]: {[dataKey: string]: { [key: string]: { value: number|null|undefined; isValid: 'SURE' | 'UNSURE' | undefined } } } }) => 
-        api(
-            `invData/companies/${cik}/fundamentals/${dataKey}`, 
-            {
-                method: 'PUT',
-                body: JSON.stringify(value)
-            }
-        )
+    const updateValue = async (value: {
+        [year: string]: {
+            [dataKey: string]: {
+                [key: string]: {
+                    value: number | null | undefined;
+                    isValid: 'SURE' | 'UNSURE' | undefined;
+                };
+            };
+        };
+    }) =>
+        api(`invData/companies/${cik}/fundamentals/${dataKey}`, {
+            method: 'PUT',
+            body: JSON.stringify(value)
+        });
 
-    const removeOverwrite = async (value: { [year: string]: {[dataKey: string]: string[] } }) => 
-        api(
-            `invData/companies/${cik}/fundamentals/${dataKey}/overwrites`, 
-            {
-                method: 'DELETE',
-                body: JSON.stringify(value)
-            }
-        )
+    const removeOverwrite = async (value: {
+        [year: string]: { [dataKey: string]: string[] };
+    }) =>
+        api(`invData/companies/${cik}/fundamentals/${dataKey}/overwrites`, {
+            method: 'DELETE',
+            body: JSON.stringify(value)
+        });
 
     const d = structure.map((ld) => {
         return {
             ...ld,
             label: t(`ticker.fundamentals.${dataKey}.${ld.name}`),
             ...yearsKeys.reduce((prev: any, current) => {
-                const c: any = years?.[current]
-                const fundData = c?.[dataKey]
-                const v = fundData ? fundData?.[ld.name]?.value : undefined
+                const c: any = years?.[current];
+                const fundData = c?.[dataKey];
+                const v = fundData ? fundData?.[ld.name]?.value : undefined;
                 prev[current] = ld.avoidScaling
-                    ? v?.toLocaleString(
-                        language,
-                        {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                        }
-                    )
-                    : formatLargeNumber(language, v, numberFormatIndex)
-                return prev
+                    ? v?.toLocaleString(language, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                      })
+                    : formatLargeNumber(language, v, numberFormatIndex);
+                return prev;
             }, {})
-        }
+        };
     });
 
     const renderLabel = (data: any) => {
@@ -97,19 +124,25 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
             <span
                 style={{
                     fontWeight: data.main ? 'bolder' : 'normal',
-                    padding: `0 0 0 ${(data.level || 0) * 40 + 3}px`,
+                    padding: `0 0 0 ${(data.level || 0) * 40 + 3}px`
                 }}
             >
                 {data.label}
             </span>
-        )
-    }
+        );
+    };
 
-    const exportCSV = () =>  {
-        dt.current?.exportCSV?.({ selectionOnly: false })
-    }
+    const exportCSV = () => {
+        dt.current?.exportCSV?.({ selectionOnly: false });
+    };
 
-    const getConfigFromOptions = ({ field, rowIndex }: { field: string; rowIndex: number }) => (years[field] as any)?.[dataKey]?.[structure[rowIndex]?.name];
+    const getConfigFromOptions = ({
+        field,
+        rowIndex
+    }: {
+        field: string;
+        rowIndex: number;
+    }) => (years[field] as any)?.[dataKey]?.[structure[rowIndex]?.name];
 
     const header = (
         <div className="flex align-items-center gap-2">
@@ -122,7 +155,7 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                         { name: 'K', value: 1 },
                         { name: 'M', value: 2 },
                         { name: 'B', value: 3 },
-                        { name: 'T', value: 4 },
+                        { name: 'T', value: 4 }
                     ]}
                 />
             </div>
@@ -136,57 +169,93 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                 />
             </div>
         </div>
-    )
-    
+    );
+
     const body = (options: ColumnBodyOptions, row: any) => {
         const config = getConfigFromOptions(options);
-        if ( (config?.value ?? null) === null ) {
+        if ((config?.value ?? null) === null) {
             return null;
         }
         return (
-            <div 
+            <div
                 className={`w-full h-full ${config?.isValid === 'ROLLBACK' ? 'line-through' : ''}`}
                 title={`${config?.isValid === 'ROLLBACK' ? 'This value will be reloaded from rules with next refresh' : ''}`}
-                style={{ 
-                    borderBottom: readonly ? 'none' : config?.isValid === 'SURE' ? `thin solid green` : (config?.isValid === 'UNSURE') ? 'thin solid orange' : 'none'
-                }}>
-                    {row?.[options.field]}
+                style={{
+                    borderBottom: readonly
+                        ? 'none'
+                        : config?.isValid === 'SURE'
+                          ? `thin solid green`
+                          : config?.isValid === 'UNSURE'
+                            ? 'thin solid orange'
+                            : 'none'
+                }}
+            >
+                {row?.[options.field]}
             </div>
         );
-    }
+    };
 
     const cellEditor = (options: ColumnEditorOptions) => {
         const conf = getConfigFromOptions(options);
         const avoidScaling = structure[options.rowIndex]?.avoidScaling;
         const isValid = conf?.isValid;
-        const value = conf?.value;  
+        const value = conf?.value;
         const onClick = (isValid: string) => {
             if (typeof options.value === 'string') {
-                options?.editorCallback?.(avoidScaling ? value : (value / Math.pow(10, numberFormatIndex * 3)));
+                options?.editorCallback?.(
+                    avoidScaling
+                        ? value
+                        : value / Math.pow(10, numberFormatIndex * 3)
+                );
             }
-            dt.current.validated = { rowIndex: options.rowIndex, year: options.field, isValid };
+            dt.current.validated = {
+                rowIndex: options.rowIndex,
+                year: options.field,
+                isValid
+            };
             dt.current.getTable().click();
-        }
+        };
 
         return (
             <div>
                 {!!isValid && (
-                    <span className='pi pi-history mr-2 text-red-400' onClick={() => { onClick('ROLLBACK'); }}></span>
+                    <span
+                        className="pi pi-history mr-2 text-red-400"
+                        onClick={() => {
+                            onClick('ROLLBACK');
+                        }}
+                    ></span>
                 )}
                 {isValid === 'UNSURE' && (
-                <span className='pi pi-check mr-2 text-green-400' onClick={() => { onClick('SURE'); }}></span>
+                    <span
+                        className="pi pi-check mr-2 text-green-400"
+                        onClick={() => {
+                            onClick('SURE');
+                        }}
+                    ></span>
                 )}
                 {!isValid && (
-                <span className='pi pi-asterisk mr-2 text-orange-400' onClick={() => { onClick('UNSURE'); }}></span>
+                    <span
+                        className="pi pi-asterisk mr-2 text-orange-400"
+                        onClick={() => {
+                            onClick('UNSURE');
+                        }}
+                    ></span>
                 )}
-                <InputNumber 
-                    className='w-7rem p-0 text-right md-input'
-                    value={value ? (avoidScaling ? value : (value / Math.pow(10, numberFormatIndex * 3))) : null} 
-                    onKeyDown={(e) => e.stopPropagation()} 
-                    disabled={isValid === "SURE"}
-                    onValueChange={e => options?.editorCallback?.(e.value)}
-                    minFractionDigits={0} 
-                    maxFractionDigits={2} 
+                <InputNumber
+                    className="w-7rem p-0 text-right md-input"
+                    value={
+                        value
+                            ? avoidScaling
+                                ? value
+                                : value / Math.pow(10, numberFormatIndex * 3)
+                            : null
+                    }
+                    onKeyDown={(e) => e.stopPropagation()}
+                    disabled={isValid === 'SURE'}
+                    onValueChange={(e) => options?.editorCallback?.(e.value)}
+                    minFractionDigits={0}
+                    maxFractionDigits={2}
                     locale={language}
                 />
             </div>
@@ -194,38 +263,40 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     };
 
     const onCellEditComplete = async (e: ColumnEvent) => {
-        if ( dt.current?.validated?.rowIndex !== e.rowIndex || dt.current?.validated?.year !== e.field ) {
+        if (
+            dt.current?.validated?.rowIndex !== e.rowIndex ||
+            dt.current?.validated?.year !== e.field
+        ) {
             dt.current.validated = undefined;
-            return; 
+            return;
         }
         const config = structure[e.rowIndex];
         const key = config?.name;
-        
+
         const newObj = {
-            value: config.avoidScaling ? e.newValue : (e.newValue * Math.pow(10, numberFormatIndex * 3)),
+            value: config.avoidScaling
+                ? e.newValue
+                : e.newValue * Math.pow(10, numberFormatIndex * 3),
             isValid: dt.current?.validated?.isValid
         };
 
         d[e.rowIndex][e.field] = config.avoidScaling
-            ? newObj.value?.toLocaleString(
-                language,
-                {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                }
-            )
+            ? newObj.value?.toLocaleString(language, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+              })
             : formatLargeNumber(language, newObj.value, numberFormatIndex);
 
-        if ( !years[e.field] ) years[e.field] = {};
-        if ( !years[e.field][dataKey] ) years[e.field][dataKey] = {};
+        if (!years[e.field]) years[e.field] = {};
+        if (!years[e.field][dataKey]) years[e.field][dataKey] = {};
         years[e.field][dataKey][key] = newObj;
-        
-        if ( newObj.isValid === "ROLLBACK") {
+
+        if (newObj.isValid === 'ROLLBACK') {
             await removeOverwrite({
                 [e.field]: {
                     [dataKey]: [key]
                 }
-            })
+            });
         } else {
             await updateValue({
                 [e.field]: {
@@ -233,9 +304,8 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                         [key]: newObj
                     }
                 }
-            })
+            });
         }
-        
     };
 
     return (
@@ -249,9 +319,13 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                 header={header}
                 stripedRows={true}
                 pt={{
-                    header: { style: { background: 'none', border: 'none' } },
+                    header: { style: { background: 'none', border: 'none' } }
                 }}
-                editMode={!readonly && numberFormatIndex === NumberFormat.K ? "cell" : undefined}
+                editMode={
+                    !readonly && numberFormatIndex === NumberFormat.K
+                        ? 'cell'
+                        : undefined
+                }
             >
                 <Column
                     field="label"
@@ -270,17 +344,17 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                             borderLeft: 0,
                             borderRight: 0,
                             borderTop: 0,
-                            padding: '4px 10px',
+                            padding: '4px 10px'
                         }}
                         body={(row, options) => body(options, row)}
                         headerStyle={{ border: 0, padding: '10px 10px' }}
                         alignHeader={'right'}
                         align={'right'}
-                        editor={(options) => cellEditor(options)} 
+                        editor={(options) => cellEditor(options)}
                         onCellEditComplete={onCellEditComplete}
                     ></Column>
                 ))}
             </DataTable>
         </div>
-    )
-}
+    );
+};

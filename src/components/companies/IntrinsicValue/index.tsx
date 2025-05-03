@@ -1,38 +1,38 @@
-import React, { useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { IntrinsicValueGraph } from '../../IntrinsicValueGraph'
-import { useUnit } from 'effector-react'
-import { companyValuesStores } from '../../../models/company/values'
-import { downloadSvg, downloadSvgAsPng } from './utils'
-import { InfoIcon } from '../../InfoIcon'
-import { CompanyValueSummary } from '../CompanyValue/Summary'
-import { TabMenu } from 'primereact/tabmenu'
-import { companyPriceStores } from '../../../models/company/price'
+import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IntrinsicValueGraph } from '../../IntrinsicValueGraph';
+import { useUnit } from 'effector-react';
+import { companyValuesStores } from '../../../models/company/values';
+import { downloadSvg, downloadSvgAsPng } from './utils';
+import { InfoIcon } from '../../InfoIcon';
+import { CompanyValueSummary } from '../CompanyValue/Summary';
+import { TabMenu } from 'primereact/tabmenu';
+import { companyPriceStores } from '../../../models/company/price';
 
 interface IntrinsicValueProps {
-    ticker: string
-    displayDetails?: boolean
-    withTitle?: boolean
+    ticker: string;
+    displayDetails?: boolean;
+    withTitle?: boolean;
 }
 
 export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
     ticker,
     displayDetails,
-    withTitle,
+    withTitle
 }) => {
-    const { t } = useTranslation()
-    const svgRef = useRef<any>(null)
-    const companyValues = useUnit(companyValuesStores.$values)
-    const { timestamp } = useUnit(companyValuesStores.$timestamps)
-    const priceData = useUnit(companyPriceStores.$priceData)
-    const [level, setLevel] = useState<number>(2)
-    const [detailsVisible, setDetailsVisible] = useState<boolean>(false)
+    const { t } = useTranslation();
+    const svgRef = useRef<any>(null);
+    const companyValues = useUnit(companyValuesStores.$values);
+    const { timestamp } = useUnit(companyValuesStores.$timestamps);
+    const priceData = useUnit(companyPriceStores.$priceData);
+    const [level, setLevel] = useState<number>(2);
+    const [detailsVisible, setDetailsVisible] = useState<boolean>(false);
 
-    const areas = companyValues?.areas?.[level]
+    const areas = companyValues?.areas?.[level];
     const items = companyValues?.areas?.map((_, i) => ({
         label: t(`ticker.value.levels.${i}`),
-        command: () => setLevel(i),
-    }))
+        command: () => setLevel(i)
+    }));
 
     return (
         <div>
@@ -96,5 +96,5 @@ export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
 
             {detailsVisible && <CompanyValueSummary />}
         </div>
-    )
-}
+    );
+};

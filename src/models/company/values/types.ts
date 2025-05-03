@@ -3,4 +3,4 @@ export interface CompanyValues {
     areas: number[][];
 }
 
-export type CompanyValue = {[key: string]: number};
+export type CompanyValue = { [key: string]: number };

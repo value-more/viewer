@@ -1,16 +1,16 @@
-import React from 'react'
-import { companyPriceStores } from '../../../models/company/price'
-import { useUnit } from 'effector-react'
+import React from 'react';
+import { companyPriceStores } from '../../../models/company/price';
+import { useUnit } from 'effector-react';
 
 interface PriceProps {
-    ticker?: string
+    ticker?: string;
 }
 
 export const Price: React.FC<PriceProps> = ({ ticker }) => {
-    const priceData = useUnit(companyPriceStores.$priceData)
+    const priceData = useUnit(companyPriceStores.$priceData);
 
     if (!ticker || !priceData) {
-        return null
+        return null;
     }
 
     return (
@@ -18,5 +18,5 @@ export const Price: React.FC<PriceProps> = ({ ticker }) => {
             <div>Last price: </div>
             <div>{priceData.price} USD</div>
         </>
-    )
-}
+    );
+};

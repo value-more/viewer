@@ -1,13 +1,24 @@
-import React, { useEffect } from 'react'
-import { api } from '../../api/invData'
-import { CompaniesList } from '../../components/CompaniesList'
+import React, { useEffect } from 'react';
+import { api } from '../../api/invData';
+import { CompaniesList } from '../../components/CompaniesList';
 import { BaseLayout } from '../../BaseLayout';
 
-const getCompanies = ({ opts, filter, favorites }: { opts: any, filter: any, favorites?: boolean }) => api(`invData/companies?first=${opts.first}&rows=${opts.rows}&favorites=${favorites??false}&q=${filter.toLocaleLowerCase()}`);
+const getCompanies = ({
+    opts,
+    filter,
+    favorites
+}: {
+    opts: any;
+    filter: any;
+    favorites?: boolean;
+}) =>
+    api(
+        `invData/companies?first=${opts.first}&rows=${opts.rows}&favorites=${favorites ?? false}&q=${filter.toLocaleLowerCase()}`
+    );
 
 export const HomePage: React.FC = () => {
     useEffect(() => {
-        document.title = "InvData - Home";
+        document.title = 'InvData - Home';
     }, []);
 
     return (
@@ -17,4 +28,4 @@ export const HomePage: React.FC = () => {
             </div>
         </BaseLayout>
     );
-}
+};

@@ -1,27 +1,27 @@
-import { Dropdown } from 'primereact/dropdown'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { QuestionsAnswers } from '../../QuestionsAnswers'
-import { useUnit } from 'effector-react'
+import { Dropdown } from 'primereact/dropdown';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { QuestionsAnswers } from '../../QuestionsAnswers';
+import { useUnit } from 'effector-react';
 import {
     companyScoresEffects,
-    companyScoresStores,
-} from '../../../models/company/scores'
-import { InfoIcon } from '../../InfoIcon'
+    companyScoresStores
+} from '../../../models/company/scores';
+import { InfoIcon } from '../../InfoIcon';
 
 interface BusinessModelProps {
-    cik: number
-    readonly?: boolean
-    withIcon?: boolean
+    cik: number;
+    readonly?: boolean;
+    withIcon?: boolean;
 }
 
 export const BusinessModel: React.FC<BusinessModelProps> = ({
     cik,
     readonly,
-    withIcon,
+    withIcon
 }) => {
-    const { t } = useTranslation()
-    const businessModel = useUnit(companyScoresStores.$scores)?.businessModel
+    const { t } = useTranslation();
+    const businessModel = useUnit(companyScoresStores.$scores)?.businessModel;
 
     return (
         <div>
@@ -42,11 +42,11 @@ export const BusinessModel: React.FC<BusinessModelProps> = ({
                         readOnly={readonly}
                         options={[...Array(5)].map((_, k) => ({
                             value: k - 2,
-                            label: t(`ticker.businessmodel.options.${k - 2}`),
+                            label: t(`ticker.businessmodel.options.${k - 2}`)
                         }))}
                         onChange={(event) =>
                             companyScoresEffects.saveScoresFx({
-                                businessModel: { val: event.value },
+                                businessModel: { val: event.value }
                             })
                         }
                     />
@@ -58,11 +58,11 @@ export const BusinessModel: React.FC<BusinessModelProps> = ({
             <QuestionsAnswers
                 apiUrls={{
                     questions: 'invData/companies/businessmodels/questions',
-                    answers: `invData/companies/${cik}/businessmodels/questions/answers`,
+                    answers: `invData/companies/${cik}/businessmodels/questions/answers`
                 }}
                 readonly={readonly}
                 cik={cik}
             />
         </div>
-    )
-}
+    );
+};
