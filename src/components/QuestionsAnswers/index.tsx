@@ -6,6 +6,7 @@ import { InfoIcon } from '../InfoIcon'
 import { useTranslation } from 'react-i18next'
 
 interface QuestionsAnswersProps {
+    cik: number
     /**
      * API for questions config and answers per cik usually
      */
@@ -16,6 +17,7 @@ interface QuestionsAnswersProps {
 const timeouts: { [key: string]: any } = {}
 
 export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({
+    cik,
     apiUrls,
     readonly,
 }) => {
@@ -56,7 +58,7 @@ export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({
             setAnswers(data)
         }
         getData()
-    }, [])
+    }, [cik])
 
     const save = (questionKey: string, answer: string) => {
         setAnswers({

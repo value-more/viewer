@@ -89,6 +89,7 @@ export const Moat: React.FC<MoatProps> = ({ cik }) => {
                     answers: `invData/companies/${cik}/moat/questions/answers`,
                 }}
                 readonly={language === 'en'}
+                cik={cik}
             />
         </div>
     )
