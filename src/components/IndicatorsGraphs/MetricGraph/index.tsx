@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Chart } from 'primereact/chart';
 import { getDisplayedSymbol } from '../../../utils/formatFromSymbol';
 import { VotingSelector } from '../VotingSelector';
@@ -30,6 +30,7 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({
     const [error, setError] = useState<string | null>(null);
     const [tableVisible, setTableVisible] = useState<boolean>(false);
     const [tableData, setTableData] = useState<ChartTableData[]>([]);
+    const tableRef = useRef(null);
 
     useEffect(() => {
         setValue(null);
@@ -92,7 +93,14 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({
                     <div
                         className="absolute hover:text-primary cursor-pointer"
                         style={{ right: '15px', top: '15px' }}
-                        onClick={() => setTableVisible(!tableVisible)}
+                        onClick={() => {
+                            setTableVisible(!tableVisible);
+                            !tableVisible &&
+                                (tableRef?.current as any)?.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                        }}
                     >
                         <i className="pi pi-table" />
                     </div>
@@ -109,35 +117,37 @@ export const MetricsGraph: React.FC<MetricsGraphProps> = ({
                     <AdditionalData config={config} value={value} data={data} />
                 )}
             </div>
-            {tableVisible && (
-                <div className="overflow-auto mt-5">
-                    <DataTable
-                        value={tableData}
-                        scrollable
-                        showGridlines
-                        stripedRows
-                        pt={{
-                            column: {
-                                headerContent: {
-                                    className:
-                                        'justify-content-center text-primary'
-                                }
-                            },
-                            bodyRow: { className: 'p-row-odd' }
-                        }}
-                    >
-                        <Column field="label" />
-                        {value.data.labels.map((k: string, i) => (
-                            <Column
-                                key={k}
-                                field={'y' + i}
-                                header={k}
-                                className="text-center"
-                            />
-                        ))}
-                    </DataTable>
-                </div>
-            )}
+            <div ref={tableRef} style={{ scrollMarginTop: '8rem' }}>
+                {tableVisible && (
+                    <div className="overflow-auto mt-5">
+                        <DataTable
+                            value={tableData}
+                            scrollable
+                            showGridlines
+                            stripedRows
+                            pt={{
+                                column: {
+                                    headerContent: {
+                                        className:
+                                            'justify-content-center text-primary'
+                                    }
+                                },
+                                bodyRow: { className: 'p-row-odd' }
+                            }}
+                        >
+                            <Column field="label" frozen />
+                            {value.data.labels.map((k: string, i) => (
+                                <Column
+                                    key={k}
+                                    field={'y' + i}
+                                    header={k}
+                                    className="text-center"
+                                />
+                            ))}
+                        </DataTable>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
