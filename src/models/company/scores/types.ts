@@ -2,6 +2,7 @@ export interface CompanyScores {
     businessModel?: { val?: number; timestamp?: number };
     moat?: MoatScores;
     score?: number;
+    fundamentals?: number;
     timestamp?: number;
 }
 

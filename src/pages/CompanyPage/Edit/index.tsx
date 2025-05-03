@@ -71,7 +71,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                         />
                     </h1>
                     <div className="ml-3">
-                        <CompanyScore />
+                        <CompanyScore withTooltip />
                     </div>
                 </div>
                 <ConfidenceLevels
