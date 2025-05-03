@@ -1,20 +1,16 @@
-import React, { useEffect } from 'react'
-import { companyPriceEvents, companyPriceStores } from '../../../models/company/price';
-import { useUnit } from 'effector-react';
+import React from 'react'
+import { companyPriceStores } from '../../../models/company/price'
+import { useUnit } from 'effector-react'
 
 interface PriceProps {
-    ticker?: string;
+    ticker?: string
 }
 
 export const Price: React.FC<PriceProps> = ({ ticker }) => {
-    const priceData = useUnit(companyPriceStores.$priceData);
-    useEffect(() => {
-        if ( !ticker ) return;
-        companyPriceEvents.setTicker(ticker);
-    }, [ticker]);
+    const priceData = useUnit(companyPriceStores.$priceData)
 
-    if ( !ticker || !priceData ) {
-        return null;
+    if (!ticker || !priceData) {
+        return null
     }
 
     return (
