@@ -2,36 +2,43 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IntrinsicValueGraph } from '../../IntrinsicValueGraph';
 import { useUnit } from 'effector-react';
-import { companyValuesStores } from '../../../models/company/values';
+import {
+    companyValuesEvents,
+    companyValuesStores
+} from '../../../models/company/values';
 import { downloadSvg, downloadSvgAsPng } from './utils';
 import { InfoIcon } from '../../InfoIcon';
 import { CompanyValueSummary } from '../CompanyValue/Summary';
 import { TabMenu } from 'primereact/tabmenu';
 import { companyPriceStores } from '../../../models/company/price';
+import { Dropdown } from 'primereact/dropdown';
 
 interface IntrinsicValueProps {
     ticker: string;
     displayDetails?: boolean;
     withTitle?: boolean;
+    defaultLevelSelector?: boolean;
 }
 
 export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
     ticker,
     displayDetails,
-    withTitle
+    withTitle,
+    defaultLevelSelector
 }) => {
     const { t } = useTranslation();
     const svgRef = useRef<any>(null);
     const companyValues = useUnit(companyValuesStores.$values);
     const { timestamp } = useUnit(companyValuesStores.$timestamps);
     const priceData = useUnit(companyPriceStores.$priceData);
-    const [level, setLevel] = useState<number>(2);
+    const level = useUnit(companyValuesStores.$level);
     const [detailsVisible, setDetailsVisible] = useState<boolean>(false);
 
     const areas = companyValues?.areas?.[level];
     const items = companyValues?.areas?.map((_, i) => ({
         label: t(`ticker.value.levels.${i}`),
-        command: () => setLevel(i)
+        command: () => companyValuesEvents.setLevel(i),
+        value: i
     }));
 
     return (
@@ -47,13 +54,27 @@ export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
                     </div>
                 </h2>
             )}
-            <div className="flex mb-3 overflow-auto">
+            <div className="flex mb-3 overflow-x-auto">
                 {!!items && (
-                    <div>
+                    <div className="flex gap-4">
                         <TabMenu
+                            activeIndex={level}
                             model={items}
                             pt={{ action: { className: 'bg-default' } }}
                         />
+                        {!!defaultLevelSelector && (
+                            <div className="ml-4">
+                                <Dropdown
+                                    options={items}
+                                    value={companyValues?.preselectedLevel ?? 2}
+                                    onChange={(event) =>
+                                        companyValuesEvents.updateDefaultLevelForActiveCikFx(
+                                            { preselectedLevel: event.value }
+                                        )
+                                    }
+                                />
+                            </div>
+                        )}
                     </div>
                 )}
                 <div className="ml-auto align-items-center flex mr-3">

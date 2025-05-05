@@ -20,11 +20,46 @@ const getValuesForActiveCikFx = attach({
     )
 });
 
+const updateDefaultLevelForActiveCikFx = attach({
+    source: $cik,
+    mapParams: (
+        { preselectedLevel }: { preselectedLevel: number },
+        cik: number
+    ) => ({ cik, preselectedLevel }),
+    effect: createEffect(
+        async ({
+            cik,
+            preselectedLevel
+        }: {
+            cik: number;
+            preselectedLevel: number;
+        }) => {
+            await api(`invData/companies/${cik}/values`, {
+                method: 'PUT',
+                body: JSON.stringify({ preselectedLevel })
+            });
+        }
+    )
+});
+
 const $values = createStore<CompanyValues | null>(null);
 const setValues = createEvent<CompanyValues>();
 $values
     .on(setValues, (_, state) => state)
+    .on(updateDefaultLevelForActiveCikFx.done, (v, state) => ({
+        ...v,
+        preselectedLevel: state.params.preselectedLevel
+    }))
     .on(getValuesForActiveCikFx.doneData, (_, state) => state);
+
+const $level = createStore<number>(0);
+const setLevel = createEvent<number>();
+$level
+    .on(setLevel, (_, state) => state)
+    .on(
+        getValuesForActiveCikFx.doneData,
+        (_, state) => state.preselectedLevel ?? 0
+    );
 
 const $timestamps = createStore<{
     timestamp?: number;
@@ -50,10 +85,13 @@ sample({
 
 export const companyValuesStores = {
     $values,
-    $timestamps
+    $timestamps,
+    $level
 };
 
 export const companyValuesEvents = {
     setCik,
-    refresh
+    updateDefaultLevelForActiveCikFx,
+    refresh,
+    setLevel
 };

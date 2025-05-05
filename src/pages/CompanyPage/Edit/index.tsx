@@ -84,6 +84,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                 <IntrinsicValue
                     ticker={data?.tickers[0]?.ticker || ''}
                     withTitle
+                    defaultLevelSelector
                 />
                 <div>
                     <h3 className="bg-primary p-2" ref={priceOverviewRef}>
