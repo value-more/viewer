@@ -20,7 +20,6 @@ import { Dialog } from 'primereact/dialog';
 import { Tooltip } from 'primereact/tooltip';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-import { BaseLayout } from '../../../BaseLayout';
 import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
 import { CompanyProfile } from '../../../components/CompanyProfile';
 
@@ -57,7 +56,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
     };
 
     return (
-        <BaseLayout>
+        <>
             <div className="ml-4 pr-4 pb-4 overflow-auto h-full">
                 <div className="flex align-items-center justify-content-center mb-2 z-5 sticky top-0 bg-default">
                     <div
@@ -168,6 +167,6 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                     </Button>
                 </div>
             </Dialog>
-        </BaseLayout>
+        </>
     );
 };
