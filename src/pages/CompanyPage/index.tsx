@@ -110,7 +110,12 @@ export const CompanyPage: React.FC = () => {
     return (
         <BaseLayout menu={items}>
             {mode === 'edit' && (
-                <CompanyPageEdit cik={Number(cik)} name={name} data={data} />
+                <CompanyPageEdit
+                    cik={Number(cik)}
+                    name={name}
+                    data={data}
+                    refs={refs}
+                />
             )}
             {mode !== 'edit' && (
                 <CompanyPageView

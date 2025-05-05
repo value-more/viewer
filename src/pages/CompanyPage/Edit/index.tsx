@@ -27,12 +27,14 @@ interface CompanyPageEditProps {
     cik: number;
     name: string;
     data: InvData;
+    refs: { [key: string]: React.MutableRefObject<null> };
 }
 
 export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
     cik,
     name: defaultName,
-    data
+    data,
+    refs
 }) => {
     const {
         t,
@@ -58,6 +60,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
     return (
         <>
             <div className="ml-4 pr-4 pb-4 overflow-auto h-full">
+                <div ref={refs.overview}></div>
                 <div className="flex align-items-center justify-content-center mb-2 z-5 sticky top-0 bg-default">
                     <div
                         className={`companyLogo48 ${data?.tickers?.map((t) => 't-logo-' + t.ticker).join(' ')} mr-2`}
@@ -96,27 +99,35 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                     />
                 </div>
                 <CompanyProfile cik={cik} edit />
-                <IndicatorsGraph data={data} includeScore withIcon />
+                <div ref={refs.diagrams} className="scrollMarginTop mb-5">
+                    <IndicatorsGraph data={data} includeScore withIcon />
+                </div>
                 <MetricsAssessment cik={cik} />
-                <InvDataViewer
-                    cik={cik}
-                    syncTimestamp={data?.timestamp}
-                    overwriteTimestamp={data?.overwriteTimestamp}
-                    withIcon
-                />
-                <BusinessModel
-                    cik={cik}
-                    withIcon
-                    readonly={language === 'en'}
-                />
+                <div ref={refs.data} className="scrollMarginTop mb-5">
+                    <InvDataViewer
+                        cik={cik}
+                        syncTimestamp={data?.timestamp}
+                        overwriteTimestamp={data?.overwriteTimestamp}
+                        withIcon
+                    />
+                </div>
+                <div ref={refs.businessModel} className="scrollMarginTop mb-5">
+                    <BusinessModel
+                        cik={cik}
+                        withIcon
+                        readonly={language === 'en'}
+                    />
+                </div>
                 <Moat cik={cik} />
-                <CompanyValue
-                    cik={cik}
-                    metrics={data.metrics}
-                    withSummary
-                    withConfig
-                    withIcon
-                />
+                <div ref={refs.value} className="scrollMarginTop mb-5">
+                    <CompanyValue
+                        cik={cik}
+                        metrics={data.metrics}
+                        withSummary
+                        withConfig
+                        withIcon
+                    />
+                </div>
                 <Sidebar
                     visible={isVisibleAssistant}
                     position="right"
