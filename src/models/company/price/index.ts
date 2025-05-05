@@ -37,3 +37,7 @@ export const companyPriceStores = {
 export const companyPriceEvents = {
     setTicker
 };
+
+export const companyPriceEffects = {
+    priceFx
+};

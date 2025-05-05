@@ -4,6 +4,7 @@ import { api } from '../../api/invData';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InfoIcon } from '../InfoIcon';
 import { useTranslation } from 'react-i18next';
+import { Skeleton } from 'primereact/skeleton';
 
 interface QuestionsAnswersProps {
     cik: number;
@@ -24,10 +25,13 @@ export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({
     const {
         i18n: { language }
     } = useTranslation();
-    const [questions, setQuestions] = useState<Question[]>([]);
-    const [answers, setAnswers] = useState<Answers>({});
+    const [questions, setQuestions] = useState<Question[] | null>(null);
+    const [answers, setAnswers] = useState<Answers | null>(null);
 
     useEffect(() => {
+        setQuestions(null);
+        setAnswers(null);
+
         const getData = async () => {
             const res = (await api(`${apiUrls.questions}?limit=1`))?.[0];
             const q = (res?.rules?.questions || []).map(
@@ -80,6 +84,18 @@ export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({
             });
         }, 750);
     };
+
+    if (questions === null || answers === null) {
+        return (
+            <div className="mt-2">
+                <Skeleton className="max-w-30rem h-2rem mb-3" />
+                <Skeleton className="max-w-10rem mb-3" />
+                <Skeleton className="max-w-20rem mb-3" />
+                <Skeleton className="max-w-25rem mb-3" />
+                <Skeleton className="max-w-30rem mb-3" />
+            </div>
+        );
+    }
 
     return (
         <div>

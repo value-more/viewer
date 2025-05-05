@@ -91,7 +91,11 @@ export const companyValuesStores = {
 
 export const companyValuesEvents = {
     setCik,
-    updateDefaultLevelForActiveCikFx,
     refresh,
     setLevel
+};
+
+export const companyValuesEffects = {
+    updateDefaultLevelForActiveCikFx,
+    getValuesForActiveCikFx
 };

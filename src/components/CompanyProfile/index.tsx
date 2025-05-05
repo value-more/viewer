@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { toasts } from '../../models/toast';
 import { InfoIcon } from '../InfoIcon';
+import { Skeleton } from 'primereact/skeleton';
 
 interface CompanyProfileProps {
     cik: number;
@@ -30,6 +31,7 @@ export const CompanyProfile: React.FC<CompanyProfileProps> = ({
     } = useTranslation();
 
     useEffect(() => {
+        setProfile(null);
         (async () => {
             const data = await api(
                 `invData/companies/${cik}/profiles?language=${language}`
@@ -70,14 +72,26 @@ export const CompanyProfile: React.FC<CompanyProfileProps> = ({
                 <h2 className="mt-0">{t('ticker.profile')}</h2>
             )}
             <div>
-                {!edit || language !== 'de' ? (
-                    profile?.text
+                {profile !== null ? (
+                    <>
+                        {!edit || language !== 'de' ? (
+                            profile?.text
+                        ) : (
+                            <InputTextarea
+                                value={profile?.text}
+                                onChange={(event) =>
+                                    save(event.currentTarget.value)
+                                }
+                                className="w-full h-20rem line-height-4"
+                            />
+                        )}
+                    </>
                 ) : (
-                    <InputTextarea
-                        value={profile?.text}
-                        onChange={(event) => save(event.currentTarget.value)}
-                        className="w-full h-20rem line-height-4"
-                    />
+                    <div>
+                        {[...Array(10)].map((k, i) => (
+                            <Skeleton key={i} className="mb-3" />
+                        ))}
+                    </div>
                 )}
             </div>
         </>

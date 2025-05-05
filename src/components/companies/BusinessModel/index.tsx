@@ -8,6 +8,7 @@ import {
     companyScoresStores
 } from '../../../models/company/scores';
 import { InfoIcon } from '../../InfoIcon';
+import { Skeleton } from 'primereact/skeleton';
 
 interface BusinessModelProps {
     cik: number;
@@ -22,6 +23,9 @@ export const BusinessModel: React.FC<BusinessModelProps> = ({
 }) => {
     const { t } = useTranslation();
     const businessModel = useUnit(companyScoresStores.$scores)?.businessModel;
+    const companyScoreFxPending = useUnit(
+        companyScoresEffects.getScoresForActiveCikFx.pending
+    );
 
     return (
         <div>
@@ -29,31 +33,43 @@ export const BusinessModel: React.FC<BusinessModelProps> = ({
                 {!!withIcon && <i className="pi pi-briefcase mr-2" />}
                 {t('ticker.businessmodel.title')}
             </h2>
-            {readonly ? (
-                <span>
-                    {t(`ticker.businessmodel.options.${businessModel?.val}`)}
-                </span>
+            {companyScoreFxPending ? (
+                <Skeleton className="max-w-30rem h-2rem mb-2" />
             ) : (
-                <div className="text-center">
-                    <span>{t('ticker.businessmodel.select')}</span>
-                    <Dropdown
-                        className="ml-2"
-                        value={businessModel?.val}
-                        readOnly={readonly}
-                        options={[...Array(5)].map((_, k) => ({
-                            value: k - 2,
-                            label: t(`ticker.businessmodel.options.${k - 2}`)
-                        }))}
-                        onChange={(event) =>
-                            companyScoresEffects.saveScoresFx({
-                                businessModel: { val: event.value }
-                            })
-                        }
-                    />
-                    <span className="ml-2">
-                        <InfoIcon editTimestamp={businessModel?.timestamp} />
-                    </span>
-                </div>
+                <>
+                    {readonly ? (
+                        <span>
+                            {t(
+                                `ticker.businessmodel.options.${businessModel?.val}`
+                            )}
+                        </span>
+                    ) : (
+                        <div className="text-center">
+                            <span>{t('ticker.businessmodel.select')}</span>
+                            <Dropdown
+                                className="ml-2"
+                                value={businessModel?.val}
+                                readOnly={readonly}
+                                options={[...Array(5)].map((_, k) => ({
+                                    value: k - 2,
+                                    label: t(
+                                        `ticker.businessmodel.options.${k - 2}`
+                                    )
+                                }))}
+                                onChange={(event) =>
+                                    companyScoresEffects.saveScoresFx({
+                                        businessModel: { val: event.value }
+                                    })
+                                }
+                            />
+                            <span className="ml-2">
+                                <InfoIcon
+                                    editTimestamp={businessModel?.timestamp}
+                                />
+                            </span>
+                        </div>
+                    )}
+                </>
             )}
             <QuestionsAnswers
                 apiUrls={{
