@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import '../../../models/company/scores/init';
 import '../../../models/company/values/init';
 import { InvData } from '../../../models/types';
