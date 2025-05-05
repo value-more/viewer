@@ -18,7 +18,7 @@ export const Price: React.FC<PriceProps> = ({ ticker }) => {
         <>
             <div>Last price: </div>
             <div>
-                {priceFxPending ? (
+                {!ticker || priceFxPending ? (
                     <Skeleton />
                 ) : (
                     <>{priceData?.price ?? '-'} USD</>
