@@ -26,6 +26,8 @@ export const CompanyPage: React.FC = () => {
     useEffect(() => {
         if (!cik) return;
 
+        setData(null);
+
         const getCompany = async () => {
             const data = await api(`invData/companies/${cik}`);
             setData(data);
