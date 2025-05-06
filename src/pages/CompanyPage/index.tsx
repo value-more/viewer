@@ -87,29 +87,23 @@ export const CompanyPage: React.FC = () => {
         });
     };
 
-    if (data === undefined) {
-        return (
-            <div className="text-center">
-                <ProgressSpinner />
-                <div style={{ whiteSpace: 'pre-line' }}>
-                    {t('ticker.loader')}
-                </div>
-            </div>
-        );
-    }
-
-    if (data === null) {
-        return (
-            <div className="m-5 text-center">
-                <h2>{cik}</h2>
-                <div className="text-orange-500">Data not found</div>
-            </div>
-        );
-    }
-
     return (
         <BaseLayout menu={items}>
-            {mode === 'edit' && (
+            {data === undefined && (
+                <div className="text-center">
+                    <ProgressSpinner />
+                    <div style={{ whiteSpace: 'pre-line' }}>
+                        {t('ticker.loader')}
+                    </div>
+                </div>
+            )}
+            {data === null && (
+                <div className="m-5 text-center">
+                    <h2>{cik}</h2>
+                    <div className="text-orange-500">Data not found</div>
+                </div>
+            )}
+            {data && mode === 'edit' && (
                 <CompanyPageEdit
                     cik={Number(cik)}
                     name={name}
@@ -117,7 +111,7 @@ export const CompanyPage: React.FC = () => {
                     refs={refs}
                 />
             )}
-            {mode !== 'edit' && (
+            {data && mode !== 'edit' && (
                 <CompanyPageView
                     cik={Number(cik)}
                     name={name}
