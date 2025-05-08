@@ -15,6 +15,7 @@ interface Data {
     }[];
     global: { main: number; sure: number; unsure: number };
     years: { year: number; n: number; p: number }[];
+    lastYear: { cat: string; key: string }[];
 }
 
 interface Timeframe {
@@ -38,7 +39,9 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({
     const { cik } = useParams();
     const [data, setData] = useState<Data | null>();
     const [displayDetails, setDisplayDetails] = useState<string | null>(null);
-    const [displayYears, setDisplayYears] = useState<boolean>(false);
+    const [displayYears, setDisplayYears] = useState<
+        'years' | 'lastYear' | null
+    >(null);
     const [timeframe, setTimeframe] = useState<Timeframe>(parentTimeframe);
 
     useEffect(() => {
@@ -129,7 +132,7 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({
                                     setDisplayDetails(
                                         displayDetails === key ? null : key
                                     );
-                                    setDisplayYears(false);
+                                    setDisplayYears(null);
                                 }}
                             >
                                 {t(`ticker.confidence.${key}`)}:{' '}
@@ -147,16 +150,41 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({
                             <div
                                 className={
                                     'cursor-pointer select-none' +
-                                    ('years' === displayDetails
+                                    ('years' === displayYears
                                         ? ' font-bold'
                                         : '')
                                 }
                                 onClick={() => {
                                     setDisplayDetails(null);
-                                    setDisplayYears(!displayYears);
+                                    setDisplayYears(
+                                        displayYears === 'years'
+                                            ? null
+                                            : 'years'
+                                    );
                                 }}
                             >
                                 {t(`ticker.confidence.years`)}
+                                <i className="pi pi-angle-down"></i>
+                            </div>
+                        )}
+                        {!!data.lastYear?.length && (
+                            <div
+                                className={
+                                    'cursor-pointer select-none' +
+                                    ('lastYear' === displayYears
+                                        ? ' font-bold'
+                                        : '')
+                                }
+                                onClick={() => {
+                                    setDisplayDetails(null);
+                                    setDisplayYears(
+                                        displayYears === 'lastYear'
+                                            ? null
+                                            : 'lastYear'
+                                    );
+                                }}
+                            >
+                                {t(`ticker.confidence.lastYear`)}
                                 <i className="pi pi-angle-down"></i>
                             </div>
                         )}
@@ -189,7 +217,7 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({
                     ))}
                 </div>
             )}
-            {displayYears && !!data && (
+            {displayYears === 'years' && !!data && (
                 <div className="flex gap-4 flex-wrap ml-4 mr-4 mt-3 justify-content-center">
                     {data.years.map((d) => (
                         <div
@@ -204,6 +232,20 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({
                                     maximumFractionDigits: 2
                                 })}
                                 %
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+            {displayYears === 'lastYear' && !!data && (
+                <div className="flex gap-4 flex-wrap ml-4 mr-4 mt-3">
+                    {data.lastYear.map((d) => (
+                        <div
+                            key={d.key}
+                            className="text-center bg-blue-50 pt-2 pb-2 pr-4 pl-4"
+                        >
+                            <div>
+                                {t(`ticker.fundamentals.${d.cat}.${d.key}`)}
                             </div>
                         </div>
                     ))}

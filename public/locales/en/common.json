@@ -120,7 +120,7 @@
                 },
                 "decompositionOfRoe": {
                     "title": "Decomposition of ROE",
-                    "dataset1": "Taxes", 
+                    "dataset1": "Taxes",
                     "dataset2": "Financing",
                     "dataset3": "Operating Profit",
                     "dataset4": "Turnover",
@@ -161,12 +161,12 @@
                     "title": "R&D Margin",
                     "dataset1": "R&D/Net income"
                 },
-                "bookValue":{
+                "bookValue": {
                     "title": "Book Value",
                     "dataset1": "Book Value",
                     "additionalDataTitle": "Book value"
                 },
-                "operatingBookValue":{
+                "operatingBookValue": {
                     "title": "Operating Book Value",
                     "dataset1": "Operating Book Value",
                     "additionalDataTitle": "Operating book value"
@@ -402,7 +402,8 @@
             "main": "Main",
             "sure": "Approved (green)",
             "unsure": "Unsure (yellow)",
-            "years": "Years (missing elements)"
+            "years": "Years (M.E.)",
+            "lastYear": "Last year (M.E.)"
         }
     },
     "analysis": {

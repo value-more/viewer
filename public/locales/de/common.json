@@ -44,8 +44,7 @@
                     "dataset1": "EBIT je Aktie",
                     "cagrOperatingIncome": "CAGR EBIT",
                     "cagrOperatingIncomePerShare": "CAGR EBIT je Aktie",
-                    "tenYAvgEbitPerShare": "10J-AVG EBIT je Aktie"
-                    "additionalDataTitle": "Operatives Ergebnis"
+                    "tenYAvgEbitPerShare": "10J-AVG EBIT je Aktie""additionalDataTitle": "Operatives Ergebnis"
                 },
                 "revenueGrowthVsCOGSGrowth": {
                     "title": "Umsatz- u. Kosten-Wachstum",
@@ -112,7 +111,7 @@
                     "title": "Vertriebs- und Verwaltungskosten-Marge",
                     "dataset1": "V&V/Umsatz (%)",
                     "dataset2": "< 30% ist gut"
-                }, 
+                },
                 "decompositionOfRoe": {
                     "title": "Zusammensetzung des ROE",
                     "dataset1": "Anteil Steuern",
@@ -121,11 +120,10 @@
                     "dataset4": "Anteil Absatz",
                     "dataset5": "Anteil Verschuldung"
                 },
-
                 "dividendPayoutRatio": {
                     "title": "Verhältnis von Dividendenzahlung zu bereinigtem Gewinn",
                     "dataset1": "Ausschüttungsquote"
-                }, 
+                },
                 "roic": {
                     "title": "Rendite auf investiertes Kapital",
                     "dataset1": "ROIC"
@@ -148,8 +146,7 @@
                 "invMargin": {
                     "title": "Verhältnis von Investitionen zu EBIT",
                     "dataset1": "Investment Marge",
-                    "tenYAvgInvMargin": "10J-AVG Inv Margin"
-                    "additionalDataTitle": "Investment Marge"
+                    "tenYAvgInvMargin": "10J-AVG Inv Margin""additionalDataTitle": "Investment Marge"
                 },
                 "daMargin": {
                     "title": "Verhältnis von Abschreibungen zu Bruttogewinn",
@@ -166,12 +163,12 @@
                     "title": "Verhältnis von Forschung & Entwicklung zu Gewinn",
                     "dataset1": "F&E-Gewinn Marge"
                 },
-                "bookValue":{
+                "bookValue": {
                     "title": "Buchwert",
                     "dataset1": "Buchwert",
                     "additionalDataTitle": "Buchwertwachstum"
                 },
-                "operatingBookValue":{
+                "operatingBookValue": {
                     "title": "Operativer Buchwert",
                     "dataset1": "Operativer Buchwert",
                     "additionalDataTitle": "Operatives Buchwertwachstum"
@@ -239,7 +236,7 @@
                 "OTHER_PROPERTIES": "Andere Immobilien",
                 "GROSS_PROPERTY_PLANT_AND_EQUIPMENT": "Brutto-Immobilien, Anlagen und Ausrüstung",
                 "ACCUMULATED_DEPRECIATION": "Kumulierte Abschreibung",
-		"OPERATING_LEASE_ASSETS": "Operatives Leasing",
+                "OPERATING_LEASE_ASSETS": "Operatives Leasing",
                 "INVESTMENTS": "Finanzinvestitionen",
                 "INTANGIBLE_ASSETS": "Immaterielle Vermögenswerte",
                 "DEFERRED_INCOME_TAXES_NON_CURRENT_ASSETS": "Aktive latente Steuern",
@@ -250,7 +247,7 @@
                 "TOTAL_CURRENT_LIABILITIES": "Summe kurzfristiger Verbindlichkeiten",
                 "SHORT_TERM_LIABILITIES": "Kurzfristige Verbindlichkeiten",
                 "CAPITAL_LEASES_CURRENT_LIABILITIES": "Kurzfristiges Capital Leasing",
-		"OPERATING_LEASES_CURRENT_LIABILITIES": "Kurzfristiges Operating Leasing",
+                "OPERATING_LEASES_CURRENT_LIABILITIES": "Kurzfristiges Operating Leasing",
                 "ACCOUNTS_PAYABLE": "Verbindlichkeiten aus Lieferungen und Leistungen",
                 "TAXES_PAYABLE": "Steuerverbindlichkeiten",
                 "DEFERRED_INCOME_TAXES_CURRENT_LIABILITIES": "Ertragssteuerverbindlichkeiten",
@@ -260,9 +257,9 @@
                 "OTHER_CURRENT_LIABILITIES": "Übrige kurzfristige Verbindlichkeiten",
                 "TOTAL_NON_CURRENT_LIABILITIES": "Summe langfristiger Verbindlichkeiten",
                 "LONG_TERM_DEBT": "Langfristige Schulden",
-		"LONG_TERM_LIABILITIES": "Langfristige Verbindlichkeiten",
+                "LONG_TERM_LIABILITIES": "Langfristige Verbindlichkeiten",
                 "CAPITAL_LEASES_NON_CURRENT_LIABILITIES": "Langfristiges Capital Leasing",
-		"OPERATING_LEASES_NON_CURRENT_LIABILITIES": "Langfristiges Operating Leasing",
+                "OPERATING_LEASES_NON_CURRENT_LIABILITIES": "Langfristiges Operating Leasing",
                 "DEFERRED_TAXES_LIABILITIES": "Passive latente Steuern",
                 "DEFERRED_REVENUES_NON_CURRENT_LIABILITIES": "Zurückgestellte Erträge",
                 "MINORITY_INTEREST_NON_CURRENT_LIABILITIES": "Minderheitsbeteiligung",
@@ -390,9 +387,9 @@
                     "futureGrowth": "Future growth",
                     "discountRate": "Discount rate",
                     "years": "# Years",
-		    "display": {
-			"currentCAGRDividendGrowth": "Aktuelles CAGR Dividendenwachstum"
-		    }
+                    "display": {
+                        "currentCAGRDividendGrowth": "Aktuelles CAGR Dividendenwachstum"
+                    }
                 },
                 "value": {
                     "title": "Sum"
@@ -407,10 +404,11 @@
             "main": "Haupt",
             "sure": "Genehmigt (grün)",
             "unsure": "Unsicher (gelb)",
-            "years": "Jahre (fehlende Elemente)"
+            "years": "Jahre (F.E.)",
+            "lastYear": "Letztes Jahr (F.E.)"
         }
     },
     "analysis": {
         "title": "Unternehmen, bei denen eines der wichtigen Fundamente fehlt"
     }
-} 
+}
