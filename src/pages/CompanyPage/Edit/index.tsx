@@ -21,7 +21,7 @@ import { Tooltip } from 'primereact/tooltip';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
-import { CompanyProfile } from '../../../components/CompanyProfile';
+import { CompanyProfile } from '../../../components/companies/CompanyProfile';
 
 interface CompanyPageEditProps {
     cik: number;

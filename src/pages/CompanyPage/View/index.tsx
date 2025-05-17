@@ -10,7 +10,7 @@ import { IndicatorsGraph } from '../../../components/IndicatorsGraphs';
 import { MetricsScoreViewer } from '../../../components/MetricsScoreViewer';
 import { Price } from '../../../components/companies/Price';
 import { CompanyFavorite } from '../../../components/CompanyFavorite';
-import { CompanyProfile } from '../../../components/CompanyProfile';
+import { CompanyProfile } from '../../../components/companies/CompanyProfile';
 import { useNavigate } from 'react-router';
 import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
 import { IntrinsicValue } from '../../../components/companies/IntrinsicValue';

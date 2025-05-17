@@ -1,10 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { api } from '../../api/invData';
+import { api } from '../../../api/invData';
 import { useTranslation } from 'react-i18next';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { toasts } from '../../models/toast';
-import { InfoIcon } from '../InfoIcon';
+import { toasts } from '../../../models/toast';
+import { InfoIcon } from '../../InfoIcon';
 import { Skeleton } from 'primereact/skeleton';
 
 interface CompanyProfileProps {
@@ -75,7 +75,9 @@ export const CompanyProfile: React.FC<CompanyProfileProps> = ({
                 {profile !== null ? (
                     <>
                         {!edit || language !== 'de' ? (
-                            profile?.text
+                            <span style={{ whiteSpace: 'pre-line' }}>
+                                {profile?.text}
+                            </span>
                         ) : (
                             <InputTextarea
                                 value={profile?.text}
