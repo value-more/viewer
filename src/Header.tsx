@@ -13,9 +13,10 @@ import { Divider } from 'primereact/divider';
 
 interface HeaderProps {
     menu?: MenuItem[];
+    title?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ menu }) => {
+export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
     const navigate = useNavigate();
     const [visibleChangelog, setVisibleChangelog] = useState<boolean>();
 
@@ -38,6 +39,7 @@ export const Header: React.FC<HeaderProps> = ({ menu }) => {
                 className="mr-2 cursor-pointer"
                 onClick={() => navigate({ pathname: '/' })}
             />
+            {title && <div className="text-primary text-3xl pt-1">{title}</div>}
         </div>
     );
 

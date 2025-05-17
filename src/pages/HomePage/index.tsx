@@ -18,11 +18,11 @@ const getCompanies = ({
 
 export const HomePage: React.FC = () => {
     useEffect(() => {
-        document.title = 'InvData - Home';
+        document.title = 'ValueMore - Home';
     }, []);
 
     return (
-        <BaseLayout>
+        <BaseLayout title="Value More">
             <div className="m-auto flex flex-column w-full h-full overflow-auto">
                 <CompaniesList onLoad={getCompanies} />
             </div>
