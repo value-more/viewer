@@ -60,6 +60,10 @@ h1, h2, h3 {
     z-index: 10;
 }
 
+.p-dropdown {
+    align-items: center;
+}
+
 /* Style the scrollbar track */
 ::-webkit-scrollbar {
     width: 6px; /* Width of the vertical scrollbar */

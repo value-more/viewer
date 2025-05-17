@@ -24,13 +24,14 @@ interface CompaniesListProps {
         opts: any;
         filter: any;
         favorites?: boolean;
-    }) => Promise<{ data: any; total: number }>;
+    }) => Promise<{ data: any; total: number; totalFiltered: number }>;
 }
 
 export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
     const [companies, setCompanies] = useState<Company[]>([]);
     const [opts, setOpts] = useState({ first: 0, rows: 25 });
     const [total, setTotal] = useState(0);
+    const [totalFiltered, setTotalFiltered] = useState(0);
     const [filter, setFilter] = useState('');
     const [showFavorites, setShowFavorites] = useState<boolean>(false);
     const { t } = useTranslation();
@@ -44,6 +45,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
             });
             setCompanies(data?.data || []);
             setTotal(data?.total);
+            setTotalFiltered(data?.totalFiltered);
         })();
     }, [opts, filter, showFavorites]);
 
@@ -123,15 +125,18 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
 
     const header = () => {
         return (
-            <div className="flex">
+            <div className="flex align-items-center">
                 <Paginator
                     className="w-max border-none"
                     first={opts.first}
                     rows={opts.rows}
-                    totalRecords={total}
+                    totalRecords={totalFiltered}
                     rowsPerPageOptions={[25, 50, 100, 200]}
                     onPageChange={onPageChange}
                 />
+                <div className="text-bluegray-600 text-sm font-normal">
+                    {totalFiltered}/{total}
+                </div>
                 <div className="ml-auto h-2rem align-self-center">
                     <i
                         className={`cursor-pointer pi pi-bookmark${showFavorites ? '-fill' : ''} mr-3`}
