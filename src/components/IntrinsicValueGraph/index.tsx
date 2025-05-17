@@ -18,7 +18,6 @@ export const IntrinsicValueGraph = forwardRef<null, IntrinsicValueGraphProps>(
         } = useTranslation();
         const myAreas = areas || defaultAreas;
         const lastAreaValue = myAreas[myAreas.length - 1];
-
         const maxValue =
             (value && value > lastAreaValue ? value : lastAreaValue) * 1.1;
         const valueX = value
@@ -29,15 +28,10 @@ export const IntrinsicValueGraph = forwardRef<null, IntrinsicValueGraphProps>(
         let prevXLegend = 20;
         return (
             <svg width="100%" height={height} overflow="visible" ref={ref}>
-                {!!areas && (
-                    <text x="0" y={height - 38} fill="black" fontSize="12">
-                        0
-                    </text>
-                )}
                 {myAreas.slice(0, 4).map((limit, index) => {
                     if (limit < 0) return <g key={index}></g>;
                     const v = Number(((limit * 100) / maxValue).toFixed(2));
-                    const w = v - prevX + '%';
+                    const w = v - prevX;
                     const x = prevX;
                     prevX = v;
                     return (
@@ -46,7 +40,7 @@ export const IntrinsicValueGraph = forwardRef<null, IntrinsicValueGraphProps>(
                                 key={index}
                                 x={x + '%'}
                                 y="0%"
-                                width={w}
+                                width={w + '%'}
                                 height={height - 52}
                                 fill={colors[index]}
                             />
@@ -59,17 +53,20 @@ export const IntrinsicValueGraph = forwardRef<null, IntrinsicValueGraphProps>(
                                     x={v + '%'}
                                     overflow="visible"
                                 >
-                                    <text
-                                        x="-15"
-                                        y="0"
-                                        fill="black"
-                                        fontSize="12"
-                                    >
-                                        {limit.toLocaleString(language, {
-                                            minimumFractionDigits: 2,
-                                            maximumFractionDigits: 2
-                                        })}
-                                    </text>
+                                    {(w > 1.6 ||
+                                        index === areas.length - 2) && (
+                                        <text
+                                            x="-15"
+                                            y="0"
+                                            fill="black"
+                                            fontSize="12"
+                                        >
+                                            {limit.toLocaleString(language, {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            })}
+                                        </text>
+                                    )}
                                 </svg>
                             )}
                         </g>
