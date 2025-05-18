@@ -5,12 +5,14 @@ interface CompanyFavoriteProps {
     cik: number;
     favorite: boolean;
     size?: 'md' | 'xl';
+    onFavoriteChange?: (opts: { cik: number; state: boolean }) => void;
 }
 
 export const CompanyFavorite: React.FC<CompanyFavoriteProps> = ({
     cik,
     favorite,
-    size
+    size,
+    onFavoriteChange
 }) => {
     const [fav, setFav] = useState<boolean>(favorite);
 
@@ -21,10 +23,11 @@ export const CompanyFavorite: React.FC<CompanyFavoriteProps> = ({
     const toggle = async ({ cik }: { cik: number }) => {
         const state = !fav;
         setFav(state);
-        return api('invData/companies/favorites', {
+        await api('invData/companies/favorites', {
             method: 'POST',
             body: JSON.stringify({ cik, state })
         });
+        onFavoriteChange?.({ cik, state });
     };
 
     return (

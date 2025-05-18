@@ -5,10 +5,9 @@ import {
     companyScoresEffects,
     companyScoresStores
 } from '../../../models/company/scores';
-import { Rating } from 'primereact/rating';
 import { Tooltip } from 'primereact/tooltip';
 import { companyValuesStores } from '../../../models/company/values';
-import { Skeleton } from 'primereact/skeleton';
+import { CompanyScoreBase } from './base';
 
 interface CompanyScoreProps {
     withTooltip?: boolean;
@@ -39,43 +38,28 @@ export const CompanyScore: React.FC<CompanyScoreProps> = ({ withTooltip }) => {
     );
 
     return (
-        <div
-            className={`company-score-rating flex align-items-center justify-content-center border-1 p-2 ${score === undefined ? 'border-warning' : 'border-solid'}`}
-        >
-            {scoreFxPending ? (
-                <Skeleton className="w-8rem" />
-            ) : (
-                <>
-                    <Rating
-                        value={score !== undefined ? score + 2 : 0}
-                        disabled
-                        cancel={false}
-                    />
-                    {withTooltip && (
-                        <Tooltip
-                            target=".company-score-rating"
-                            position="bottom"
-                        >
-                            {itemTemplate({
-                                label: 'ticker.metrics.title',
-                                value: scoreData?.fundamentals
-                            })}
-                            {itemTemplate({
-                                label: 'ticker.businessmodel.title',
-                                value: scoreData?.businessModel?.val
-                            })}
-                            {itemTemplate({
-                                label: 'ticker.moat.title',
-                                value: scoreData?.moat?.result
-                            })}
-                            {itemTemplate({
-                                label: 'ticker.value.title',
-                                value: valuation?.areas?.length
-                            })}
-                        </Tooltip>
-                    )}
-                </>
+        <>
+            <CompanyScoreBase score={score} pending={scoreFxPending} />
+            {withTooltip && (
+                <Tooltip target=".company-score-rating" position="bottom">
+                    {itemTemplate({
+                        label: 'ticker.metrics.title',
+                        value: scoreData?.fundamentals
+                    })}
+                    {itemTemplate({
+                        label: 'ticker.businessmodel.title',
+                        value: scoreData?.businessModel?.val
+                    })}
+                    {itemTemplate({
+                        label: 'ticker.moat.title',
+                        value: scoreData?.moat?.result
+                    })}
+                    {itemTemplate({
+                        label: 'ticker.value.title',
+                        value: valuation?.areas?.length
+                    })}
+                </Tooltip>
             )}
-        </div>
+        </>
     );
 };

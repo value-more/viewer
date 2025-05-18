@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { CompanyFavorite } from '../CompanyFavorite';
 import { Link } from 'react-router-dom';
 import { Card } from 'primereact/card';
+import { api } from '../../api/invData';
+import { CompanyScoreBase } from '../companies/CompanyScore/base';
 
 interface Company {
     cik: number;
@@ -13,41 +15,49 @@ interface Company {
     timestamp?: number;
     favorite: boolean;
     tickers?: string[];
+    lastYearMetrics?: { roe?: number; operatingMargin?: number };
+    score?: number;
 }
 
 interface CompaniesListProps {
-    onLoad: ({
-        opts,
-        filter,
-        favorites
-    }: {
-        opts: any;
-        filter: any;
-        favorites?: boolean;
-    }) => Promise<{ data: any; total: number; totalFiltered: number }>;
+    recommended?: boolean;
+    favorites?: boolean;
+    withHeader?: boolean;
+    limit?: number;
+    onFavoritesChange?: () => void;
+    reload?: number;
+    centerContent?: boolean;
 }
 
-export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
+export const CompaniesList: React.FC<CompaniesListProps> = ({
+    recommended,
+    favorites,
+    withHeader,
+    limit,
+    onFavoritesChange,
+    reload,
+    centerContent
+}) => {
     const [companies, setCompanies] = useState<Company[]>([]);
-    const [opts, setOpts] = useState({ first: 0, rows: 25 });
+    const [opts, setOpts] = useState({ first: 0, rows: limit ?? 25 });
     const [total, setTotal] = useState(0);
     const [totalFiltered, setTotalFiltered] = useState(0);
     const [filter, setFilter] = useState('');
-    const [showFavorites, setShowFavorites] = useState<boolean>(false);
+    const [showFavorites, setShowFavorites] = useState<boolean>(
+        favorites ?? false
+    );
     const { t } = useTranslation();
 
     useEffect(() => {
         (async () => {
-            const data = await onLoad({
-                opts,
-                filter,
-                favorites: showFavorites
-            });
+            const data = await api(
+                `invData/companies?first=${opts.first}&rows=${opts.rows}&favorites=${showFavorites}&recommended=${recommended ?? false}&q=${filter.toLocaleLowerCase()}`
+            );
             setCompanies(data?.data || []);
             setTotal(data?.total);
             setTotalFiltered(data?.totalFiltered);
         })();
-    }, [opts, filter, showFavorites]);
+    }, [opts, filter, showFavorites, reload]);
 
     const onPageChange = async ({
         first,
@@ -60,10 +70,18 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
     const itemTemplate = (company: Company) => {
         if (!company) return null;
 
-        const { title, cik, timestamp, favorite, tickers } = company;
+        const {
+            title,
+            cik,
+            timestamp,
+            favorite,
+            tickers,
+            score,
+            lastYearMetrics
+        } = company;
         return (
             <Card
-                className="hover:surface-hover relative w-20rem h-6rem pl-2 pr-4"
+                className="hover:surface-hover relative w-20rem h-8rem pl-2 pr-4"
                 key={cik}
                 pt={{
                     body: { className: 'p-0 h-full' },
@@ -74,11 +92,40 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
                     <div
                         className={`companyLogo48 ${tickers?.map((t) => 't-logo-' + t).join(' ')}`}
                     ></div>
-                    <div className="flex flex-column flex-1 h-full">
-                        <div className="flex-1 mt-1 text-center text-primary align-content-center">
+                    <div className="flex flex-column flex-1 h-full ml-3">
+                        <div className="flex-1 mt-1 text-primary align-content-center line-height-2">
                             {title ?? ''}
                         </div>
-                        <div className="flex justify-content-center gap-3 mt-auto">
+                        <div className="flex mb-2">
+                            {(score ?? undefined) !== undefined ? (
+                                <CompanyScoreBase score={score} />
+                            ) : (
+                                <div className="flex gap-4 text-sm">
+                                    {(lastYearMetrics?.roe ?? 0) > 0 && (
+                                        <div>
+                                            ROE:{' '}
+                                            {(
+                                                (lastYearMetrics?.roe ?? 0) *
+                                                100
+                                            ).toFixed(0)}
+                                            %
+                                        </div>
+                                    )}
+                                    {(lastYearMetrics?.operatingMargin ?? 0) >
+                                        0 && (
+                                        <div>
+                                            EBIT-Marge:{' '}
+                                            {(
+                                                (lastYearMetrics?.operatingMargin ??
+                                                    0) * 100
+                                            ).toFixed(0)}
+                                            %
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                        <div className="flex gap-3 mt-auto">
                             <Link
                                 style={{ textDecoration: 'none' }}
                                 className="text-gray-400 hover:text-primary"
@@ -111,7 +158,11 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
                     </div>
                 </div>
                 <div className="absolute top-0 right-0 pr-1 pt-1 hover:text-primary">
-                    <CompanyFavorite cik={cik} favorite={favorite} />
+                    <CompanyFavorite
+                        cik={cik}
+                        favorite={favorite}
+                        onFavoriteChange={() => onFavoritesChange?.()}
+                    />
                 </div>
                 {!!timestamp && (
                     <div className="text-sm flex align-items-center mt-2">
@@ -157,16 +208,15 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({ onLoad }) => {
     return (
         <DataView
             value={companies}
-            rows={50}
+            rows={opts.rows}
             itemTemplate={itemTemplate}
             pt={{
                 grid: {
-                    className:
-                        'gap-4 align-content-start overflow-auto overflow-x-hidden justify-content-center p-1'
+                    className: `gap-4 align-content-start overflow-auto overflow-x-hidden p-1 ${centerContent ? 'justify-content-center' : ''}`
                 },
                 header: { className: 'border-none' }
             }}
-            header={header()}
+            header={withHeader ? header() : null}
         />
     );
 };
