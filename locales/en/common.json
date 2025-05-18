@@ -1,6 +1,9 @@
 {
     "home": {
-        "title": "Companies"
+        "title": "Companies",
+        "recommendedCompanies": "Top recommended",
+        "favoritesCompanies": "Your favorites",
+        "allCompanies": "All companies"
     },
     "controls": {
         "search": "Search...",

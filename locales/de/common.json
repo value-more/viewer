@@ -1,6 +1,9 @@
 {
     "home": {
-        "title": "Unternehmen"
+        "title": "Unternehmen",
+        "recommendedCompanies": "Top Empfehlungen",
+        "favoritesCompanies": "Deine Favoriten",
+        "allCompanies": "Alle Unternehmen"
     },
     "controls": {
         "search": "Suche...",
@@ -44,7 +47,8 @@
                     "dataset1": "EBIT je Aktie",
                     "cagrOperatingIncome": "CAGR EBIT",
                     "cagrOperatingIncomePerShare": "CAGR EBIT je Aktie",
-                    "tenYAvgEbitPerShare": "10J-AVG EBIT je Aktie""additionalDataTitle": "Operatives Ergebnis"
+                    "tenYAvgEbitPerShare": "10J-AVG EBIT je Aktie",
+                    "additionalDataTitle": "Operatives Ergebnis"
                 },
                 "revenueGrowthVsCOGSGrowth": {
                     "title": "Umsatz- u. Kosten-Wachstum",
@@ -146,7 +150,8 @@
                 "invMargin": {
                     "title": "Verhältnis von Investitionen zu EBIT",
                     "dataset1": "Investment Marge",
-                    "tenYAvgInvMargin": "10J-AVG Inv Margin""additionalDataTitle": "Investment Marge"
+                    "tenYAvgInvMargin": "10J-AVG Inv Margin",
+                    "additionalDataTitle": "Investment Marge"
                 },
                 "daMargin": {
                     "title": "Verhältnis von Abschreibungen zu Bruttogewinn",
