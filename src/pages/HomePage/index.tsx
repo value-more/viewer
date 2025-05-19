@@ -29,7 +29,7 @@ export const HomePage: React.FC = () => {
                 </div>
                 <h1>{t('home.allCompanies')}</h1>
                 <div className="m-auto flex flex-column w-full h-full overflow-auto">
-                    <CompaniesList withHeader centerContent />
+                    <CompaniesList withHeader centerContent view="table" />
                 </div>
             </div>
         </BaseLayout>
