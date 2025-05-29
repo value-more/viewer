@@ -11,16 +11,17 @@ export const CompanyScoreBase: React.FC<CompanyScoreBaseProps> = ({
     pending,
     score
 }) => {
+    const scoreValue = score ?? undefined;
     return (
         <div
-            className={`company-score-rating flex align-items-center w-min justify-content-center border-1 p-2 ${score === undefined ? 'border-warning' : 'border-solid'}`}
+            className={`company-score-rating flex align-items-center w-min justify-content-center border-1 p-2 ${scoreValue === undefined ? 'border-warning' : 'border-solid'}`}
         >
             {pending ? (
                 <Skeleton className="w-8rem" />
             ) : (
                 <>
                     <Rating
-                        value={score !== undefined ? score + 2 : 0}
+                        value={scoreValue !== undefined ? scoreValue + 2 : 0}
                         disabled
                         cancel={false}
                     />
