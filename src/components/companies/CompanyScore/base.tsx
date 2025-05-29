@@ -4,7 +4,7 @@ import { Skeleton } from 'primereact/skeleton';
 
 interface CompanyScoreBaseProps {
     pending?: boolean;
-    score?: number;
+    score?: number | null;
 }
 
 export const CompanyScoreBase: React.FC<CompanyScoreBaseProps> = ({
