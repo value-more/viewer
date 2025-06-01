@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menubar } from 'primereact/menubar';
 import i18next from 'i18next';
 import { Sidebar } from 'primereact/sidebar';
 import { ChangeLog } from './components/ChangeLog';
-import { ThemeMenu } from './components/ThemeMenu';
 import { Avatar } from 'primereact/avatar';
 import { MenuItem } from 'primereact/menuitem';
-import { IconMenu } from './components/IconMenu';
 import { CompanySearch } from './components/CompanySearch';
-import { Divider } from 'primereact/divider';
+import { useIsMediumScreen } from './utils/breakpointsHook';
+import { Menu } from 'primereact/menu';
+import { useThemeMenu } from './components/ThemeMenu/useThemeMenu';
 
 interface HeaderProps {
     menu?: MenuItem[];
@@ -19,15 +19,48 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
     const navigate = useNavigate();
     const [visibleChangelog, setVisibleChangelog] = useState<boolean>();
+    const isMedium = useIsMediumScreen();
+    const menuUserRef = useRef<Menu | null>(null);
+    const { themeItems } = useThemeMenu();
 
     const changeLanguage = (lang: string) => {
         localStorage.setItem('lng', lang);
         i18next.changeLanguage(lang);
     };
 
-    const languageMenuItems = [
-        { label: 'English', command: () => changeLanguage('en') },
-        { label: 'German', command: () => changeLanguage('de') }
+    const items: MenuItem[] = [
+        {
+            label: 'Language',
+            icon: 'pi pi-globe',
+            items: [
+                { label: 'English', command: () => changeLanguage('en') },
+                { label: 'German', command: () => changeLanguage('de') }
+            ]
+        },
+        {
+            label: 'Themes',
+            items: themeItems
+        },
+        {
+            label: 'Admin',
+            items: [
+                {
+                    label: 'Analysis',
+                    icon: 'pi pi-check-circle',
+                    command: () => navigate('/analysis')
+                },
+                {
+                    label: 'Config',
+                    icon: 'pi pi-cog',
+                    command: () => navigate('/config')
+                },
+                {
+                    label: 'Logs',
+                    icon: 'pi pi-clock',
+                    command: () => setVisibleChangelog(true)
+                }
+            ]
+        }
     ];
 
     const start = (
@@ -39,7 +72,9 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
                 className="mr-2 cursor-pointer"
                 onClick={() => navigate({ pathname: '/' })}
             />
-            {title && <div className="text-primary text-5xl pt-2">{title}</div>}
+            {isMedium && title && (
+                <div className="text-primary text-5xl pt-2">{title}</div>
+            )}
         </div>
     );
 
@@ -48,23 +83,13 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
             <CompanySearch />
             <div className="flex gap-3 mr-2 ml-2 align-items-center">
                 <i className="pi pi-bell"></i>
-                <IconMenu icon="language" menu={languageMenuItems} />
-                <ThemeMenu />
-                <Divider layout="vertical" className="h-1rem m-0" />
-                <i
-                    className="pi pi-check-circle hover:text-primary cursor-pointer"
-                    onClick={() => navigate('/analysis')}
-                ></i>
-                <i
-                    className="pi pi-cog hover:text-primary cursor-pointer"
-                    onClick={() => navigate('/config')}
-                ></i>
-                <i
-                    className="pi pi-clock hover:text-primary cursor-pointer"
-                    onClick={() => setVisibleChangelog(true)}
-                ></i>
             </div>
-            <Avatar icon="pi pi-user" shape="circle" />
+            <Avatar
+                icon="pi pi-user"
+                shape="circle"
+                onClick={(event) => menuUserRef?.current?.toggle(event)}
+            />
+            <Menu model={items} popup ref={menuUserRef} />
         </div>
     );
 

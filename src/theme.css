@@ -16,7 +16,7 @@ h1, h2, h3 {
     background-color: var(--background-color);    
 }
 
-.p-button-label {
+.p-button-label, .p-submenu-header {
     line-height: normal;
 }
 
