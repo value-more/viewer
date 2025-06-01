@@ -1,9 +1,13 @@
 {
+    "common": {
+        "showMore": "Show more"
+    },
     "home": {
         "title": "Companies",
-        "recommendedCompanies": "Top recommended",
+        "recommendedCompanies": "Highlights",
         "favoritesCompanies": "Your favorites",
-        "allCompanies": "All companies"
+        "allCompanies": "All companies",
+        "randomCompanies": "Do you know ?"
     },
     "controls": {
         "search": "Search...",
