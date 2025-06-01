@@ -1,7 +1,7 @@
 import React from 'react';
 import { BaseViewProps, Company } from './types';
 import { DataView } from 'primereact/dataview';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Card } from 'primereact/card';
 import { CompanyFavorite } from '../CompanyFavorite';
 import { CompanyScoreBase } from '../companies/CompanyScore/base';
@@ -19,6 +19,7 @@ export const ListView: React.FC<BaseViewProps> = ({
     const {
         i18n: { language }
     } = useTranslation();
+    const navigate = useNavigate();
 
     const itemTemplate = (company: Company) => {
         if (!company) return null;
@@ -34,39 +35,52 @@ export const ListView: React.FC<BaseViewProps> = ({
         } = company;
         return (
             <Card
-                className="hover:surface-hover relative w-20rem h-8rem pl-2 pr-4"
+                className="hover:surface-hover relative w-20rem h-8rem pl-2 pr-4 cursor-pointer"
                 key={cik}
                 pt={{
                     body: { className: 'p-0 h-full' },
-                    content: { className: 'p-0 pt-1 pb-1 h-full' }
+                    content: { className: 'p-0 py-2 h-full' }
+                }}
+                onClick={(event) => {
+                    if (event.ctrlKey) {
+                        window.open(
+                            `${window.location.origin}/#/company/${cik}`,
+                            '_blank'
+                        );
+                    } else {
+                        navigate(`/company/${cik}`);
+                    }
                 }}
             >
-                <div className="flex align-items-center h-full">
+                <div className="flex h-full">
                     <div
                         className={`companyLogo48 ${tickers?.map((t) => 't-logo-' + t).join(' ')}`}
                     ></div>
                     <div className="flex flex-column flex-1 h-full ml-3">
-                        <div className="flex-1 mt-1 text-primary align-content-center line-height-2">
+                        <div className="flex-1 mt-1 text-primary line-height-2">
                             {title ?? ''}
                         </div>
-                        <div className="flex mb-2">
+                        <div className="flex gap-3 mt-auto line-height-3 pb-1">
                             {(score ?? undefined) !== undefined ? (
                                 <CompanyScoreBase score={score} />
                             ) : (
-                                <div className="flex gap-4 text-sm">
-                                    {(lastYearMetrics?.roe ?? 0) > 0 && (
+                                <div className="flex gap-6 text-sm">
+                                    {(lastYearMetrics?.roe ?? undefined) !==
+                                        undefined && (
                                         <div>
-                                            ROE:{' '}
+                                            ROE:
+                                            <br />
                                             {displayMetricField(
                                                 language,
                                                 lastYearMetrics?.roe
                                             )}
                                         </div>
                                     )}
-                                    {(lastYearMetrics?.operatingMargin ?? 0) >
-                                        0 && (
+                                    {(lastYearMetrics?.operatingMargin ??
+                                        undefined) !== undefined && (
                                         <div>
-                                            EBIT-Marge:{' '}
+                                            EBIT-Marge:
+                                            <br />
                                             {displayMetricField(
                                                 language,
                                                 lastYearMetrics?.operatingMargin
@@ -75,36 +89,6 @@ export const ListView: React.FC<BaseViewProps> = ({
                                     )}
                                 </div>
                             )}
-                        </div>
-                        <div className="flex gap-3 mt-auto">
-                            <Link
-                                style={{ textDecoration: 'none' }}
-                                className="text-gray-400 hover:text-primary"
-                                to={`/company/${cik}`}
-                            >
-                                <i className="pi pi-eye mr-1" />
-                                View
-                            </Link>
-                            <Link
-                                style={{ textDecoration: 'none' }}
-                                className="text-gray-400 hover:text-primary"
-                                to={`/company/${cik}/edit`}
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                <i className="pi pi-pencil mr-1" />
-                                Edit
-                            </Link>
-                            <Link
-                                style={{ textDecoration: 'none' }}
-                                className="text-gray-400 hover:text-primary"
-                                to={`/company/${cik}`}
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                <i className="pi pi-external-link mr-1" />
-                                Tab
-                            </Link>
                         </div>
                     </div>
                 </div>
