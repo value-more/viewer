@@ -21,7 +21,7 @@ export const CompanyScoreBase: React.FC<CompanyScoreBaseProps> = ({
             ) : (
                 <>
                     <Rating
-                        value={scoreValue !== undefined ? scoreValue + 2 : 0}
+                        value={scoreValue !== undefined ? scoreValue + 3 : 0}
                         disabled
                         cancel={false}
                     />
