@@ -14,17 +14,21 @@ export const InfoIcon: React.FC<InfoIconProps> = ({
     const [cla] = useState<string>(uuidv4());
     return (
         <>
-            <Tooltip target={`.c${cla}`} className="w-12rem">
+            <Tooltip target={`.c${cla}`} className="w-14rem">
                 {syncTimestamp && (
                     <div className="text-sm flex align-items-center mb-1">
                         <i className="pi pi-sync mr-2"></i>
-                        {new Date(syncTimestamp).toLocaleString()}
+                        <div className="ml-auto">
+                            {new Date(syncTimestamp).toLocaleString()}
+                        </div>
                     </div>
                 )}
                 {editTimestamp && (
                     <div className="text-sm flex align-items-center">
                         <i className="pi pi-pencil mr-2"></i>
-                        {new Date(editTimestamp).toLocaleString()}
+                        <div className="ml-auto">
+                            {new Date(editTimestamp).toLocaleString()}
+                        </div>
                     </div>
                 )}
             </Tooltip>

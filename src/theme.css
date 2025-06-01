@@ -16,6 +16,10 @@ h1, h2, h3 {
     background-color: var(--background-color);    
 }
 
+.p-button-label {
+    line-height: normal;
+}
+
 .text-warning {
     color: #c25d1a;
 }

@@ -35,11 +35,11 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
             <img
                 alt="logo"
                 src={`${process.env.PUBLIC_URL}/logo.png`}
-                height="40"
+                height="36"
                 className="mr-2 cursor-pointer"
                 onClick={() => navigate({ pathname: '/' })}
             />
-            {title && <div className="text-primary text-3xl pt-1">{title}</div>}
+            {title && <div className="text-primary text-5xl pt-2">{title}</div>}
         </div>
     );
 
