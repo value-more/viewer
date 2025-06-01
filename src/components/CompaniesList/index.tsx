@@ -47,7 +47,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     useEffect(() => {
         (async () => {
             const data = await api(
-                `invData/companies?first=${opts.first}&rows=${opts.rows}${showFavorites ? '&favorites=true' : ''}${recommended ? '&recommended=true' : ''}${hasRoe ? '&hasRoe=true' : ''}${random ? '&random=true' : ''}&q=${filter.toLocaleLowerCase()}`
+                `invData/companies?first=${opts.first}&rows=${opts.rows}${showFavorites ? `&favorites=${limit ?? true}` : ''}${recommended ? '&recommended=true' : ''}${hasRoe ? '&hasRoe=true' : ''}${random ? '&random=true' : ''}&q=${filter.toLocaleLowerCase()}`
             );
             setCompanies(data?.data || []);
             setTotal(data?.total);
