@@ -6,6 +6,7 @@ import { CompanyScoreBase } from '../companies/CompanyScore/base';
 import { displayMetricField } from './utils';
 import { CompanyFavorite } from '../CompanyFavorite';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 export const TableView: React.FC<BaseViewProps> = ({
     companies,
@@ -16,6 +17,7 @@ export const TableView: React.FC<BaseViewProps> = ({
     const {
         i18n: { language }
     } = useTranslation();
+    const navigate = useNavigate();
 
     return (
         <DataTable
@@ -28,12 +30,29 @@ export const TableView: React.FC<BaseViewProps> = ({
             pt={{
                 header: { style: { background: 'none', border: 'none' } }
             }}
+            selectionMode="single"
+            onRowSelect={(event) => {
+                if ((event.originalEvent as any).ctrlKey) {
+                    window.open(
+                        `${window.location.origin}/#/company/${event.data.cik}`,
+                        '_blank'
+                    );
+                } else {
+                    navigate(`/company/${event.data.cik}`);
+                }
+            }}
         >
             <Column
                 field="timestamp"
                 header="Date"
                 frozen
-                body={(row) => new Date(row.timestamp).toLocaleDateString()}
+                body={(row) =>
+                    new Date(row.timestamp).toLocaleDateString(language, {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    })
+                }
             />
             <Column field="title" header="Company" frozen />
             <Column
