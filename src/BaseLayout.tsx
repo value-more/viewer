@@ -15,7 +15,7 @@ export const BaseLayout: React.FC<BaseLayoutProps> = ({
 }) => (
     <div className="overflow-y-auto overflow-x-hidden h-full">
         <Header menu={menu} title={title} />
-        <div className="flex-auto" style={{ height: 'calc(100% - 60px)' }}>
+        <div className="flex-auto" style={{ height: 'calc(100% - 58px)' }}>
             {children}
         </div>
     </div>

@@ -11,6 +11,7 @@ import { ProtectedRoute } from './components/routes/ProtectedRoute';
 import { ConfigPage } from './pages/ConfigPage';
 import { AnalysisPage } from './pages/AnalysisPage';
 import { Toasts } from './components/Toasts';
+import { ListPage } from './pages/ListPage';
 
 function App() {
     return (
@@ -22,6 +23,14 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <HomePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/list"
+                        element={
+                            <ProtectedRoute>
+                                <ListPage />
                             </ProtectedRoute>
                         }
                     />

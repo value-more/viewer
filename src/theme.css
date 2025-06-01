@@ -68,6 +68,17 @@ h1, h2, h3 {
     align-items: center;
 }
 
+.p-button-secondary {
+    color: var(--text-color);
+    background: transparent;
+    border-color: var(--text-color);
+}
+
+.p-button-secondary:hover {
+    background: var(--highlight-bg);
+    color: white;
+}
+
 /* Style the scrollbar track */
 ::-webkit-scrollbar {
     width: 6px; /* Width of the vertical scrollbar */
