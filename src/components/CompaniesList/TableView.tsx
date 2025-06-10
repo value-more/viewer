@@ -34,7 +34,7 @@ export const TableView: React.FC<BaseViewProps> = ({
             onRowSelect={(event) => {
                 if ((event.originalEvent as any).ctrlKey) {
                     window.open(
-                        `${window.location.origin}/#/company/${event.data.cik}`,
+                        `${window.location.origin}${process.env.PUBLIC_URL}#/company/${event.data.cik}`,
                         '_blank'
                     );
                 } else {

@@ -44,7 +44,7 @@ export const ListView: React.FC<BaseViewProps> = ({
                 onClick={(event) => {
                     if (event.ctrlKey) {
                         window.open(
-                            `${window.location.origin}/#/company/${cik}`,
+                            `${window.location.origin}${process.env.PUBLIC_URL}#/company/${cik}`,
                             '_blank'
                         );
                     } else {
