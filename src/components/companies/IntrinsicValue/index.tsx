@@ -77,7 +77,7 @@ export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
                                             options={items}
                                             value={
                                                 companyValues?.preselectedLevel ??
-                                                2
+                                                0
                                             }
                                             onChange={(event) =>
                                                 companyValuesEffects.updateDefaultLevelForActiveCikFx(
