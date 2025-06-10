@@ -56,7 +56,9 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     }, [opts, filter, showFavorites, reload]);
 
     useEffect(() => {
-        if (limit !== opts.rows) setOpts({ ...opts, rows: limit ?? 25 });
+        if (limit && limit !== opts.rows) {
+            setOpts({ ...opts, rows: limit ?? 25 });
+        }
     }, [limit]);
 
     const onPageChange = async ({

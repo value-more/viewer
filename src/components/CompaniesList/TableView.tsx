@@ -83,6 +83,16 @@ export const TableView: React.FC<BaseViewProps> = ({
                 body={(row) => row.tickers?.[0] ?? ''}
             />
             <Column
+                field="price.diffFiftyTwoWeekLow"
+                header="~52w"
+                body={(row) => {
+                    const diff = row.price?.diffFiftyTwoWeekLow;
+                    return diff !== undefined
+                        ? Math.round(row.price.diffFiftyTwoWeekLow)
+                        : '';
+                }}
+            />
+            <Column
                 field="favorite"
                 header="Favorite"
                 body={(row) => (
