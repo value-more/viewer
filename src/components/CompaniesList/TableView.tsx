@@ -87,7 +87,7 @@ export const TableView: React.FC<BaseViewProps> = ({
                 header="~52w"
                 body={(row) => {
                     const diff = row.price?.diffFiftyTwoWeekLow;
-                    return diff !== undefined
+                    return (diff ?? undefined) !== undefined
                         ? row.price.diffFiftyTwoWeekLow.toLocaleString(
                               language,
                               {
