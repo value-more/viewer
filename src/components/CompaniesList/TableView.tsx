@@ -88,7 +88,13 @@ export const TableView: React.FC<BaseViewProps> = ({
                 body={(row) => {
                     const diff = row.price?.diffFiftyTwoWeekLow;
                     return diff !== undefined
-                        ? Math.round(row.price.diffFiftyTwoWeekLow)
+                        ? row.price.diffFiftyTwoWeekLow.toLocaleString(
+                              language,
+                              {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                              }
+                          )
                         : '';
                 }}
             />
