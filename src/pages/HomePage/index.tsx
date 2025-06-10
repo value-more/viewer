@@ -4,11 +4,19 @@ import { BaseLayout } from '../../BaseLayout';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router';
+import {
+    useIsMediumScreen,
+    useIsXXXLargeScreen
+} from '../../utils/breakpointsHook';
 
 export const HomePage: React.FC = () => {
     const { t } = useTranslation();
     const [reloadFavList, setReloadFavList] = useState<number>(0);
     const navigate = useNavigate();
+    const isMediumScreen = useIsMediumScreen();
+    const isLargeScreen = useIsXXXLargeScreen();
+    const limit = isLargeScreen ? 5 : isMediumScreen ? 4 : 3;
+
     useEffect(() => {
         document.title = 'ValueMore - Home';
     }, []);
@@ -22,7 +30,7 @@ export const HomePage: React.FC = () => {
                         <CompaniesList
                             recommended
                             random
-                            limit={5}
+                            limit={limit}
                             onFavoritesChange={() =>
                                 setReloadFavList(
                                     Math.floor(Math.random() * 100000)
@@ -45,7 +53,7 @@ export const HomePage: React.FC = () => {
                     <div className="m-auto flex flex-column w-full overflow-auto">
                         <CompaniesList
                             favorites
-                            limit={5}
+                            limit={limit}
                             reload={reloadFavList}
                         />
                     </div>
@@ -63,7 +71,7 @@ export const HomePage: React.FC = () => {
                     <h1 className="mt-6">{t('home.randomCompanies')}</h1>
                     <div className="m-auto flex flex-column w-full overflow-auto">
                         <CompaniesList
-                            limit={5}
+                            limit={limit}
                             reload={reloadFavList}
                             random
                             hasRoe

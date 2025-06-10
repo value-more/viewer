@@ -28,3 +28,4 @@ export const useIsMediumScreen = () => useMediaQuery(`(min-width: 768px)`);
 export const useIsLargeScreen = () => useMediaQuery(`(min-width: 992px)`);
 export const useIsXLargeScreen = () => useMediaQuery(`(min-width: 1200px)`);
 export const useIsXXLargeScreen = () => useMediaQuery(`(min-width: 1440px)`);
+export const useIsXXXLargeScreen = () => useMediaQuery(`(min-width: 1768px)`);
