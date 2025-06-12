@@ -46,8 +46,10 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     );
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const [metricsKeys, setMetricsKeys] = useState<string[] | null>(null);
-    const [filterState, filterStateDebounced, setFilter] =
-        useDebounce<Filter | null>(filter ?? null, 400);
+    const [, filterStateDebounced, setFilter] = useDebounce<Filter | null>(
+        filter ?? null,
+        400
+    );
 
     useEffect(() => {
         (async () => {
@@ -155,7 +157,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                 />
                 <div className="flex gap-2 align-items-center">
                     <InputNumber
-                        value={filter?.globalMetrics?.[gmk]?.$gte}
+                        value={filterStateDebounced?.globalMetrics?.[gmk]?.$gte}
                         size={3}
                         locale={language}
                         placeholder="min"
@@ -174,7 +176,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                         }}
                     />
                     <InputNumber
-                        value={filter?.globalMetrics?.[gmk]?.$lte}
+                        value={filterStateDebounced?.globalMetrics?.[gmk]?.$lte}
                         size={3}
                         locale={language}
                         placeholder="max"
@@ -197,8 +199,9 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                             <i
                                 className="pi pi-trash cursor-pointer"
                                 onClick={() => {
-                                    delete filterState?.globalMetrics?.[gmk];
-                                    setFilter({ ...filterState });
+                                    delete filterStateDebounced
+                                        ?.globalMetrics?.[gmk];
+                                    setFilter({ ...filterStateDebounced });
                                 }}
                             />
                         )}
@@ -219,8 +222,8 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                     className="w-30rem"
                 >
                     <h2>Filter</h2>
-                    {filterState?.globalMetrics &&
-                        Object.keys(filterState.globalMetrics).map(
+                    {filterStateDebounced?.globalMetrics &&
+                        Object.keys(filterStateDebounced.globalMetrics).map(
                             renderFilter
                         )}
                     {renderFilter('', -1)}
