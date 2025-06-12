@@ -28,8 +28,7 @@ export const HomePage: React.FC = () => {
                     <h1>{t('home.recommendedCompanies')}</h1>
                     <div className="m-auto flex flex-column w-full overflow-auto">
                         <CompaniesList
-                            recommended
-                            random
+                            filter={{ recommended: true, random: true }}
                             limit={limit}
                             onFavoritesChange={() =>
                                 setReloadFavList(
@@ -52,7 +51,7 @@ export const HomePage: React.FC = () => {
                     <h1 className="mt-6">{t('home.favoritesCompanies')}</h1>
                     <div className="m-auto flex flex-column w-full overflow-auto">
                         <CompaniesList
-                            favorites
+                            filter={{ favorites: true }}
                             limit={limit}
                             reload={reloadFavList}
                         />
@@ -73,8 +72,7 @@ export const HomePage: React.FC = () => {
                         <CompaniesList
                             limit={limit}
                             reload={reloadFavList}
-                            random
-                            hasRoe
+                            filter={{ random: true, hasRoe: true }}
                         />
                     </div>
                 </div>

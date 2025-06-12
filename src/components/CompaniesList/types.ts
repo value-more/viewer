@@ -21,3 +21,11 @@ export interface BaseViewProps {
     centerContent?: boolean;
     showTimestamp?: boolean;
 }
+
+export interface Filter {
+    favorites?: boolean;
+    recommended?: boolean;
+    hasRoe?: boolean;
+    random?: boolean;
+    globalMetrics?: { [key: string]: { $gte?: number; $lte?: number } };
+}

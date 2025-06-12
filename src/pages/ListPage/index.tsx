@@ -15,9 +15,11 @@ export const ListPage = () => {
                         withHeader
                         centerContent
                         view="table"
-                        favorites={favorites}
-                        recommended={recommended}
-                        random={random}
+                        filter={{
+                            favorites,
+                            recommended,
+                            random
+                        }}
                     />
                 </div>
             </div>

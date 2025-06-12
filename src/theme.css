@@ -68,6 +68,10 @@ h1, h2, h3 {
     align-items: center;
 }
 
+.p-dropdown-label {
+    padding: 0.1rem 0 0.1rem 0.5rem;
+}
+
 .p-button-secondary {
     color: var(--text-color);
     background: transparent;
