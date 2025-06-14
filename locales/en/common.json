@@ -2,6 +2,17 @@
     "common": {
         "showMore": "Show more"
     },
+    "menu": {
+        "user": "User",
+        "logout": "Logout",
+        "signin": "Sign in",
+        "language": "Language",
+        "themes": "Themes",
+        "analysis": "Analysis",
+        "config": "Config",
+        "logs": "Logs",
+        "admin": "Admin"
+    },
     "home": {
         "title": "Companies",
         "recommendedCompanies": "Highlights",
