@@ -14,9 +14,11 @@ import { CompanyPageView } from './View';
 import { companyPriceEvents } from '../../models/company/price';
 import { BaseLayout } from '../../BaseLayout';
 import { viewerEvents } from '../../components/InvDataViewer/state';
+import { useUserRights } from '../../models/user/hooks';
 
 export const CompanyPage: React.FC = () => {
     const { t } = useTranslation();
+    const urs = useUserRights();
     const { cik, mode } = useParams();
     const [name, setName] = useState<string>('');
     const [data, setData] = useState<InvData | undefined | null>();
@@ -39,16 +41,22 @@ export const CompanyPage: React.FC = () => {
 
         const getCompany = async () => {
             const data = await api(`invData/companies/${cik}`);
+            if (!data) return;
+
             setData(data);
             setName(data.name);
 
-            if (!data) return;
-
             document.title = data.name;
 
-            metricsScoresEvents.setCik(Number(cik));
-            companyScoresEvents.setCik(Number(cik));
-            companyValuesEvents.setCik(Number(cik));
+            urs?.['companies.metrics.scores.view'] &&
+                metricsScoresEvents.setCik(Number(cik));
+
+            urs?.['companies.scores.view'] &&
+                companyScoresEvents.setCik(Number(cik));
+
+            urs?.['companies.value.view'] &&
+                companyValuesEvents.setCik(Number(cik));
+
             companyPriceEvents.setTicker(data?.tickers?.[0]?.ticker);
         };
         getCompany();
@@ -66,19 +74,21 @@ export const CompanyPage: React.FC = () => {
         {
             label: t('ticker.businessmodel.title'),
             command: () => scrollToItem('businessModel')
-        },
-        {
-            label: t('ticker.value.title'),
-            command: () => scrollToItem('value')
-        },
-        {
-            label: t('ticker.fundamentals.title'),
-            command: () => {
-                viewerEvents.setIndexes([0]);
-                setTimeout(() => scrollToItem('data'), 500);
-            }
         }
     ];
+    if (urs?.['companies.value.view']) {
+        items.push({
+            label: t('ticker.value.title'),
+            command: () => scrollToItem('value')
+        });
+    }
+    items.push({
+        label: t('ticker.fundamentals.title'),
+        command: () => {
+            viewerEvents.setIndexes([0]);
+            setTimeout(() => scrollToItem('data'), 500);
+        }
+    });
 
     const scrollToItem = (key: string) => {
         (refs[key]?.current as any)?.scrollIntoView({

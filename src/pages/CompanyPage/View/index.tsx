@@ -19,6 +19,7 @@ import {
     useIsXLargeScreen,
     useIsXXLargeScreen
 } from '../../../utils/breakpointsHook';
+import { useUserRights } from '../../../models/user/hooks';
 
 interface CompanyPageViewProps {
     cik: number;
@@ -35,6 +36,7 @@ export const CompanyPageView: React.FC<CompanyPageViewProps> = ({
 }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const urs = useUserRights();
     const isMedium = useIsMediumScreen();
     const isXLarge = useIsXLargeScreen();
     const isXXLarge = useIsXXLargeScreen();
@@ -45,23 +47,29 @@ export const CompanyPageView: React.FC<CompanyPageViewProps> = ({
             <div className="flex flex-wrap align-items-center bg-default sticky top-0 z-5">
                 <h1 className="col-12 md:col-7 scrollMarginTop">
                     {name}
-                    <i
-                        className="pi pi-pencil vertical-align-top text-xs cursor-pointer pl-1"
-                        onClick={() =>
-                            navigate({ pathname: `/company/${cik}/edit` })
-                        }
-                    />
+                    {urs?.['companies.edit'] && (
+                        <i
+                            className="pi pi-pencil vertical-align-top text-xs cursor-pointer pl-1"
+                            onClick={() =>
+                                navigate({ pathname: `/company/${cik}/edit` })
+                            }
+                        />
+                    )}
                 </h1>
                 {isMedium && (
                     <>
-                        <div className="col-5 xl:col-2 justify-content-end flex gap-3 align-items-center xl:pr-5">
-                            <CompanyScore />
-                            <CompanyFavorite
-                                favorite={data.favorite}
-                                cik={cik}
-                                size="xl"
-                            />
-                        </div>
+                        {urs && (
+                            <div className="col-5 xl:col-2 justify-content-end flex gap-3 align-items-center xl:pr-5">
+                                {urs['companies.scores.view'] && (
+                                    <CompanyScore />
+                                )}
+                                <CompanyFavorite
+                                    favorite={data.favorite}
+                                    cik={cik}
+                                    size="xl"
+                                />
+                            </div>
+                        )}
                         {isXLarge && (
                             <div className="col-3 flex align-items-center gap-3 p-0 mt-1 line-height-2">
                                 <div>
@@ -77,23 +85,31 @@ export const CompanyPageView: React.FC<CompanyPageViewProps> = ({
                     </>
                 )}
             </div>
-            <div className="flex flex-wrap">
-                <div className={`${isXXLarge ? 'col-9 pr-5' : 'col-12'}`}>
-                    <div className="border-1 border-solid">
-                        <MetricsScoreViewer cik={cik} displayDetails={false} />
+            {!!urs?.['companies.metrics.scores.view'] && (
+                <div className="flex flex-wrap">
+                    <div className={`${isXXLarge ? 'col-9 pr-5' : 'col-12'}`}>
+                        <div className="border-1 border-solid">
+                            <MetricsScoreViewer
+                                cik={cik}
+                                displayDetails={false}
+                            />
+                        </div>
                     </div>
+
+                    {isXXLarge && (
+                        <div className="col-3">
+                            <CompanyProfile cik={cik} />
+                        </div>
+                    )}
                 </div>
-                {isXXLarge && (
-                    <div className="col-3">
-                        <CompanyProfile cik={cik} />
-                    </div>
-                )}
-            </div>
-            <div className="mb-5">
-                <h2>Aktuelle Einschatzung</h2>
-                <MetricsAssessment cik={cik} readonly />
-            </div>
-            {!isXXLarge && (
+            )}
+            {!!urs?.['companies.metrics.assessment.view'] && (
+                <div className="mb-5">
+                    <h2>Aktuelle Einschatzung</h2>
+                    <MetricsAssessment cik={cik} readonly />
+                </div>
+            )}
+            {(!urs?.['companies.metrics.scores.view'] || !isXXLarge) && (
                 <div>
                     <CompanyProfile cik={cik} />
                 </div>
@@ -104,13 +120,15 @@ export const CompanyPageView: React.FC<CompanyPageViewProps> = ({
             <div ref={refs.businessModel} className="scrollMarginTop mb-5">
                 <BusinessModel cik={cik} readonly />
             </div>
-            <div ref={refs.value} className="scrollMarginTop mb-5">
-                <h2>{t('ticker.value.title')}</h2>
-                <IntrinsicValue
-                    ticker={data?.tickers[0]?.ticker || ''}
-                    displayDetails
-                />
-            </div>
+            {!!urs?.['companies.value.view'] && (
+                <div ref={refs.value} className="scrollMarginTop mb-5">
+                    <h2>{t('ticker.value.title')}</h2>
+                    <IntrinsicValue
+                        ticker={data?.tickers[0]?.ticker || ''}
+                        displayDetails
+                    />
+                </div>
+            )}
             <div ref={refs.data} className="scrollMarginTop mb-5">
                 <InvDataViewer cik={cik} readonly />
             </div>

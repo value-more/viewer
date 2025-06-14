@@ -8,6 +8,7 @@ import {
 import { Tooltip } from 'primereact/tooltip';
 import { companyValuesStores } from '../../../models/company/values';
 import { CompanyScoreBase } from './base';
+import { useUserRights } from '../../../models/user/hooks';
 
 interface CompanyScoreProps {
     withTooltip?: boolean;
@@ -20,6 +21,10 @@ export const CompanyScore: React.FC<CompanyScoreProps> = ({ withTooltip }) => {
     const scoreFxPending = useUnit(
         companyScoresEffects.getScoresForActiveCikFx.pending
     );
+    const urs = useUserRights();
+
+    if (!urs?.['companies.scores.view']) return null;
+
     const score = scoreData?.score ?? undefined;
 
     const itemTemplate = ({

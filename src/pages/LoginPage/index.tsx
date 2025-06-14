@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Navigate } from 'react-router';
 import { api } from '../../api/invData';
+import { setUser } from '../../models/user';
 
 type Inputs = {
     login: string;
@@ -28,6 +29,20 @@ export const LoginPage: React.FC = () => {
         });
         if (json?.token) {
             localStorage.setItem('token', json.token);
+
+            const user = {
+                ...json.user,
+                name: json.user.name ?? json.user.login,
+                rights: json.user.rights?.reduce(
+                    (prev: { [key: string]: boolean }, i: string) => {
+                        prev[i] = true;
+                        return prev;
+                    },
+                    {}
+                )
+            };
+            localStorage.setItem('user', JSON.stringify(user));
+            setUser(user);
             setHasToken(true);
         }
     };

@@ -12,40 +12,24 @@ import { ConfigPage } from './pages/ConfigPage';
 import { AnalysisPage } from './pages/AnalysisPage';
 import { Toasts } from './components/Toasts';
 import { ListPage } from './pages/ListPage';
+import { NavigateEffector } from './components/routes/NavigateEffector';
 
 function App() {
     return (
         <PrimeReactProvider>
             <HashRouter>
+                <NavigateEffector />
                 <Routes>
-                    <Route
-                        index
-                        element={
-                            <ProtectedRoute>
-                                <HomePage />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/list"
-                        element={
-                            <ProtectedRoute>
-                                <ListPage />
-                            </ProtectedRoute>
-                        }
-                    />
+                    <Route index element={<HomePage />} />
+                    <Route path="/list" element={<ListPage />} />
                     <Route
                         path="/company/:cik/:mode?/*"
-                        element={
-                            <ProtectedRoute>
-                                <CompanyPage />
-                            </ProtectedRoute>
-                        }
+                        element={<CompanyPage />}
                     />
                     <Route
                         path="/config/*"
                         element={
-                            <ProtectedRoute>
+                            <ProtectedRoute right="companies.config">
                                 <ConfigPage />
                             </ProtectedRoute>
                         }
@@ -53,7 +37,7 @@ function App() {
                     <Route
                         path="/analysis/*"
                         element={
-                            <ProtectedRoute>
+                            <ProtectedRoute right="companies.missingRequiredData.view">
                                 <AnalysisPage />
                             </ProtectedRoute>
                         }

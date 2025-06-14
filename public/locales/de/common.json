@@ -2,6 +2,17 @@
     "common": {
         "showMore": "Mehr"
     },
+    "menu": {
+        "user": "Benutzer",
+        "logout": "Abmelden",
+        "signin": "Anmelden",
+        "language": "Sprache",
+        "themes": "Themen",
+        "analysis": "Analyse",
+        "config": "Konfiguration",
+        "logs": "Protokolle",
+        "admin": "Administrator"
+    },
     "home": {
         "title": "Unternehmen",
         "recommendedCompanies": "Highlights",

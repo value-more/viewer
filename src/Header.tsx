@@ -10,6 +10,9 @@ import { CompanySearch } from './components/CompanySearch';
 import { useIsMediumScreen } from './utils/breakpointsHook';
 import { Menu } from 'primereact/menu';
 import { useThemeMenu } from './components/ThemeMenu/useThemeMenu';
+import { useUser, useUserRights } from './models/user/hooks';
+import { logoutFx } from './models/user';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
     menu?: MenuItem[];
@@ -17,51 +20,87 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
+    const user = useUser();
+    const userRights = useUserRights();
     const navigate = useNavigate();
     const [visibleChangelog, setVisibleChangelog] = useState<boolean>();
     const isMedium = useIsMediumScreen();
     const menuUserRef = useRef<Menu | null>(null);
     const { themeItems } = useThemeMenu();
+    const { t } = useTranslation();
 
     const changeLanguage = (lang: string) => {
         localStorage.setItem('lng', lang);
         i18next.changeLanguage(lang);
     };
 
-    const items: MenuItem[] = [
-        {
-            label: 'Language',
-            icon: 'pi pi-globe',
-            items: [
-                { label: 'English', command: () => changeLanguage('en') },
-                { label: 'German', command: () => changeLanguage('de') }
-            ]
-        },
-        {
-            label: 'Themes',
-            items: themeItems
-        },
-        {
-            label: 'Admin',
+    const items: MenuItem[] = [];
+
+    if (user) {
+        items.push({
+            label: t('menu.user'),
             items: [
                 {
-                    label: 'Analysis',
-                    icon: 'pi pi-check-circle',
-                    command: () => navigate('/analysis')
+                    label: user.name ?? 'Anonymous',
+                    disabled: true,
+                    icon: 'pi pi-user'
                 },
                 {
-                    label: 'Config',
-                    icon: 'pi pi-cog',
-                    command: () => navigate('/config')
-                },
-                {
-                    label: 'Logs',
-                    icon: 'pi pi-clock',
-                    command: () => setVisibleChangelog(true)
+                    label: t('menu.logout'),
+                    icon: 'pi pi-sign-out',
+                    command: () => logoutFx()
                 }
             ]
-        }
-    ];
+        });
+    } else {
+        items.push({
+            label: t('menu.signin'),
+            icon: 'pi pi-sign-in',
+            command: () => navigate('/login')
+        });
+    }
+
+    items.push({
+        label: t('menu.language'),
+        icon: 'pi pi-globe',
+        items: [
+            { label: 'English', command: () => changeLanguage('en') },
+            { label: 'German', command: () => changeLanguage('de') }
+        ]
+    });
+    items.push({
+        label: t('menu.themes'),
+        items: themeItems
+    });
+
+    const adminItems = [];
+    if (userRights?.['companies.missingRequiredData.view']) {
+        adminItems.push({
+            label: t('menu.analysis'),
+            icon: 'pi pi-check-circle',
+            command: () => navigate('/analysis')
+        });
+    }
+    if (userRights?.['companies.config']) {
+        adminItems.push({
+            label: t('menu.config'),
+            icon: 'pi pi-cog',
+            command: () => navigate('/config')
+        });
+    }
+    if (userRights?.['logs']) {
+        adminItems.push({
+            label: t('menu.logs'),
+            icon: 'pi pi-clock',
+            command: () => setVisibleChangelog(true)
+        });
+    }
+    if (adminItems.length) {
+        items.push({
+            label: t('menu.admin'),
+            items: adminItems
+        });
+    }
 
     const start = (
         <div className="flex align-items-center gap-2 mr-2">

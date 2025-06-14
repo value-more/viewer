@@ -10,6 +10,7 @@ import { Sidebar } from 'primereact/sidebar';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { useDebounce } from 'primereact/hooks';
+import { useUserRights } from '../../models/user/hooks';
 
 interface CompaniesListProps {
     withHeader?: boolean;
@@ -36,6 +37,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
         i18n: { language },
         t
     } = useTranslation();
+    const urs = useUserRights();
     const [companies, setCompanies] = useState<Company[]>([]);
     const [opts, setOpts] = useState({ first: 0, rows: limit ?? 25 });
     const [total, setTotal] = useState(0);
@@ -112,10 +114,12 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                         className={'cursor-pointer pi pi-filter mr-2'}
                         onClick={() => setShowFilter(true)}
                     />
-                    <i
-                        className={`cursor-pointer pi pi-bookmark${showFavorites ? '-fill' : ''} mr-3`}
-                        onClick={() => setShowFavorites(!showFavorites)}
-                    ></i>
+                    {urs && (
+                        <i
+                            className={`cursor-pointer pi pi-bookmark${showFavorites ? '-fill' : ''} mr-3`}
+                            onClick={() => setShowFavorites(!showFavorites)}
+                        ></i>
+                    )}
                     <InputText
                         placeholder={t('controls.search')}
                         type="text"

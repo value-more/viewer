@@ -7,6 +7,7 @@ import { displayMetricField } from './utils';
 import { CompanyFavorite } from '../CompanyFavorite';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { useUserRights } from '../../models/user/hooks';
 
 export const TableView: React.FC<BaseViewProps> = ({
     companies,
@@ -18,6 +19,7 @@ export const TableView: React.FC<BaseViewProps> = ({
         i18n: { language }
     } = useTranslation();
     const navigate = useNavigate();
+    const urs = useUserRights();
 
     return (
         <DataTable
@@ -55,11 +57,13 @@ export const TableView: React.FC<BaseViewProps> = ({
                 }
             />
             <Column field="title" header="Company" frozen />
-            <Column
-                field="score"
-                header="Score"
-                body={(row) => <CompanyScoreBase score={row.score} />}
-            />
+            {urs?.['companies.scores.view'] && (
+                <Column
+                    field="score"
+                    header="Score"
+                    body={(row) => <CompanyScoreBase score={row.score} />}
+                />
+            )}
             <Column
                 field="lastYearMetricsRoe"
                 header="ROE"
@@ -82,33 +86,37 @@ export const TableView: React.FC<BaseViewProps> = ({
                 header="Ticker"
                 body={(row) => row.tickers?.[0] ?? ''}
             />
-            <Column
-                field="price.diffFiftyTwoWeekLow"
-                header="~52w"
-                body={(row) => {
-                    const diff = row.price?.diffFiftyTwoWeekLow;
-                    return (diff ?? undefined) !== undefined
-                        ? row.price.diffFiftyTwoWeekLow.toLocaleString(
-                              language,
-                              {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2
-                              }
-                          )
-                        : '';
-                }}
-            />
-            <Column
-                field="favorite"
-                header="Favorite"
-                body={(row) => (
-                    <CompanyFavorite
-                        cik={row.cik}
-                        favorite={row.favorite}
-                        onFavoriteChange={onFavoritesChange}
-                    />
-                )}
-            />
+            {urs?.['companies.edit'] && (
+                <Column
+                    field="price.diffFiftyTwoWeekLow"
+                    header="~52w"
+                    body={(row) => {
+                        const diff = row.price?.diffFiftyTwoWeekLow;
+                        return (diff ?? undefined) !== undefined
+                            ? row.price.diffFiftyTwoWeekLow.toLocaleString(
+                                  language,
+                                  {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2
+                                  }
+                              )
+                            : '';
+                    }}
+                />
+            )}
+            {urs && (
+                <Column
+                    field="favorite"
+                    header="Favorite"
+                    body={(row) => (
+                        <CompanyFavorite
+                            cik={row.cik}
+                            favorite={row.favorite}
+                            onFavoriteChange={onFavoritesChange}
+                        />
+                    )}
+                />
+            )}
         </DataTable>
     );
 };

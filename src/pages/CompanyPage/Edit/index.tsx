@@ -22,6 +22,8 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { MetricsAssessment } from '../../../components/companies/MetricsAssessment';
 import { CompanyProfile } from '../../../components/companies/CompanyProfile';
+import { useUserRights } from '../../../models/user/hooks';
+import { Navigate } from 'react-router';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -46,6 +48,9 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
         useState<boolean>(false);
     const [name, setName] = useState<string>(defaultName);
     const priceOverviewRef = useRef(null);
+    const urs = useUserRights();
+
+    if (!urs?.['companies.edit']) return <Navigate to={`/company/${cik}`} />;
 
     const yearsKeys = Object.keys(data?.years || {});
 

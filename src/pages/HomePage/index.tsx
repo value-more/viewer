@@ -8,10 +8,12 @@ import {
     useIsMediumScreen,
     useIsXXXLargeScreen
 } from '../../utils/breakpointsHook';
+import { useUserRights } from '../../models/user/hooks';
 
 export const HomePage: React.FC = () => {
     const { t } = useTranslation();
     const [reloadFavList, setReloadFavList] = useState<number>(0);
+    const urs = useUserRights();
     const navigate = useNavigate();
     const isMediumScreen = useIsMediumScreen();
     const isLargeScreen = useIsXXXLargeScreen();
@@ -31,6 +33,7 @@ export const HomePage: React.FC = () => {
                             filter={{ recommended: true, random: true }}
                             limit={limit}
                             onFavoritesChange={() =>
+                                urs &&
                                 setReloadFavList(
                                     Math.floor(Math.random() * 100000)
                                 )
@@ -48,25 +51,31 @@ export const HomePage: React.FC = () => {
                     >
                         {t('common.showMore')}
                     </Button>
-                    <h1 className="mt-6">{t('home.favoritesCompanies')}</h1>
-                    <div className="m-auto flex flex-column w-full overflow-auto">
-                        <CompaniesList
-                            filter={{ favorites: true }}
-                            limit={limit}
-                            reload={reloadFavList}
-                        />
-                    </div>
-                    <Button
-                        severity="secondary"
-                        className="mt-3 ml-1"
-                        onClick={() =>
-                            navigate('/list', {
-                                state: { favorites: true }
-                            })
-                        }
-                    >
-                        {t('common.showMore')}
-                    </Button>
+                    {urs && (
+                        <>
+                            <h1 className="mt-6">
+                                {t('home.favoritesCompanies')}
+                            </h1>
+                            <div className="m-auto flex flex-column w-full overflow-auto">
+                                <CompaniesList
+                                    filter={{ favorites: true }}
+                                    limit={limit}
+                                    reload={reloadFavList}
+                                />
+                            </div>
+                            <Button
+                                severity="secondary"
+                                className="mt-3 ml-1"
+                                onClick={() =>
+                                    navigate('/list', {
+                                        state: { favorites: true }
+                                    })
+                                }
+                            >
+                                {t('common.showMore')}
+                            </Button>
+                        </>
+                    )}
                     <h1 className="mt-6">{t('home.randomCompanies')}</h1>
                     <div className="m-auto flex flex-column w-full overflow-auto">
                         <CompaniesList

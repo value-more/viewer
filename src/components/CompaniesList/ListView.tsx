@@ -7,6 +7,7 @@ import { CompanyFavorite } from '../CompanyFavorite';
 import { CompanyScoreBase } from '../companies/CompanyScore/base';
 import { displayMetricField } from './utils';
 import { useTranslation } from 'react-i18next';
+import { useUserRights } from '../../models/user/hooks';
 
 export const ListView: React.FC<BaseViewProps> = ({
     companies,
@@ -20,6 +21,7 @@ export const ListView: React.FC<BaseViewProps> = ({
         i18n: { language }
     } = useTranslation();
     const navigate = useNavigate();
+    const urs = useUserRights();
 
     const itemTemplate = (company: Company) => {
         if (!company) return null;
@@ -61,7 +63,8 @@ export const ListView: React.FC<BaseViewProps> = ({
                             {title ?? ''}
                         </div>
                         <div className="flex gap-3 mt-auto line-height-3 pb-1">
-                            {(score ?? undefined) !== undefined ? (
+                            {urs?.['companies.scores.view'] &&
+                            (score ?? undefined) !== undefined ? (
                                 <CompanyScoreBase score={score} />
                             ) : (
                                 <div className="flex gap-6 text-sm">
@@ -92,13 +95,15 @@ export const ListView: React.FC<BaseViewProps> = ({
                         </div>
                     </div>
                 </div>
-                <div className="absolute top-0 right-0 pr-1 pt-1 hover:text-primary">
-                    <CompanyFavorite
-                        cik={cik}
-                        favorite={favorite}
-                        onFavoriteChange={() => onFavoritesChange?.()}
-                    />
-                </div>
+                {urs && (
+                    <div className="absolute top-0 right-0 pr-1 pt-1 hover:text-primary">
+                        <CompanyFavorite
+                            cik={cik}
+                            favorite={favorite}
+                            onFavoriteChange={() => onFavoritesChange?.()}
+                        />
+                    </div>
+                )}
                 {!!showTimestamp && !!timestamp && (
                     <div className="text-sm flex align-items-center mt-2">
                         <i className="pi pi-sync mr-2"></i>
