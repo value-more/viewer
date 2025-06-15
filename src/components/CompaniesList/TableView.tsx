@@ -104,7 +104,7 @@ export const TableView: React.FC<BaseViewProps> = ({
                     }}
                 />
             )}
-            {urs && (
+            {urs?.['companies.favorites.edit'] && (
                 <Column
                     field="favorite"
                     header="Favorite"

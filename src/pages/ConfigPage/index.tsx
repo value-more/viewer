@@ -5,10 +5,11 @@ import { ConfigEditor } from './ConfigEditor';
 import { MetricsFormulasConfig } from './MetricsFormulasConfig';
 import { ChartsMetricsConfig } from './ChartsMetricsConfig';
 import { BaseLayout } from '../../BaseLayout';
+import { AccessLinks } from './AccessLinks';
 
 export const ConfigPage: React.FC = () => {
     useEffect(() => {
-        document.title = 'InvData - Configuration';
+        document.title = 'ValueMore - Configuration';
     }, []);
 
     return (
@@ -68,6 +69,9 @@ export const ConfigPage: React.FC = () => {
                         </div>
                         <ConfigEditor endpoint="companies/values/rules" />
                     </div>
+                </TabPanel>
+                <TabPanel header="Access links">
+                    <AccessLinks />
                 </TabPanel>
             </TabView>
         </BaseLayout>

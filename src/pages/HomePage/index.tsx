@@ -51,7 +51,7 @@ export const HomePage: React.FC = () => {
                     >
                         {t('common.showMore')}
                     </Button>
-                    {urs && (
+                    {urs?.['companies.favorites.edit'] && (
                         <>
                             <h1 className="mt-6">
                                 {t('home.favoritesCompanies')}

@@ -31,7 +31,7 @@ export const AnalysisPage: React.FC = () => {
     const [data, setData] = useState<Data | null>(null);
 
     useEffect(() => {
-        document.title = 'InvData - Analysis';
+        document.title = 'ValueMore - Analysis';
     }, []);
 
     useEffect(() => {

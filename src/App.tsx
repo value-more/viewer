@@ -42,7 +42,10 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
-                    <Route path="/login" element={<LoginPage />} />
+                    <Route
+                        path="/login/:accesstoken?"
+                        element={<LoginPage />}
+                    />
                 </Routes>
             </HashRouter>
             <Toasts />

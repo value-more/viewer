@@ -95,7 +95,7 @@ export const ListView: React.FC<BaseViewProps> = ({
                         </div>
                     </div>
                 </div>
-                {urs && (
+                {urs?.['companies.favorites.edit'] && (
                     <div className="absolute top-0 right-0 pr-1 pt-1 hover:text-primary">
                         <CompanyFavorite
                             cik={cik}

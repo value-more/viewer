@@ -63,11 +63,13 @@ export const CompanyPageView: React.FC<CompanyPageViewProps> = ({
                                 {urs['companies.scores.view'] && (
                                     <CompanyScore />
                                 )}
-                                <CompanyFavorite
-                                    favorite={data.favorite}
-                                    cik={cik}
-                                    size="xl"
-                                />
+                                {urs['companies.favorites.edit'] && (
+                                    <CompanyFavorite
+                                        favorite={data.favorite}
+                                        cik={cik}
+                                        size="xl"
+                                    />
+                                )}
                             </div>
                         )}
                         {isXLarge && (

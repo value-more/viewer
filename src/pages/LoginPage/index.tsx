@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Navigate } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 import { api } from '../../api/invData';
 import { setUser } from '../../models/user';
 
@@ -11,10 +11,41 @@ type Inputs = {
 
 export const LoginPage: React.FC = () => {
     const [hasToken, setHasToken] = useState<boolean>(false);
+    const params = useParams();
 
     useEffect(() => {
-        document.title = 'InvData - Login';
+        document.title = 'ValueMore - Login';
     }, []);
+
+    const storeInfo = (json: any) => {
+        localStorage.setItem('token', json.token);
+        const user = {
+            ...json.user,
+            name: json.user.name ?? json.user.login,
+            rights: json.user.rights?.reduce(
+                (prev: { [key: string]: boolean }, i: string) => {
+                    prev[i] = true;
+                    return prev;
+                },
+                {}
+            )
+        };
+        localStorage.setItem('user', JSON.stringify(user));
+        setUser(user);
+        setHasToken(true);
+    };
+
+    useEffect(() => {
+        if (params?.accesstoken) {
+            (async () => {
+                const data = await api(
+                    `invData/accesslinks/${params.accesstoken}`
+                );
+                if (!data?.token) return;
+                storeInfo(data);
+            })();
+        }
+    }, [params]);
 
     const {
         register,
@@ -28,22 +59,7 @@ export const LoginPage: React.FC = () => {
             body: JSON.stringify(data)
         });
         if (json?.token) {
-            localStorage.setItem('token', json.token);
-
-            const user = {
-                ...json.user,
-                name: json.user.name ?? json.user.login,
-                rights: json.user.rights?.reduce(
-                    (prev: { [key: string]: boolean }, i: string) => {
-                        prev[i] = true;
-                        return prev;
-                    },
-                    {}
-                )
-            };
-            localStorage.setItem('user', JSON.stringify(user));
-            setUser(user);
-            setHasToken(true);
+            storeInfo(json);
         }
     };
 
