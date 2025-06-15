@@ -2,10 +2,7 @@ import { useState, useContext, useRef } from 'react';
 import { PrimeReactContext } from 'primereact/api';
 import { Menu } from 'primereact/menu';
 
-const themes = [
-    { label: 'Light', value: 'value-more-light' },
-    { label: 'Mira', value: 'mira' }
-];
+const themes = [{ label: 'Light', value: 'value-more-light' }];
 
 export const useThemeMenu = () => {
     const [theme, setTheme] = useState<string>(
