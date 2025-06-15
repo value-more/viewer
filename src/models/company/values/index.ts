@@ -58,16 +58,15 @@ $level
     .on(setLevel, (_, state) => state)
     .on(
         getValuesForActiveCikFx.doneData,
-        (_, state) => state.preselectedLevel ?? 0
+        (_, state) => state?.preselectedLevel ?? 0
     );
 
 const $timestamps = createStore<{
     timestamp?: number;
     configTimestamp?: number;
 }>({});
-$timestamps.on(
-    getValuesForActiveCikFx.doneData,
-    (_, { timestamp, configTimestamp }) => ({ timestamp, configTimestamp })
+$timestamps.on(getValuesForActiveCikFx.doneData, (_, state) =>
+    state ? { ...state } : {}
 );
 
 const refresh = createEvent<void>();

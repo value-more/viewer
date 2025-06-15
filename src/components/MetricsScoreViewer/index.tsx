@@ -39,7 +39,9 @@ export const MetricsScoreViewer: React.FC<MetricsScoreViewerProps> = ({
         const exec = async () => {
             const config = (
                 await api(`invData/companies/metrics/scores/rules?limit=1`)
-            )[0].rules;
+            )?.[0]?.rules;
+
+            if (!config) return;
             const data: MetricsScores = await api(
                 `invData/companies/${cik}/metrics/globalScores`
             );

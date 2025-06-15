@@ -25,6 +25,7 @@
         "companySearch": "Search company"
     },
     "ticker": {
+        "accessLimited": "The access is limited to 3 companies per month, continue reading ?",
         "overview": "Overview",
         "loader": "Retrieving and verifying data.\nGrab a coffee, it might take a few seconds.",
         "profile": "Company profile",

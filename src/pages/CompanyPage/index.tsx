@@ -15,6 +15,7 @@ import { companyPriceEvents } from '../../models/company/price';
 import { BaseLayout } from '../../BaseLayout';
 import { viewerEvents } from '../../components/InvDataViewer/state';
 import { useUserRights } from '../../models/user/hooks';
+import { AccessBlocked } from './AccessBlocked';
 
 export const CompanyPage: React.FC = () => {
     const { t } = useTranslation();
@@ -22,6 +23,7 @@ export const CompanyPage: React.FC = () => {
     const { cik, mode } = useParams();
     const [name, setName] = useState<string>('');
     const [data, setData] = useState<InvData | undefined | null>();
+    const [accessLimited, setAccessLimited] = useState<boolean>(false);
     const refs: { [key: string]: React.MutableRefObject<null> } = {
         overview: useRef(null),
         diagrams: useRef(null),
@@ -39,7 +41,20 @@ export const CompanyPage: React.FC = () => {
 
         setData(undefined);
 
-        const getCompany = async () => {
+        const fetch = async () => {
+            const { accessLimited } = await api(`invData/tracks`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    view: 'company',
+                    viewdata: { cik: Number(cik) }
+                })
+            });
+            if (accessLimited) {
+                setAccessLimited(true);
+                return;
+            }
+
+            setAccessLimited(false);
             const data = await api(`invData/companies/${cik}`);
             if (!data) return;
 
@@ -59,7 +74,7 @@ export const CompanyPage: React.FC = () => {
 
             companyPriceEvents.setTicker(data?.tickers?.[0]?.ticker);
         };
-        getCompany();
+        fetch();
     }, [cik]);
 
     const items = [
@@ -99,7 +114,8 @@ export const CompanyPage: React.FC = () => {
 
     return (
         <BaseLayout menu={items}>
-            {data === undefined && (
+            {accessLimited && <AccessBlocked />}
+            {!accessLimited && data === undefined && (
                 <div className="text-center">
                     <ProgressSpinner />
                     <div style={{ whiteSpace: 'pre-line' }}>
@@ -107,7 +123,7 @@ export const CompanyPage: React.FC = () => {
                     </div>
                 </div>
             )}
-            {data === null && (
+            {!accessLimited && data === null && (
                 <div className="m-5 text-center">
                     <h2>{cik}</h2>
                     <div className="text-orange-500">Data not found</div>
