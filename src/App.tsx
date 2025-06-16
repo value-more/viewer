@@ -13,6 +13,9 @@ import { AnalysisPage } from './pages/AnalysisPage';
 import { Toasts } from './components/Toasts';
 import { ListPage } from './pages/ListPage';
 import { NavigateEffector } from './components/routes/NavigateEffector';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { ImpressumPage } from './pages/ImpressumPage';
+import { TermsAndConditionsPage } from './pages/TermsAndConditionsPage';
 
 function App() {
     return (
@@ -45,6 +48,15 @@ function App() {
                     <Route
                         path="/login/:accesstoken?"
                         element={<LoginPage />}
+                    />
+                    <Route
+                        path="/privacy-policy"
+                        element={<PrivacyPolicyPage />}
+                    />
+                    <Route path="/impressum" element={<ImpressumPage />} />
+                    <Route
+                        path="/terms-and-conditions"
+                        element={<TermsAndConditionsPage />}
                     />
                 </Routes>
             </HashRouter>

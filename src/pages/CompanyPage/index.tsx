@@ -113,7 +113,7 @@ export const CompanyPage: React.FC = () => {
     };
 
     return (
-        <BaseLayout menu={items}>
+        <BaseLayout title="" menu={items}>
             {accessLimited && <AccessBlocked />}
             {!accessLimited && data === undefined && (
                 <div className="text-center">
