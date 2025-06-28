@@ -81,6 +81,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                         <CompanyScore withTooltip />
                     </div>
                 </div>
+                <CompanyProfile cik={cik} edit />
                 <ConfidenceLevels
                     timeframe={{
                         startYear: parseInt(yearsKeys.slice(-11)[0]),
@@ -88,26 +89,6 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                     }}
                     overwriteTimestamp={data?.overwriteTimestamp}
                 />
-                <IntrinsicValue
-                    ticker={data?.tickers[0]?.ticker || ''}
-                    withTitle
-                    defaultLevelSelector
-                />
-                <div>
-                    <h3 className="bg-primary p-2" ref={priceOverviewRef}>
-                        <i className="pi pi-dollar mr-2" />
-                        {t('ticker.market.title')}
-                    </h3>
-                    <TradingViewSymbolOverview
-                        ticker={data?.tickers?.[0]?.ticker || ''}
-                        exchange={data?.tickers?.[0]?.exchange || ''}
-                    />
-                </div>
-                <CompanyProfile cik={cik} edit />
-                <div ref={refs.diagrams} className="scrollMarginTop mb-5">
-                    <IndicatorsGraph data={data} includeScore withIcon />
-                </div>
-                <MetricsAssessment cik={cik} />
                 <div ref={refs.data} className="scrollMarginTop mb-5">
                     <InvDataViewer
                         cik={cik}
@@ -116,6 +97,10 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                         withIcon
                     />
                 </div>
+                <div ref={refs.diagrams} className="scrollMarginTop mb-5">
+                    <IndicatorsGraph data={data} includeScore withIcon />
+                </div>
+                <MetricsAssessment cik={cik} />
                 <div ref={refs.businessModel} className="scrollMarginTop mb-5">
                     <BusinessModel
                         cik={cik}
@@ -133,6 +118,22 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                         withIcon
                     />
                 </div>
+                <IntrinsicValue
+                    ticker={data?.tickers[0]?.ticker || ''}
+                    withTitle
+                    defaultLevelSelector
+                />
+                <div>
+                    <h3 className="bg-primary p-2" ref={priceOverviewRef}>
+                        <i className="pi pi-dollar mr-2" />
+                        {t('ticker.market.title')}
+                    </h3>
+                    <TradingViewSymbolOverview
+                        ticker={data?.tickers?.[0]?.ticker || ''}
+                        exchange={data?.tickers?.[0]?.exchange || ''}
+                    />
+                </div>
+
                 <Sidebar
                     visible={isVisibleAssistant}
                     position="right"
