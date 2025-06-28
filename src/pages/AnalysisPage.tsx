@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { api } from '../../api/invData';
+import { api } from '../api/invData';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { InputText } from 'primereact/inputtext';
 import { Accordion, AccordionTab } from 'primereact/accordion';
-import { BaseLayout } from '../../BaseLayout';
+import { BaseLayout } from '../BaseLayout';
 
 interface Company {
     title: string;

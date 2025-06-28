@@ -38,7 +38,7 @@ export const AccessLinks = () => {
     return (
         <div>
             <h2>Open access</h2>
-            <div className="flex justify-content-center">
+            <div className="flex justify-content-center flex-column">
                 {links.map((link, i) => {
                     const url = `${window.location.origin}${process.env.PUBLIC_URL}#/login/${link.token}`;
                     return (

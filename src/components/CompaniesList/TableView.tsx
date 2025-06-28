@@ -27,10 +27,15 @@ export const TableView: React.FC<BaseViewProps> = ({
             header={header}
             rows={opts.rows}
             scrollable
-            scrollHeight="500px"
             stripedRows
+            className="h-full"
             pt={{
-                header: { style: { background: 'none', border: 'none' } }
+                header: {
+                    style: { background: 'none', border: 'none' }
+                },
+                wrapper: {
+                    style: { height: 'calc(100% - 75px)' }
+                }
             }}
             selectionMode="single"
             onRowSelect={(event) => {

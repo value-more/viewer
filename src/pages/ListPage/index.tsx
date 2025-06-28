@@ -9,19 +9,17 @@ export const ListPage = () => {
 
     return (
         <BaseLayout title="Value More">
-            <div className="p-4">
-                <div className="m-auto flex flex-column w-full h-full overflow-auto">
-                    <CompaniesList
-                        withHeader
-                        centerContent
-                        view="table"
-                        filter={{
-                            favorites,
-                            recommended,
-                            random
-                        }}
-                    />
-                </div>
+            <div className="p-4 m-auto flex flex-column w-full h-full overflow-auto">
+                <CompaniesList
+                    withHeader
+                    centerContent
+                    view="table"
+                    filter={{
+                        favorites,
+                        recommended,
+                        random
+                    }}
+                />
             </div>
         </BaseLayout>
     );
