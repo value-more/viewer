@@ -19,9 +19,14 @@ export const CompanySearch: React.FC = () => {
     const [value, setValue] = useState<string>('');
 
     const search = async (event: AutoCompleteCompleteEvent) => {
-        const data = await api(
-            `invData/companies?first=0&rows=5&q=${event.query.toLocaleLowerCase()}`
-        );
+        const data = await api(`invData/companies/search`, {
+            method: 'POST',
+            body: JSON.stringify({
+                first: 0,
+                rows: 5,
+                filter: { q: event.query.toLocaleLowerCase() }
+            })
+        });
         setCompanies(
             (data.data || []).map(
                 (c: { title: string; tickers: string[]; cik: number }) => ({

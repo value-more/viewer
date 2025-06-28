@@ -42,7 +42,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     const [opts, setOpts] = useState({ first: 0, rows: limit ?? 25 });
     const [total, setTotal] = useState(0);
     const [totalFiltered, setTotalFiltered] = useState(0);
-    const [q, setQ] = useState('');
+    const [, q, setQ] = useDebounce<string>('', 400);
     const [showFavorites, setShowFavorites] = useState<boolean>(
         filter?.favorites ?? false
     );
@@ -70,7 +70,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
             setTotal(data?.total);
             setTotalFiltered(data?.totalFiltered);
         })();
-    }, [opts, filterStateDebounced, showFavorites, reload]);
+    }, [opts, filterStateDebounced, showFavorites, reload, q]);
 
     useEffect(() => {
         if (limit && limit !== opts.rows) {
