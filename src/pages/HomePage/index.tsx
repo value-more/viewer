@@ -76,12 +76,15 @@ export const HomePage: React.FC = () => {
                             </Button>
                         </>
                     )}
-                    <h1 className="mt-6">{t('home.randomCompanies')}</h1>
+                    <h1 className="mt-6">{t('home.discoverMore')}</h1>
                     <div className="m-auto flex flex-column w-full overflow-auto">
                         <CompaniesList
                             limit={limit}
                             reload={reloadFavList}
-                            filter={{ random: true, hasRoe: true }}
+                            filter={{
+                                recommendedDiscovery: true,
+                                random: true
+                            }}
                         />
                     </div>
                 </div>

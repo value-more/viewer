@@ -25,6 +25,7 @@ export interface BaseViewProps {
 export interface Filter {
     favorites?: boolean;
     recommended?: boolean;
+    recommendedDiscovery?: boolean;
     hasRoe?: boolean;
     random?: boolean;
     globalMetrics?: { [key: string]: { $gte?: number; $lte?: number } };
