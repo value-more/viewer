@@ -11,6 +11,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { useDebounce } from 'primereact/hooks';
 import { useUserRights } from '../../models/user/hooks';
+import { format } from 'path';
 
 interface CompaniesListProps {
     withHeader?: boolean;
@@ -47,7 +48,9 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
         filter?.favorites ?? false
     );
     const [showFilter, setShowFilter] = useState<boolean>(false);
-    const [metricsKeys, setMetricsKeys] = useState<string[] | null>(null);
+    const [metricsKeys, setMetricsKeys] = useState<
+        { format: string; key: string }[] | null
+    >(null);
     const [, filterStateDebounced, setFilter] = useDebounce<Filter | null>(
         filter ?? null,
         400
@@ -80,10 +83,15 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
 
     useEffect(() => {
         if (showFilter && !metricsKeys) {
-            (async () =>
+            (async () => {
+                const dataKeys = await api('invData/companies/metrics/keys');
                 setMetricsKeys(
-                    (await api('invData/companies/metrics/keys')).globalMetrics
-                ))();
+                    dataKeys.map(({ format, cat, key }: any) => ({
+                        format: format,
+                        key: `${cat}.${key}`
+                    }))
+                );
+            })();
         }
     }, [showFilter]);
 
@@ -131,6 +139,22 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     };
 
     const renderFilter = (gmk: string, k: number) => {
+        const splitGmk = gmk.split('.');
+        const setF = (type: string, value?: number) => {
+            setFilter({
+                ...filterStateDebounced,
+                [splitGmk[0]]: {
+                    ...(filterStateDebounced as any)[splitGmk[0]],
+                    [splitGmk[1]]: {
+                        ...(filterStateDebounced as any)[splitGmk[0]][
+                            splitGmk[1]
+                        ],
+                        [type]: value ?? undefined,
+                        format: metricsKeys?.find((v) => v.key === gmk)?.format
+                    }
+                }
+            });
+        };
         return (
             <div
                 key={k}
@@ -138,64 +162,56 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
             >
                 <Dropdown
                     className="flex-1"
-                    options={(metricsKeys ?? []).map((v) => ({
-                        label: t(`ticker.metrics.globals.${v}`, {
-                            defaultValue: v
-                                .match(/[A-Z][a-z]*|^[a-z]+/g)
-                                ?.join(' ')
-                                .toLocaleLowerCase()
-                        }),
-                        value: v
-                    }))}
+                    options={(metricsKeys ?? []).map((v) => {
+                        const key = v.key.split('.')[1];
+                        return {
+                            label: t(`ticker.metrics.globals.${key}`, {
+                                defaultValue: key
+                                    .match(/[A-Z][a-z]*|^[a-z]+/g)
+                                    ?.join(' ')
+                                    .toLocaleLowerCase()
+                            }),
+                            value: v.key
+                        };
+                    })}
                     value={gmk}
                     placeholder="criteria"
                     onChange={(event) => {
+                        const split = event.target.value.split('.');
                         setFilter({
                             ...filterStateDebounced,
-                            globalMetrics: {
-                                ...filterStateDebounced?.globalMetrics,
-                                [event.target.value]: {}
+                            [split[0]]: {
+                                ...(filterStateDebounced as any)[split[0]],
+                                [split[1]]: {}
                             }
                         });
                     }}
                 />
                 <div className="flex gap-2 align-items-center">
                     <InputNumber
-                        value={filterStateDebounced?.globalMetrics?.[gmk]?.$gte}
+                        value={
+                            (filterStateDebounced as any)?.[splitGmk[0]]?.[
+                                splitGmk[1]
+                            ]?.$gte
+                        }
                         size={3}
                         locale={language}
                         placeholder="min"
                         onChange={(event) => {
-                            setFilter({
-                                ...filterStateDebounced,
-                                globalMetrics: {
-                                    ...filterStateDebounced?.globalMetrics,
-                                    [gmk]: {
-                                        ...filterStateDebounced
-                                            ?.globalMetrics?.[gmk],
-                                        $gte: event.value ?? undefined
-                                    }
-                                }
-                            });
+                            setF('$gte', event.value ?? undefined);
                         }}
                     />
                     <InputNumber
-                        value={filterStateDebounced?.globalMetrics?.[gmk]?.$lte}
+                        value={
+                            (filterStateDebounced as any)?.[splitGmk[0]]?.[
+                                splitGmk[1]
+                            ]?.$lte
+                        }
                         size={3}
                         locale={language}
                         placeholder="max"
                         onChange={(event) => {
-                            setFilter({
-                                ...filterStateDebounced,
-                                globalMetrics: {
-                                    ...filterStateDebounced?.globalMetrics,
-                                    [gmk]: {
-                                        ...filterStateDebounced
-                                            ?.globalMetrics?.[gmk],
-                                        $lte: event.value ?? undefined
-                                    }
-                                }
-                            });
+                            setF('$lte', event.value ?? undefined);
                         }}
                     />
                     <div className="w-1rem">
@@ -203,8 +219,9 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                             <i
                                 className="pi pi-trash cursor-pointer"
                                 onClick={() => {
-                                    delete filterStateDebounced
-                                        ?.globalMetrics?.[gmk];
+                                    delete (filterStateDebounced as any)?.[
+                                        splitGmk[0]
+                                    ]?.[splitGmk[1]];
                                     setFilter({ ...filterStateDebounced });
                                 }}
                             />
@@ -228,7 +245,11 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                     <h2>Filter</h2>
                     {filterStateDebounced?.globalMetrics &&
                         Object.keys(filterStateDebounced.globalMetrics).map(
-                            renderFilter
+                            (v, i) => renderFilter(`globalMetrics.${v}`, i)
+                        )}
+                    {filterStateDebounced?.yearlyMetrics &&
+                        Object.keys(filterStateDebounced.yearlyMetrics).map(
+                            (v, i) => renderFilter(`yearlyMetrics.${v}`, i)
                         )}
                     {renderFilter('', -1)}
                 </Sidebar>

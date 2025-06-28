@@ -28,4 +28,5 @@ export interface Filter {
     hasRoe?: boolean;
     random?: boolean;
     globalMetrics?: { [key: string]: { $gte?: number; $lte?: number } };
+    yearlyMetrics?: { [key: string]: { $gte?: number; $lte?: number } };
 }
