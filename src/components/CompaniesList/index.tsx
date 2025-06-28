@@ -11,7 +11,6 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { useDebounce } from 'primereact/hooks';
 import { useUserRights } from '../../models/user/hooks';
-import { format } from 'path';
 
 interface CompaniesListProps {
     withHeader?: boolean;
