@@ -10,6 +10,7 @@ import { ChartsConfig } from './types';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { InfoIcon } from '../InfoIcon';
 import { metricsScoresStores } from '../../models/company/metricsScores';
+import { ApproveButton } from '../companies/CompanyStatus/ApproveButton';
 
 interface IndicatorsGraphProps {
     data?: InvData;
@@ -57,13 +58,16 @@ export const IndicatorsGraph: React.FC<IndicatorsGraphProps> = ({
 
     return (
         <div>
-            <h2 className={`${readonly ? '' : 'bg-primary p-2'} flex`}>
+            <h2 className={`${readonly ? '' : `bg-primary p-2`} flex`}>
                 <div>
                     {!!withIcon && <i className="pi pi-chart-scatter mr-2" />}
                     {t('ticker.metrics.title')}
                 </div>
                 {!readonly && (
                     <div className="ml-auto mr-2 ">
+                        <span className="mr-3">
+                            <ApproveButton prop="diagramsApproved" />
+                        </span>
                         <InfoIcon
                             syncTimestamp={data?.metricsTimestamp}
                             editTimestamp={timestampLastEdit}

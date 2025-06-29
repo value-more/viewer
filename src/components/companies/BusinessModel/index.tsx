@@ -9,6 +9,7 @@ import {
 } from '../../../models/company/scores';
 import { InfoIcon } from '../../InfoIcon';
 import { Skeleton } from 'primereact/skeleton';
+import { ApproveButton } from '../CompanyStatus/ApproveButton';
 
 interface BusinessModelProps {
     cik: number;
@@ -29,9 +30,16 @@ export const BusinessModel: React.FC<BusinessModelProps> = ({
 
     return (
         <div>
-            <h2 className={`${!readonly && 'bg-primary p-2'}`}>
-                {!!withIcon && <i className="pi pi-briefcase mr-2" />}
-                {t('ticker.businessmodel.title')}
+            <h2 className={`${!readonly && 'bg-primary p-2'} flex`}>
+                <div>
+                    {!!withIcon && <i className="pi pi-briefcase mr-2" />}
+                    {t('ticker.businessmodel.title')}
+                </div>
+                {!readonly && (
+                    <div className="ml-auto">
+                        <ApproveButton prop="businessModelApproved" />
+                    </div>
+                )}
             </h2>
             {companyScoreFxPending ? (
                 <Skeleton className="max-w-30rem h-2rem mb-2" />

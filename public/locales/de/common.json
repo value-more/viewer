@@ -29,6 +29,16 @@
         "overview": "Übersicht",
         "loader": "Daten abrufen und überprüfen.\nHol dir einen Kaffee, es könnte ein paar Sekunden dauern.",
         "profile": "Firmenprofil",
+        "status": {
+            "initial": "Initial",
+            "companyProfilValid": "Unternehmensprofil geprüft",
+            "dataApproved": "Daten freigegeben",
+            "diagramsApproved": "Diagramme bewertet",
+            "businessModelApproved": "Geschäftsmodell bewertet",
+            "moatApproved": "MOAT bewertet",
+            "valuated": "Bewertung durchgeführt",
+            "assessed": "Aktuelle Situation beschrieben"
+        },
         "intrinsicValue": {
             "title": "Intrinsic value",
             "areas": {

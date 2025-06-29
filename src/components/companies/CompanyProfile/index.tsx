@@ -6,6 +6,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { toasts } from '../../../models/toast';
 import { InfoIcon } from '../../InfoIcon';
 import { Skeleton } from 'primereact/skeleton';
+import { ApproveButton } from '../CompanyStatus/ApproveButton';
 
 interface CompanyProfileProps {
     cik: number;
@@ -65,6 +66,9 @@ export const CompanyProfile: React.FC<CompanyProfileProps> = ({
                         {t('ticker.profile')}
                     </div>
                     <div className="ml-auto mr-2 ">
+                        <span className="mr-3">
+                            <ApproveButton prop="companyProfilValid" readonly />
+                        </span>
                         <InfoIcon editTimestamp={profile?.editTime} />
                     </div>
                 </h3>

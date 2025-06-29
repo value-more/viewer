@@ -8,6 +8,7 @@ import { Accordion, AccordionTab } from 'primereact/accordion';
 import { InfoIcon } from '../InfoIcon';
 import { viewerEvents, viewerStores } from './state';
 import { useUnit } from 'effector-react';
+import { ApproveButton } from '../companies/CompanyStatus/ApproveButton';
 
 interface InvDataViewerProps {
     cik: number;
@@ -57,6 +58,9 @@ export const InvDataViewer: React.FC<InvDataViewerProps> = ({
                 </div>
                 {(syncTimestamp || overwriteTimestamp) && (
                     <div className="ml-auto mr-2 ">
+                        <span className="mr-3">
+                            <ApproveButton prop="dataApproved" readonly />
+                        </span>
                         <InfoIcon
                             syncTimestamp={syncTimestamp}
                             editTimestamp={overwriteTimestamp}

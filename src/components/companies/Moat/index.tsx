@@ -11,6 +11,7 @@ import {
 import { MoatScores } from '../../../models/company/scores/types';
 import { ScoreText } from '../../ScoreText';
 import { InfoIcon } from '../../InfoIcon';
+import { ApproveButton } from '../CompanyStatus/ApproveButton';
 
 interface MoatProps {
     cik: number;
@@ -36,9 +37,14 @@ export const Moat: React.FC<MoatProps> = ({ cik }) => {
 
     return (
         <div>
-            <h3 className="bg-primary p-2 scrollMarginTop">
-                <i className="pi pi-chart-line mr-2" />
-                {t('ticker.moat.title')}
+            <h3 className="bg-primary p-2 scrollMarginTop flex">
+                <div>
+                    <i className="pi pi-chart-line mr-2" />
+                    {t('ticker.moat.title')}
+                </div>
+                <div className="ml-auto">
+                    <ApproveButton prop="moatApproved" />
+                </div>
             </h3>
             <div className="flex gap-5 justify-content-end">
                 <div className="align-self-center">

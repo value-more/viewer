@@ -14,6 +14,7 @@ import { TabMenu } from 'primereact/tabmenu';
 import { companyPriceStores } from '../../../models/company/price';
 import { Dropdown } from 'primereact/dropdown';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { ApproveButton } from '../CompanyStatus/ApproveButton';
 
 interface IntrinsicValueProps {
     ticker: string;
@@ -55,6 +56,9 @@ export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
                         {t('ticker.intrinsicValue.title')}
                     </div>
                     <div className="ml-auto mr-2 ">
+                        <span className="mr-3">
+                            <ApproveButton prop="valuated" />
+                        </span>
                         <InfoIcon syncTimestamp={timestamp} />
                     </div>
                 </h2>

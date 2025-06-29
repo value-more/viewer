@@ -29,6 +29,16 @@
         "overview": "Overview",
         "loader": "Retrieving and verifying data.\nGrab a coffee, it might take a few seconds.",
         "profile": "Company profile",
+        "status": {
+            "initial": "Initial",
+            "companyProfilValid": "Company profil reviewed",
+            "dataApproved": "Data approved",
+            "diagramsApproved": "Diagrams evaluated",
+            "businessModelApproved": "Business Model evaluated",
+            "moatApproved": "MOAT evaluated",
+            "valuated": "Valuation evaluated",
+            "assessed": "Current situation described"
+        },
         "intrinsicValue": {
             "title": "Intrinsic value",
             "areas": {

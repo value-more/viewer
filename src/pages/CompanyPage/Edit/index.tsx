@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../../models/company/scores/init';
 import '../../../models/company/values/init';
 import { Sidebar } from 'primereact/sidebar';
@@ -24,6 +24,9 @@ import { MetricsAssessment } from '../../../components/companies/MetricsAssessme
 import { CompanyProfile } from '../../../components/companies/CompanyProfile';
 import { useUserRights } from '../../../models/user/hooks';
 import { Navigate } from 'react-router';
+import { ApproveButton } from '../../../components/companies/CompanyStatus/ApproveButton';
+import { companyStatusEvents } from '../../../models/company/status';
+import { CompanyStatus } from '../../../components/companies/CompanyStatus';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -49,6 +52,10 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
     const [name, setName] = useState<string>(defaultName);
     const priceOverviewRef = useRef(null);
     const urs = useUserRights();
+
+    useEffect(() => {
+        if (cik) companyStatusEvents.setCik(cik);
+    }, [cik]);
 
     if (!urs?.['companies.edit']) return <Navigate to={`/company/${cik}`} />;
 
@@ -80,6 +87,9 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                     <div className="ml-3">
                         <CompanyScore withTooltip />
                     </div>
+                    <div className="ml-2">
+                        <CompanyStatus />
+                    </div>
                 </div>
                 <CompanyProfile cik={cik} edit />
                 <ConfidenceLevels
@@ -100,7 +110,6 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                 <div ref={refs.diagrams} className="scrollMarginTop mb-5">
                     <IndicatorsGraph data={data} includeScore withIcon />
                 </div>
-                <MetricsAssessment cik={cik} />
                 <div ref={refs.businessModel} className="scrollMarginTop mb-5">
                     <BusinessModel
                         cik={cik}
@@ -132,6 +141,15 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                         ticker={data?.tickers?.[0]?.ticker || ''}
                         exchange={data?.tickers?.[0]?.exchange || ''}
                     />
+                </div>
+                <div>
+                    <h3 className="bg-primary p-2 flex">
+                        <div>Current situation</div>
+                        <div className="ml-auto">
+                            <ApproveButton prop="assessed" />
+                        </div>
+                    </h3>
+                    <MetricsAssessment cik={cik} />
                 </div>
 
                 <Sidebar
