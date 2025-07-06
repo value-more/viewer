@@ -36,7 +36,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
             <ConversationHeader>
                 <Avatar src={`${process.env.PUBLIC_URL}/charlie_120.png`} />
                 <ConversationHeader.Content
-                    info="Be aware the data are not shared with any third party. I'm running on Quentin personal server and might be wrong or a bit slow sometimes, please be patient. I can only remember this conversation."
+                    info="I might be wrong or a bit slow sometimes, please be patient. I can only remember this conversation."
                     userName={AINAme}
                 />
             </ConversationHeader>

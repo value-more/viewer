@@ -24,6 +24,7 @@ const $webSocket = createStore<any>(null);
 
 const initConversation = createEvent<InitConversationData>();
 const appendDataToLastMessage = createEvent<string>();
+const appendMessage = createEvent<Message>();
 const connectWebSocket = createEvent();
 const disconnectWebSocket = createEvent();
 const receiveMessage = createEvent<string>();
@@ -41,9 +42,10 @@ $messages
             position: 'first',
             sender: AINAme,
             message: `Hello my friend, please <u>ask me</u> anything you want to know about the <b>${companyName}</b>. I will do my best to help you.
-For now I only have access to fundamentals or metrics data. You could ask me if I find any <b>anomalies</b> in the <u>fundamentals</u> <i>(INCOME_STATEMENT, BALANCE_SHEET, CASH_FLOW)</i> or in the <u>calculated metrics</u>. I could also provide you an analysis of the company. Hopefully later I can get my hand on more data.`
+I have access to fundamentals, metrics, price, ... You could ask me if I find any <b>anomalies</b> in the <u>fundamentals</u> <i>, in the <u>calculated metrics</u> or for an analysis of the company for instance.`
         }
     ])
+    .on(appendMessage, (state, message) => [...state, message])
     .on(appendDataToLastMessage, (state, data) => {
         const lastMessage = state[state.length - 1];
         if (lastMessage) {
@@ -51,16 +53,7 @@ For now I only have access to fundamentals or metrics data. You could ask me if 
         }
         return [...state];
     })
-    .on(sendMessage, (state, message) => [
-        ...state,
-        message,
-        {
-            direction: 'incoming',
-            position: 'last',
-            sender: AINAme,
-            message: '<thinking>...'
-        }
-    ]);
+    .on(sendMessage, (state, message) => [...state, message]);
 
 $webSocket
     .on(connectWebSocket, () => new WebSocket(WS_HOST))
@@ -135,9 +128,14 @@ sample({
 });
 
 sample({
-    source: receiveMessage,
-    fn: (mess: string) => mess,
-    target: appendDataToLastMessage
+    clock: receiveMessage,
+    fn: (message: string): Message => ({
+        direction: 'incoming',
+        position: 'last',
+        sender: AINAme,
+        message
+    }),
+    target: appendMessage
 });
 
 sample({
