@@ -9,6 +9,7 @@ import { InfoIcon } from '../InfoIcon';
 import { viewerEvents, viewerStores } from './state';
 import { useUnit } from 'effector-react';
 import { ApproveButton } from '../companies/CompanyStatus/ApproveButton';
+import { StatusWorkflow } from '../../models/company/status/types';
 
 interface InvDataViewerProps {
     cik: number;
@@ -59,7 +60,10 @@ export const InvDataViewer: React.FC<InvDataViewerProps> = ({
                 {(syncTimestamp || overwriteTimestamp) && (
                     <div className="ml-auto mr-2 ">
                         <span className="mr-3">
-                            <ApproveButton prop="dataApproved" readonly />
+                            <ApproveButton
+                                statusKey={StatusWorkflow.DATA_APPROVED}
+                                readonly
+                            />
                         </span>
                         <InfoIcon
                             syncTimestamp={syncTimestamp}

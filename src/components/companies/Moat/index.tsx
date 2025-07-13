@@ -12,6 +12,7 @@ import { MoatScores } from '../../../models/company/scores/types';
 import { ScoreText } from '../../ScoreText';
 import { InfoIcon } from '../../InfoIcon';
 import { ApproveButton } from '../CompanyStatus/ApproveButton';
+import { StatusWorkflow } from '../../../models/company/status/types';
 
 interface MoatProps {
     cik: number;
@@ -43,7 +44,7 @@ export const Moat: React.FC<MoatProps> = ({ cik }) => {
                     {t('ticker.moat.title')}
                 </div>
                 <div className="ml-auto">
-                    <ApproveButton prop="moatApproved" />
+                    <ApproveButton statusKey={StatusWorkflow.MOAT_APPROVED} />
                 </div>
             </h3>
             <div className="flex gap-5 justify-content-end">

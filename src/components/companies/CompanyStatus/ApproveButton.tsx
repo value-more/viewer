@@ -5,42 +5,47 @@ import {
     companyStatusStores
 } from '../../../models/company/status';
 import { useUnit } from 'effector-react';
-import { isWorkfowValid } from './utils';
+import {
+    StatusWorkflow,
+    workflows
+} from '../../../models/company/status/types';
 
 interface ApproveButtonProps {
-    prop: string;
+    statusKey: StatusWorkflow;
     readonly?: boolean;
 }
 
 export const ApproveButton: React.FC<ApproveButtonProps> = ({
-    prop,
+    statusKey,
     readonly
 }) => {
     const status = useUnit(companyStatusStores.$status);
-    const statusProp = !!status?.[prop];
-    const workflowValid = isWorkfowValid(prop, status);
+    const approved =
+        !!status?.index && status.index >= workflows.indexOf(statusKey);
+    const isNextTransition =
+        !!status?.index && workflows[status.index + 1] === statusKey;
 
     return (
         <Button
-            onClick={() => companyStatusEffects.toggleApprovalFx(prop)}
+            onClick={() => companyStatusEffects.toggleApprovalFx(statusKey)}
             size="small"
-            disabled={readonly || !workflowValid || statusProp}
+            disabled={readonly || !isNextTransition || approved}
             severity={
-                !workflowValid
-                    ? 'danger'
-                    : statusProp
-                      ? 'success'
-                      : readonly
-                        ? 'warning'
+                approved
+                    ? 'success'
+                    : readonly
+                      ? 'warning'
+                      : !isNextTransition
+                        ? 'danger'
                         : undefined
             }
         >
-            {!workflowValid
-                ? 'Previous step required'
-                : statusProp
-                  ? 'Approved'
-                  : readonly
-                    ? 'Does not meet requirement'
+            {approved
+                ? 'Approved'
+                : readonly
+                  ? 'Does not meet requirement'
+                  : !isNextTransition
+                    ? 'Previous step required'
                     : 'Approve'}
         </Button>
     );

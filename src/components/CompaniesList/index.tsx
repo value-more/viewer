@@ -11,6 +11,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { useDebounce } from 'primereact/hooks';
 import { useUserRights } from '../../models/user/hooks';
+import { StatusWorkflow } from '../../models/company/status/types';
 
 interface CompaniesListProps {
     withHeader?: boolean;
@@ -116,7 +117,27 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                 <div className="text-bluegray-600 text-sm font-normal">
                     {totalFiltered}/{total}
                 </div>
-                <div className="ml-auto h-2rem align-self-center">
+                <div className="ml-auto align-self-center flex align-items-center">
+                    {!!urs?.['companies.edit'] && (
+                        <Dropdown
+                            showClear={true}
+                            className="mr-3 w-15rem"
+                            options={Object.keys(StatusWorkflow).map(
+                                (value) => ({
+                                    label: t(`ticker.status.${value}`),
+                                    value
+                                })
+                            )}
+                            value={filterStateDebounced?.status}
+                            placeholder="Status"
+                            onChange={(event) =>
+                                setFilter({
+                                    ...filterStateDebounced,
+                                    status: event.value
+                                })
+                            }
+                        />
+                    )}
                     <i
                         className={'cursor-pointer pi pi-filter mr-2'}
                         onClick={() => setShowFilter(true)}

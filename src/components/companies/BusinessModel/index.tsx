@@ -10,6 +10,7 @@ import {
 import { InfoIcon } from '../../InfoIcon';
 import { Skeleton } from 'primereact/skeleton';
 import { ApproveButton } from '../CompanyStatus/ApproveButton';
+import { StatusWorkflow } from '../../../models/company/status/types';
 
 interface BusinessModelProps {
     cik: number;
@@ -37,7 +38,9 @@ export const BusinessModel: React.FC<BusinessModelProps> = ({
                 </div>
                 {!readonly && (
                     <div className="ml-auto">
-                        <ApproveButton prop="businessModelApproved" />
+                        <ApproveButton
+                            statusKey={StatusWorkflow.BUSINESS_MODEL_APPROVED}
+                        />
                     </div>
                 )}
             </h2>

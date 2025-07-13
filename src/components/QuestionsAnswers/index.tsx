@@ -5,6 +5,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InfoIcon } from '../InfoIcon';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'primereact/skeleton';
+import { companyStatusEffects } from '../../models/company/status';
 
 interface QuestionsAnswersProps {
     cik: number;
@@ -75,13 +76,16 @@ export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({
 
         clearTimeout(timeouts[questionKey]);
         timeouts[questionKey] = setTimeout(() => {
-            api(apiUrls.answers, {
-                method: 'POST',
-                body: JSON.stringify({
-                    questionKey,
-                    answer
-                })
-            });
+            (async () => {
+                await api(apiUrls.answers, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        questionKey,
+                        answer
+                    })
+                });
+                companyStatusEffects.getStatusForActiveCikFx();
+            })();
         }, 750);
     };
 

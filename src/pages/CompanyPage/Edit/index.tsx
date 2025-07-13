@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../../../models/company/scores/init';
 import '../../../models/company/values/init';
+import '../../../models/company/status/init';
 import { Sidebar } from 'primereact/sidebar';
 import { InvData } from '../../../models/types';
 import { api } from '../../../api/invData';
@@ -27,6 +28,7 @@ import { Navigate } from 'react-router';
 import { ApproveButton } from '../../../components/companies/CompanyStatus/ApproveButton';
 import { companyStatusEvents } from '../../../models/company/status';
 import { CompanyStatus } from '../../../components/companies/CompanyStatus';
+import { StatusWorkflow } from '../../../models/company/status/types';
 
 interface CompanyPageEditProps {
     cik: number;
@@ -146,7 +148,9 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                     <h3 className="bg-primary p-2 flex">
                         <div>Current situation</div>
                         <div className="ml-auto">
-                            <ApproveButton prop="assessed" />
+                            <ApproveButton
+                                statusKey={StatusWorkflow.ASSESSED}
+                            />
                         </div>
                     </h3>
                     <MetricsAssessment cik={cik} />

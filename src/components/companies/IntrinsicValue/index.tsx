@@ -15,6 +15,7 @@ import { companyPriceStores } from '../../../models/company/price';
 import { Dropdown } from 'primereact/dropdown';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { ApproveButton } from '../CompanyStatus/ApproveButton';
+import { StatusWorkflow } from '../../../models/company/status/types';
 
 interface IntrinsicValueProps {
     ticker: string;
@@ -57,7 +58,9 @@ export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
                     </div>
                     <div className="ml-auto mr-2 ">
                         <span className="mr-3">
-                            <ApproveButton prop="valuated" />
+                            <ApproveButton
+                                statusKey={StatusWorkflow.VALUATED}
+                            />
                         </span>
                         <InfoIcon syncTimestamp={timestamp} />
                     </div>

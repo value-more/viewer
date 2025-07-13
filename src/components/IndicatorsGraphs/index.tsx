@@ -11,6 +11,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { InfoIcon } from '../InfoIcon';
 import { metricsScoresStores } from '../../models/company/metricsScores';
 import { ApproveButton } from '../companies/CompanyStatus/ApproveButton';
+import { StatusWorkflow } from '../../models/company/status/types';
 
 interface IndicatorsGraphProps {
     data?: InvData;
@@ -66,7 +67,9 @@ export const IndicatorsGraph: React.FC<IndicatorsGraphProps> = ({
                 {!readonly && (
                     <div className="ml-auto mr-2 ">
                         <span className="mr-3">
-                            <ApproveButton prop="diagramsApproved" />
+                            <ApproveButton
+                                statusKey={StatusWorkflow.DIAGRAMS_APPROVED}
+                            />
                         </span>
                         <InfoIcon
                             syncTimestamp={data?.metricsTimestamp}

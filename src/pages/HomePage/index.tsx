@@ -89,7 +89,8 @@ export const HomePage: React.FC = () => {
                     </div>
                 </div>
                 <Button
-                    className="w-full mt-auto justify-content-center"
+                    className="m-auto justify-content-center mb-3 mt-4 shadow-6 px-6"
+                    size="large"
                     onClick={() => navigate('/list')}
                 >
                     {t('home.allCompanies')}

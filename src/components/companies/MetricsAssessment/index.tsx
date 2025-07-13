@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { api } from '../../../api/invData';
 import { Divider } from 'primereact/divider';
 import { toasts } from '../../../models/toast';
+import { companyStatusEffects } from '../../../models/company/status';
 
 interface MetricsAssessmentProps {
     cik: number;
@@ -39,9 +40,10 @@ export const MetricsAssessment: React.FC<MetricsAssessmentProps> = ({
                     severity: 'info',
                     summary: 'Metrics assessment updated'
                 });
+                companyStatusEffects.getStatusForActiveCikFx();
             });
         }, 750);
-        setData(data);
+        setData(value);
     };
 
     return (

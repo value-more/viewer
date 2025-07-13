@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { StatusWorkflow } from '../../models/company/status/types';
 
 export interface Company {
     cik: number;
@@ -28,6 +29,7 @@ export interface Filter {
     recommendedDiscovery?: boolean;
     hasRoe?: boolean;
     random?: boolean;
+    status?: StatusWorkflow;
     globalMetrics?: { [key: string]: { $gte?: number; $lte?: number } };
     yearlyMetrics?: { [key: string]: { $gte?: number; $lte?: number } };
 }

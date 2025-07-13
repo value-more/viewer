@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { api } from '../../../api/invData';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { InputNumber } from 'primereact/inputnumber';
+import { companyStatusEffects } from '../../../models/company/status';
 
 interface InvDataViewerTableProps {
     cik: number;
@@ -86,11 +87,13 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                 };
             };
         };
-    }) =>
-        api(`invData/companies/${cik}/fundamentals/${dataKey}`, {
+    }) => {
+        await api(`invData/companies/${cik}/fundamentals/${dataKey}`, {
             method: 'PUT',
             body: JSON.stringify(value)
         });
+        companyStatusEffects.getStatusForActiveCikFx();
+    };
 
     const removeOverwrite = async (value: {
         [year: string]: { [dataKey: string]: string[] };

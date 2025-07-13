@@ -17,7 +17,7 @@
         "title": "Unternehmen",
         "recommendedCompanies": "Highlights",
         "favoritesCompanies": "Deine Favoriten",
-        "allCompanies": "Alle Unternehmen",
+        "allCompanies": "Informieren Sie sich über alle Unternehmen",
         "discoverMore": "Entdecke weitere Unternehmen"
     },
     "controls": {
@@ -30,14 +30,14 @@
         "loader": "Daten abrufen und überprüfen.\nHol dir einen Kaffee, es könnte ein paar Sekunden dauern.",
         "profile": "Firmenprofil",
         "status": {
-            "initial": "Initial",
-            "companyProfilValid": "Unternehmensprofil geprüft",
-            "dataApproved": "Daten freigegeben",
-            "diagramsApproved": "Diagramme bewertet",
-            "businessModelApproved": "Geschäftsmodell bewertet",
-            "moatApproved": "MOAT bewertet",
-            "valuated": "Bewertung durchgeführt",
-            "assessed": "Aktuelle Situation beschrieben"
+            "INIT": "Initial",
+            "COMPANY_PROFIL_VALID": "Unternehmensprofil geprüft",
+            "DATA_APPROVED": "Daten freigegeben",
+            "DIAGRAMS_APPROVED": "Diagramme bewertet",
+            "BUSINESS_MODEL_APPROVED": "Geschäftsmodell bewertet",
+            "MOAT_APPROVED": "MOAT bewertet",
+            "VALUATED": "Bewertung durchgeführt",
+            "ASSESSED": "Aktuelle Situation beschrieben"
         },
         "intrinsicValue": {
             "title": "Intrinsic value",

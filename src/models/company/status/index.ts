@@ -6,7 +6,7 @@ import {
     sample
 } from 'effector';
 import { api } from '../../../api/invData';
-import { CompanyStatus } from './types';
+import { CompanyStatus, StatusWorkflow, workflows } from './types';
 
 const $cik = createStore<number>(0);
 const setCik = createEvent<number>();
@@ -14,56 +14,42 @@ $cik.on(setCik, (_, state) => state);
 
 const getStatusForActiveCikFx = attach({
     source: $cik,
-    mapParams: (_params: unknown, cik: number) => ({ cik }),
+    mapParams: (_params: void, cik: number) => ({ cik }),
     effect: createEffect(async ({ cik }: { cik: number }) =>
         api(`invData/companies/${cik}/status`)
     )
 });
 
 const $status = createStore<CompanyStatus | null>(null);
-const setStatus = createEvent<CompanyStatus>();
 
 const setApprovalFx = createEffect(
-    async ({
-        cik,
-        prop,
-        status
-    }: {
-        cik: number;
-        prop: string;
-        status: CompanyStatus | null;
-    }) => {
-        const res = {
-            [prop]: !status?.[prop]
-        };
-        await api(`invData/companies/${cik}/status`, {
+    async ({ cik, statusKey }: { cik: number; statusKey: StatusWorkflow }) => {
+        const res = await api(`invData/companies/${cik}/status/approval`, {
             method: 'POST',
-            body: JSON.stringify(res)
+            body: JSON.stringify({ key: statusKey })
         });
-        return res;
+        return res as CompanyStatus;
     }
 );
 
 const toggleApprovalFx = attach({
-    source: { $cik, $status },
-    mapParams: (prop: string, { $cik, $status }) => ({
-        prop,
-        cik: $cik,
-        status: $status
+    source: { $cik },
+    mapParams: (statusKey: StatusWorkflow, { $cik }) => ({
+        statusKey,
+        cik: $cik
     }),
     effect: setApprovalFx
 });
 
 $status
-    .on(setStatus, (_, status) => status)
-    .on(getStatusForActiveCikFx.doneData, (_, status) => status)
-    .on(setApprovalFx.doneData, (status, result) => {
-        const res = {
-            ...(status ?? {}),
-            ...result
-        };
-        return res;
-    });
+    .on(getStatusForActiveCikFx.doneData, (_, status) => ({
+        ...status,
+        index: workflows.indexOf(status.key)
+    }))
+    .on(setApprovalFx.doneData, (_, result) => ({
+        ...result,
+        index: workflows.indexOf(result.key)
+    }));
 
 sample({
     source: $cik,
@@ -76,8 +62,7 @@ export const companyStatusStores = {
 };
 
 export const companyStatusEvents = {
-    setCik,
-    setStatus
+    setCik
 };
 
 export const companyStatusEffects = {
