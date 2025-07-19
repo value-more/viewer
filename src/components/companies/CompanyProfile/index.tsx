@@ -8,6 +8,7 @@ import { InfoIcon } from '../../InfoIcon';
 import { Skeleton } from 'primereact/skeleton';
 import { ApproveButton } from '../CompanyStatus/ApproveButton';
 import { StatusWorkflow } from '../../../models/company/status/types';
+import { companyStatusEffects } from '../../../models/company/status';
 
 interface CompanyProfileProps {
     cik: number;
@@ -53,6 +54,7 @@ export const CompanyProfile: React.FC<CompanyProfileProps> = ({
                     severity: 'info',
                     summary: 'Company profile updated'
                 });
+                companyStatusEffects.getStatusForActiveCikFx();
             });
         }, 750);
         setProfile((prev) => ({ ...(prev ?? {}), text: value }));

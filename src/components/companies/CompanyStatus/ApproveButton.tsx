@@ -21,9 +21,11 @@ export const ApproveButton: React.FC<ApproveButtonProps> = ({
 }) => {
     const status = useUnit(companyStatusStores.$status);
     const approved =
-        !!status?.index && status.index >= workflows.indexOf(statusKey);
+        status?.index !== undefined &&
+        status.index >= workflows.indexOf(statusKey);
     const isNextTransition =
-        !!status?.index && workflows[status.index + 1] === statusKey;
+        status?.index !== undefined &&
+        workflows[status.index + 1] === statusKey;
 
     return (
         <Button
