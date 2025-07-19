@@ -54,7 +54,9 @@ export const TableView: React.FC<BaseViewProps> = ({
                 header="Date"
                 frozen
                 body={(row) =>
-                    new Date(row.timestamp).toLocaleDateString(language, {
+                    new Date(
+                        row?.scores?.timestamp ?? row.timestamp
+                    ).toLocaleDateString(language, {
                         day: '2-digit',
                         month: '2-digit',
                         year: 'numeric'
