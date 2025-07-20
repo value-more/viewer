@@ -7,7 +7,7 @@ i18n.use(initReactI18next)
     .init({
         lng: window.localStorage.getItem('lng') || 'de',
         fallbackLng: 'en',
-        ns: ['common'],
+        ns: ['common', 'login'],
         defaultNS: 'common',
         backend: {
             loadPath: `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
