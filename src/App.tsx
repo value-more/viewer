@@ -16,6 +16,9 @@ import { NavigateEffector } from './components/routes/NavigateEffector';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { ImpressumPage } from './pages/ImpressumPage';
 import { TermsAndConditionsPage } from './pages/TermsAndConditionsPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 
 function App() {
     return (
@@ -48,6 +51,15 @@ function App() {
                     <Route
                         path="/login/:accesstoken?"
                         element={<LoginPage />}
+                    />
+                    <Route
+                        path="/login/forgotpassword"
+                        element={<ForgotPasswordPage />}
+                    />
+                    <Route path="/register" element={<RegisterPage />} />
+                    <Route
+                        path="/users/password-reset/:token"
+                        element={<ResetPasswordPage />}
                     />
                     <Route
                         path="/privacy-policy"

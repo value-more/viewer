@@ -2,7 +2,6 @@ import { createEffect, createEvent, createStore } from 'effector';
 
 export interface User {
     name?: string;
-    login?: string;
     email?: string;
     rights: { [key: string]: boolean };
 }

@@ -26,8 +26,7 @@ export const PrivacyPolicyPage: React.FC = () => {
                     decisions about how your personal information is processed.
                     If you do not agree with our policies and practices, please
                     do not use our Services. If you still have any questions or
-                    concerns, please contact us at
-                    quentin.vanhauteghem@gmail.com.
+                    concerns, please contact us at contact.valuemore@gmail.com
                 </p>
                 <h1>SUMMARY OF KEY POINTS</h1>
                 <p>

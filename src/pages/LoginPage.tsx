@@ -4,6 +4,8 @@ import { Navigate, useParams } from 'react-router';
 import { api } from '../api/invData';
 import { setUser } from '../models/user';
 import { BaseLayout } from '../BaseLayout';
+import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 type Inputs = {
     login: string;
@@ -11,6 +13,7 @@ type Inputs = {
 };
 
 export const LoginPage: React.FC = () => {
+    const { t } = useTranslation('login');
     const [hasToken, setHasToken] = useState<boolean>(false);
     const params = useParams();
 
@@ -71,34 +74,49 @@ export const LoginPage: React.FC = () => {
     return (
         <BaseLayout>
             <div className="m-auto w-3">
-                <h2 className="text-center">Login form</h2>
+                <h2 className="text-center">{t('titles.login')}</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex flex-column gap-2 m-3">
-                        <label htmlFor="input-login">Username</label>
+                    <div className="p-inputgroup my-3">
+                        <span className="p-inputgroup-addon">
+                            <i className="pi pi-at"></i>
+                        </span>
                         <input
-                            id="input-login"
+                            id="input-email"
                             {...register('login', { required: true })}
+                            type="email"
+                            placeholder={t('fields.username')}
                             className="p-inputtext"
                         />
                     </div>
-                    <div className="flex flex-column gap-2 m-3">
-                        <label htmlFor="input-password">Password</label>
+                    <div className="p-inputgroup my-3">
+                        <span className="p-inputgroup-addon">
+                            <i className="pi pi-key"></i>
+                        </span>
                         <input
                             id="input-password"
                             {...register('password', { required: true })}
                             type="password"
+                            placeholder={t('fields.password')}
                             className="p-inputtext"
                         />
                     </div>
-                    <div>
+                    <div className="text-center">
                         {(errors.login || errors.password) && (
-                            <span>Missing required fields</span>
+                            <span>{t('errors.missing')}</span>
                         )}
                     </div>
                     <div className="m-3 text-center">
                         <button type="submit" className="p-button">
-                            Sign in
+                            {t('buttons.signIn')}
                         </button>
+                    </div>
+                    <div className="flex justify-content-center">
+                        <NavLink to="/register" className="mr-4">
+                            {t('buttons.register')}
+                        </NavLink>
+                        <NavLink to="/login/forgotpassword">
+                            {t('buttons.forgotPassword')}
+                        </NavLink>
                     </div>
                 </form>
             </div>

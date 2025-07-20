@@ -740,7 +740,7 @@ export const TermsAndConditionsPage: React.FC = () => (
             <br />
             Value-More
             <br />
-            quentin.vanhauteghem@gmail.com
+            contact.valuemore@gmail.com
         </div>
     </BaseLayout>
 );
