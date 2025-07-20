@@ -11,7 +11,22 @@
         "analysis": "Analysis",
         "config": "Config",
         "logs": "Logs",
-        "admin": "Admin"
+        "admin": "Admin",
+        "feedback": "Feedback"
+    },
+    "feedback": {
+        "name": "Name",
+        "email": "Email",
+        "categories": {
+            "bug": "Bug",
+            "suggestion": "Suggestion",
+            "compliment": "Compliment",
+            "question": "Question or support request"
+        },
+        "message": "Feedback message",
+        "messagePlaceholder": "Your feedback helps us grow — share anything you'd like",
+        "submit": "Send",
+        "success": "Your feedback has been sent"
     },
     "home": {
         "title": "Companies",
