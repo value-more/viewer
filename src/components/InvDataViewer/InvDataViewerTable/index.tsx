@@ -15,6 +15,7 @@ import { api } from '../../../api/invData';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { InputNumber } from 'primereact/inputnumber';
 import { companyStatusEffects } from '../../../models/company/status';
+import { Search } from './Search';
 
 interface InvDataViewerTableProps {
     cik: number;
@@ -52,20 +53,63 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
         i18n: { language }
     } = useTranslation();
     const [years, setYears] = useState<yearsType>();
-    const yearsKeys = Object.keys(years || {}).slice(-11);
     const dt: any = useRef(null);
     const [numberFormatIndex, setNumberFormatIndex] = useState<NumberFormat>(
         NumberFormat.K
     );
+    const [structuredData, setStructuredData] = useState<any[]>([]);
+    const [filteredStructuredData, setFilteredStructuredData] = useState<any[]>(
+        []
+    );
+    const [search, setSearch] = useState<string | null>(null);
 
     useEffect(() => {
         (async () => {
-            const v = await api(
+            const yearsData = await api(
                 `invData/companies/${cik}/fundamentals/${dataKey}`
             );
-            setYears(v);
+            setYears(yearsData);
+            const yearsKeys = Object.keys(yearsData || {}).slice(-11);
+            const sData = structure.map((ld) => {
+                return {
+                    ...ld,
+                    label: t(`ticker.fundamentals.${dataKey}.${ld.name}`),
+                    ...yearsKeys.reduce((prev: any, current) => {
+                        const c: any = yearsData?.[current];
+                        const fundData = c?.[dataKey];
+                        const v = fundData
+                            ? fundData?.[ld.name]?.value
+                            : undefined;
+                        prev[current] = ld.avoidScaling
+                            ? v?.toLocaleString(language, {
+                                  minimumFractionDigits: 2,
+                                  maximumFractionDigits: 2
+                              })
+                            : formatLargeNumber(language, v, numberFormatIndex);
+                        return prev;
+                    }, {})
+                };
+            });
+            setStructuredData(sData);
+            setFilteredStructuredData(sData);
         })();
     }, [cik, dataKey]);
+
+    useEffect(() => {
+        const lowerCaseSearch = search?.toLowerCase() ?? '';
+        setFilteredStructuredData(
+            !search
+                ? structuredData
+                : structuredData.filter(
+                      (d) =>
+                          !!Object.keys(d).filter(
+                              (k) =>
+                                  typeof d[k] === 'string' &&
+                                  d[k].toLowerCase().includes(lowerCaseSearch)
+                          ).length
+                  )
+        );
+    }, [structuredData, search]);
 
     if (!years) {
         return (
@@ -102,25 +146,6 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
             method: 'DELETE',
             body: JSON.stringify(value)
         });
-
-    const d = structure.map((ld) => {
-        return {
-            ...ld,
-            label: t(`ticker.fundamentals.${dataKey}.${ld.name}`),
-            ...yearsKeys.reduce((prev: any, current) => {
-                const c: any = years?.[current];
-                const fundData = c?.[dataKey];
-                const v = fundData ? fundData?.[ld.name]?.value : undefined;
-                prev[current] = ld.avoidScaling
-                    ? v?.toLocaleString(language, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2
-                      })
-                    : formatLargeNumber(language, v, numberFormatIndex);
-                return prev;
-            }, {})
-        };
-    });
 
     const renderLabel = (data: any) => {
         return (
@@ -162,7 +187,8 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                     ]}
                 />
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto flex gap-4">
+                <Search onChange={(value) => setSearch(value)} />
                 <Button
                     type="button"
                     icon="pi pi-file"
@@ -283,7 +309,7 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
             isValid: dt.current?.validated?.isValid
         };
 
-        d[e.rowIndex][e.field] = config.avoidScaling
+        filteredStructuredData[e.rowIndex][e.field] = config.avoidScaling
             ? newObj.value?.toLocaleString(language, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
@@ -315,7 +341,7 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
         <div>
             <DataTable
                 ref={dt}
-                value={d}
+                value={filteredStructuredData}
                 scrollable={true}
                 scrollHeight="500px"
                 selectionMode="single"
@@ -338,25 +364,27 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                     headerStyle={{ border: 0 }}
                     frozen
                 ></Column>
-                {yearsKeys.map((year) => (
-                    <Column
-                        key={year}
-                        field={year}
-                        header={year}
-                        bodyStyle={{
-                            borderLeft: 0,
-                            borderRight: 0,
-                            borderTop: 0,
-                            padding: '4px 10px'
-                        }}
-                        body={(row, options) => body(options, row)}
-                        headerStyle={{ border: 0, padding: '10px 10px' }}
-                        alignHeader={'right'}
-                        align={'right'}
-                        editor={(options) => cellEditor(options)}
-                        onCellEditComplete={onCellEditComplete}
-                    ></Column>
-                ))}
+                {Object.keys(years || {})
+                    .slice(-11)
+                    .map((year) => (
+                        <Column
+                            key={year}
+                            field={year}
+                            header={year}
+                            bodyStyle={{
+                                borderLeft: 0,
+                                borderRight: 0,
+                                borderTop: 0,
+                                padding: '4px 10px'
+                            }}
+                            body={(row, options) => body(options, row)}
+                            headerStyle={{ border: 0, padding: '10px 10px' }}
+                            alignHeader={'right'}
+                            align={'right'}
+                            editor={(options) => cellEditor(options)}
+                            onCellEditComplete={onCellEditComplete}
+                        ></Column>
+                    ))}
             </DataTable>
         </div>
     );
