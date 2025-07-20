@@ -7,6 +7,7 @@ import { ChartsMetricsConfig } from './ChartsMetricsConfig';
 import { BaseLayout } from '../../BaseLayout';
 import { AccessLinks } from './AccessLinks';
 import { Feedbacks } from './Feedbacks';
+import { Users } from './Users';
 
 export const ConfigPage: React.FC = () => {
     useEffect(() => {
@@ -70,6 +71,9 @@ export const ConfigPage: React.FC = () => {
                         </div>
                         <ConfigEditor endpoint="companies/values/rules" />
                     </div>
+                </TabPanel>
+                <TabPanel header="Users">
+                    <Users />
                 </TabPanel>
                 <TabPanel header="Access links">
                     <AccessLinks />
