@@ -13,6 +13,7 @@ import { useThemeMenu } from './components/ThemeMenu/useThemeMenu';
 import { useUser, useUserRights } from './models/user/hooks';
 import { logoutFx } from './models/user';
 import { useTranslation } from 'react-i18next';
+import { Feedback } from './components/Feedback';
 
 interface HeaderProps {
     menu?: MenuItem[];
@@ -23,7 +24,8 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
     const user = useUser();
     const userRights = useUserRights();
     const navigate = useNavigate();
-    const [visibleChangelog, setVisibleChangelog] = useState<boolean>();
+    const [visibleChangelog, setVisibleChangelog] = useState<boolean>(false);
+    const [visibleFeedback, setVisibleFeedback] = useState<boolean>(false);
     const isMedium = useIsMediumScreen();
     const menuUserRef = useRef<Menu | null>(null);
     const { themeItems } = useThemeMenu();
@@ -44,6 +46,11 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
                     label: user.name ?? 'Anonymous',
                     disabled: true,
                     icon: 'pi pi-user'
+                },
+                {
+                    label: t('menu.feedback'),
+                    icon: 'pi pi-comments',
+                    command: () => setVisibleFeedback(true)
                 },
                 {
                     label: t('menu.logout'),
@@ -142,15 +149,30 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
                     className="flex-1"
                 />
 
-                <Sidebar
-                    visible={visibleChangelog}
-                    onHide={() => setVisibleChangelog(false)}
-                    position="right"
-                    className="w-6"
-                >
-                    <h2 className="mt-0 text-center">Changelog</h2>
-                    <ChangeLog />
-                </Sidebar>
+                {visibleChangelog && (
+                    <Sidebar
+                        visible={visibleChangelog}
+                        onHide={() => setVisibleChangelog(false)}
+                        position="right"
+                        className="w-6"
+                    >
+                        <h2 className="mt-0 text-center">Changelog</h2>
+                        <ChangeLog />
+                    </Sidebar>
+                )}
+                {visibleFeedback && (
+                    <Sidebar
+                        visible={visibleFeedback}
+                        modal
+                        onHide={() => setVisibleFeedback(false)}
+                        position="right"
+                    >
+                        <h2 className="mt-0 text-center">
+                            {t('menu.feedback')}
+                        </h2>
+                        <Feedback onSuccess={() => setVisibleFeedback(false)} />
+                    </Sidebar>
+                )}
             </div>
         </>
     );

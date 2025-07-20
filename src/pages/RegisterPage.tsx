@@ -53,7 +53,7 @@ export const RegisterPage: React.FC = () => {
                         <input
                             id="input-name"
                             {...register('name', { required: true })}
-                            type="name"
+                            type="text"
                             placeholder={t('fields.name')}
                             className="p-inputtext"
                         />

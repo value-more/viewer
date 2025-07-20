@@ -11,7 +11,22 @@
         "analysis": "Analyse",
         "config": "Konfiguration",
         "logs": "Protokolle",
-        "admin": "Administrator"
+        "admin": "Administrator",
+        "feedback": "Rückmeldung"
+    },
+    "feedback": {
+        "name": "Name",
+        "email": "E-Mail",
+        "categories": {
+            "bug": "Fehler",
+            "suggestion": "Vorschlag",
+            "compliment": "Lob",
+            "question": "Frage oder Supportanfrage"
+        },
+        "message": "Feedback-Nachricht",
+        "messagePlaceholder": "Ihr Feedback hilft uns, besser zu werden — teilen Sie gerne Ihre Gedanken mit",
+        "submit": "Absenden",
+        "success": "Ihr Feedback wurde gesendet"
     },
     "home": {
         "title": "Unternehmen",
