@@ -6,6 +6,7 @@ import { MetricsFormulasConfig } from './MetricsFormulasConfig';
 import { ChartsMetricsConfig } from './ChartsMetricsConfig';
 import { BaseLayout } from '../../BaseLayout';
 import { AccessLinks } from './AccessLinks';
+import { Feedbacks } from './Feedbacks';
 
 export const ConfigPage: React.FC = () => {
     useEffect(() => {
@@ -72,6 +73,9 @@ export const ConfigPage: React.FC = () => {
                 </TabPanel>
                 <TabPanel header="Access links">
                     <AccessLinks />
+                </TabPanel>
+                <TabPanel header="Feedbacks">
+                    <Feedbacks />
                 </TabPanel>
             </TabView>
         </BaseLayout>
