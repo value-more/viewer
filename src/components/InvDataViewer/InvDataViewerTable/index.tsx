@@ -30,6 +30,7 @@ type yearsType = {
             [key: string]: {
                 value: number | null | undefined;
                 isValid?: boolean;
+                ai?: { matching: boolean; value?: number };
             };
         };
     };
@@ -205,18 +206,30 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
         if ((config?.value ?? null) === null) {
             return null;
         }
+        const title =
+            config?.isValid === 'ROLLBACK'
+                ? 'This value will be reloaded from rules with next refresh'
+                : config?.isValid === 'UNSURE' && config?.ai?.matching
+                  ? '⚇ Validated by Charlie'
+                  : config?.ai?.value !== undefined
+                    ? `⚉ Charlie found ${config.ai.value}`
+                    : '';
         return (
             <div
                 className={`w-full h-full ${config?.isValid === 'ROLLBACK' ? 'line-through' : ''}`}
-                title={`${config?.isValid === 'ROLLBACK' ? 'This value will be reloaded from rules with next refresh' : ''}`}
+                title={title}
                 style={{
                     borderBottom: readonly
                         ? 'none'
                         : config?.isValid === 'SURE'
                           ? `thin solid green`
                           : config?.isValid === 'UNSURE'
-                            ? 'thin solid orange'
-                            : 'none'
+                            ? config?.ai?.matching
+                                ? 'thin dashed orange'
+                                : 'thin solid orange'
+                            : config?.ai?.value !== undefined
+                              ? 'thin dashed red'
+                              : 'none'
                 }}
             >
                 {row?.[options.field]}
