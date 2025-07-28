@@ -22,6 +22,7 @@ interface CompaniesListProps {
     view?: 'list' | 'table';
     showTimestamp?: boolean;
     filter?: Filter;
+    onReload?: ({ total }: { total: number }) => void;
 }
 
 export const CompaniesList: React.FC<CompaniesListProps> = ({
@@ -32,7 +33,8 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     centerContent,
     view = 'list',
     showTimestamp,
-    filter
+    filter,
+    onReload
 }) => {
     const {
         i18n: { language },
@@ -55,6 +57,10 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
         filter ?? null,
         400
     );
+
+    useEffect(() => {
+        onReload?.({ total: companies.length });
+    }, [companies, onReload]);
 
     useEffect(() => {
         (async () => {

@@ -9,6 +9,7 @@ import {
     useIsXXXLargeScreen
 } from '../../utils/breakpointsHook';
 import { useUserRights } from '../../models/user/hooks';
+import { CompaniesFavorites } from './CompaniesFavorites';
 
 export const HomePage: React.FC = () => {
     const { t } = useTranslation();
@@ -51,31 +52,10 @@ export const HomePage: React.FC = () => {
                     >
                         {t('common.showMore')}
                     </Button>
-                    {urs?.['companies.favorites.edit'] && (
-                        <>
-                            <h1 className="mt-6">
-                                {t('home.favoritesCompanies')}
-                            </h1>
-                            <div className="m-auto flex flex-column w-full overflow-auto">
-                                <CompaniesList
-                                    filter={{ favorites: true }}
-                                    limit={limit}
-                                    reload={reloadFavList}
-                                />
-                            </div>
-                            <Button
-                                severity="secondary"
-                                className="mt-3 ml-1"
-                                onClick={() =>
-                                    navigate('/list', {
-                                        state: { favorites: true }
-                                    })
-                                }
-                            >
-                                {t('common.showMore')}
-                            </Button>
-                        </>
-                    )}
+                    <CompaniesFavorites
+                        limit={limit}
+                        reloadFavList={reloadFavList}
+                    />
                     <h1 className="mt-6">{t('home.discoverMore')}</h1>
                     <div className="m-auto flex flex-column w-full overflow-auto">
                         <CompaniesList
