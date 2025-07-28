@@ -1,8 +1,8 @@
 {
     "titles": {
-        "login": "Login-Formular",
+        "login": "Login",
         "passwordForgotten": "Passwort vergessen?",
-        "register": "Registrierungsformular",
+        "register": "Registrieren",
         "resetPassword": "Passwort ändern"
     },
     "errors": {
