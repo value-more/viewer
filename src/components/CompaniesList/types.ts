@@ -30,6 +30,13 @@ export interface Filter {
     hasRoe?: boolean;
     random?: boolean;
     status?: StatusWorkflow;
-    globalMetrics?: { [key: string]: { $gte?: number; $lte?: number } };
-    yearlyMetrics?: { [key: string]: { $gte?: number; $lte?: number } };
+    globalMetrics?: { [key: string]: FilterItem };
+    yearlyMetrics?: { [key: string]: FilterItem };
+    confidences?: { main?: FilterItem; sure?: FilterItem; unsure?: FilterItem };
+}
+
+export interface FilterItem {
+    $gte?: number;
+    $lte?: number;
+    format?: string;
 }

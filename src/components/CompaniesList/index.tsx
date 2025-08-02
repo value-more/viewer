@@ -50,6 +50,8 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
         filter?.favorites ?? false
     );
     const [showFilter, setShowFilter] = useState<boolean>(false);
+    const [showConfidencesFilter, setShowConfidencesFilter] =
+        useState<boolean>(false);
     const [metricsKeys, setMetricsKeys] = useState<
         { format: string; key: string }[] | null
     >(null);
@@ -111,56 +113,134 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
 
     const header = () => {
         return (
-            <div className="flex align-items-center">
-                <Paginator
-                    className="w-max border-none"
-                    first={opts.first}
-                    rows={opts.rows}
-                    totalRecords={totalFiltered}
-                    rowsPerPageOptions={[25, 50, 100, 200]}
-                    onPageChange={onPageChange}
-                />
-                <div className="text-bluegray-600 text-sm font-normal">
-                    {totalFiltered}/{total}
-                </div>
-                <div className="ml-auto align-self-center flex align-items-center">
-                    {!!urs?.['companies.edit'] && (
-                        <Dropdown
-                            showClear={true}
-                            className="mr-3 w-15rem"
-                            options={Object.keys(StatusWorkflow).map(
-                                (value) => ({
-                                    label: t(`ticker.status.${value}`),
-                                    value
-                                })
-                            )}
-                            value={filterStateDebounced?.status}
-                            placeholder="Status"
+            <>
+                <div className="flex align-items-center">
+                    <Paginator
+                        className="w-max border-none"
+                        first={opts.first}
+                        rows={opts.rows}
+                        totalRecords={totalFiltered}
+                        rowsPerPageOptions={[25, 50, 100, 200]}
+                        onPageChange={onPageChange}
+                    />
+                    <div className="text-bluegray-600 text-sm font-normal">
+                        {totalFiltered}/{total}
+                    </div>
+                    <div className="ml-auto align-self-center flex align-items-center">
+                        {!!urs?.['companies.edit'] && (
+                            <>
+                                <Dropdown
+                                    showClear={true}
+                                    className="mr-3 w-15rem"
+                                    options={Object.keys(StatusWorkflow).map(
+                                        (value) => ({
+                                            label: t(`ticker.status.${value}`),
+                                            value
+                                        })
+                                    )}
+                                    value={filterStateDebounced?.status}
+                                    placeholder="Status"
+                                    onChange={(event) =>
+                                        setFilter({
+                                            ...filterStateDebounced,
+                                            status: event.value
+                                        })
+                                    }
+                                />
+                                <i
+                                    className={
+                                        'cursor-pointer pi pi-verified mr-2'
+                                    }
+                                    onClick={() =>
+                                        setShowConfidencesFilter(
+                                            !showConfidencesFilter
+                                        )
+                                    }
+                                />
+                            </>
+                        )}
+                        <i
+                            className={'cursor-pointer pi pi-filter mr-2'}
+                            onClick={() => setShowFilter(true)}
+                        />
+                        {urs && (
+                            <i
+                                className={`cursor-pointer pi pi-bookmark${showFavorites ? '-fill' : ''} mr-3`}
+                                onClick={() => setShowFavorites(!showFavorites)}
+                            ></i>
+                        )}
+                        <InputText
+                            placeholder={t('controls.search')}
+                            type="text"
                             onChange={(event) =>
-                                setFilter({
-                                    ...filterStateDebounced,
-                                    status: event.value
-                                })
+                                setQ(event.currentTarget.value)
                             }
                         />
-                    )}
-                    <i
-                        className={'cursor-pointer pi pi-filter mr-2'}
-                        onClick={() => setShowFilter(true)}
-                    />
-                    {urs && (
-                        <i
-                            className={`cursor-pointer pi pi-bookmark${showFavorites ? '-fill' : ''} mr-3`}
-                            onClick={() => setShowFavorites(!showFavorites)}
-                        ></i>
-                    )}
-                    <InputText
-                        placeholder={t('controls.search')}
-                        type="text"
-                        onChange={(event) => setQ(event.currentTarget.value)}
-                    />
+                    </div>
                 </div>
-            </div>
+                {showConfidencesFilter && (
+                    <div className="flex gap-4 align-items-center justify-content-end">
+                        {['main', 'sure', 'unsure'].map((k) => (
+                            <div
+                                className="flex gap-2 align-items-center"
+                                key={k}
+                            >
+                                <div>{t(`ticker.confidence.${k}`)}</div>
+                                <InputNumber
+                                    size={3}
+                                    locale={language}
+                                    placeholder="min"
+                                    value={
+                                        (filterStateDebounced as any)
+                                            ?.confidences?.[k]?.$gte
+                                    }
+                                    onChange={(event) => {
+                                        const conf =
+                                            (filterStateDebounced as any)
+                                                ?.confidences ?? {};
+                                        setFilter({
+                                            ...filterStateDebounced,
+                                            confidences: {
+                                                ...conf,
+                                                [k]: {
+                                                    ...(conf[k] ?? {}),
+                                                    $gte:
+                                                        event.value ?? undefined
+                                                }
+                                            }
+                                        });
+                                    }}
+                                />
+                                <InputNumber
+                                    size={3}
+                                    locale={language}
+                                    placeholder="max"
+                                    value={
+                                        (filterStateDebounced as any)
+                                            ?.confidences?.[k]?.$lte
+                                    }
+                                    onChange={(event) => {
+                                        const conf =
+                                            (filterStateDebounced as any)
+                                                ?.confidences ?? {};
+                                        setFilter({
+                                            ...filterStateDebounced,
+                                            confidences: {
+                                                ...conf,
+                                                [k]: {
+                                                    ...(conf[k] ?? {}),
+                                                    $lte:
+                                                        event.value ?? undefined
+                                                }
+                                            }
+                                        });
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </>
         );
     };
 
