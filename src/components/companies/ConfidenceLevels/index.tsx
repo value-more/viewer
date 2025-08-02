@@ -4,6 +4,8 @@ import { api } from '../../../api/invData';
 import { useTranslation } from 'react-i18next';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { InfoIcon } from '../../InfoIcon';
+import { Button } from 'primereact/button';
+import { toasts } from '../../../models/toast';
 
 interface Data {
     data: {
@@ -68,6 +70,16 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({
         })();
     }, [cik, timeframe.startYear, timeframe.endYear]);
 
+    const prioritizeInAiSyncQueue = async () => {
+        await api(`invData/sync/ai/companies/${cik}`, {
+            method: 'POST'
+        });
+        toasts.showToast({
+            severity: 'success',
+            summary: 'Company queued for AI sync with higher priority'
+        });
+    };
+
     return (
         <div>
             <h3 className="bg-primary p-2 flex align-items-center">
@@ -115,7 +127,10 @@ export const ConfidenceLevels: React.FC<ConfidenceLevelsProps> = ({
             )}
             {!!data?.global && (
                 <div>
-                    <div className="flex gap-4 justify-content-center">
+                    <div className="flex gap-4 justify-content-center align-items-center">
+                        <Button onClick={prioritizeInAiSyncQueue}>
+                            Prioritize in Charlie queue
+                        </Button>
                         {Object.keys(data.global).map((key) => (
                             <div
                                 key={key}
