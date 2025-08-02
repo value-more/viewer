@@ -171,7 +171,10 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     }: {
         field: string;
         rowIndex: number;
-    }) => (years[field] as any)?.[dataKey]?.[structure[rowIndex]?.name];
+    }) =>
+        (years[field] as any)?.[dataKey]?.[
+            filteredStructuredData[rowIndex]?.name
+        ];
 
     const header = (
         <div className="flex align-items-center gap-2">
