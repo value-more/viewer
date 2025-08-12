@@ -70,33 +70,36 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                 `invData/companies/${cik}/fundamentals/${dataKey}`
             );
             setYears(yearsData);
-            const yearsKeys = Object.keys(yearsData || {}).slice(-11);
-            const sData = structure.map((ld) => {
-                return {
-                    ...ld,
-                    label: t(`ticker.fundamentals.${dataKey}.${ld.name}`),
-                    ...yearsKeys.reduce((prev: any, current) => {
-                        const c: any = yearsData?.[current];
-                        const fundData = c?.[dataKey];
-                        const v = fundData
-                            ? fundData?.[ld.name]?.value
-                            : undefined;
-                        prev[current] = ld.avoidScaling
-                            ? v?.toLocaleString(language, {
-                                  minimumFractionDigits: 2,
-                                  maximumFractionDigits: 2
-                              })
-                            : formatLargeNumber(language, v, numberFormatIndex);
-                        return prev;
-                    }, {})
-                };
-            });
-            setStructuredData(sData);
-            setFilteredStructuredData(sData);
         })();
     }, [cik, dataKey]);
 
     useEffect(() => {
+        const yearsKeys = Object.keys(years || {}).slice(-11);
+        if (!yearsKeys.length) return;
+        const sData = structure.map((ld) => {
+            return {
+                ...ld,
+                label: t(`ticker.fundamentals.${dataKey}.${ld.name}`),
+                ...yearsKeys.reduce((prev: any, current) => {
+                    const c: any = years?.[current];
+                    const fundData = c?.[dataKey];
+                    const v = fundData ? fundData?.[ld.name]?.value : undefined;
+                    prev[current] = ld.avoidScaling
+                        ? v?.toLocaleString(language, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2
+                          })
+                        : formatLargeNumber(language, v, numberFormatIndex);
+                    return prev;
+                }, {})
+            };
+        });
+        setStructuredData(sData);
+        setFilteredStructuredData(sData);
+    }, [years, numberFormatIndex, language]);
+
+    useEffect(() => {
+        if (!Object.keys(years || {}).length) return;
         const lowerCaseSearch = search?.toLowerCase() ?? '';
         setFilteredStructuredData(
             !search
