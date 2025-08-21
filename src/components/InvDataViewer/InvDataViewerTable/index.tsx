@@ -43,6 +43,11 @@ enum NumberFormat {
     T = 4
 }
 
+const keysTitleValidate = [
+    { prop: 'ai', label: 'Charlie' },
+    { prop: 'edgartools', label: 'edgartools' }
+];
+
 export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     cik,
     dataKey,
@@ -212,14 +217,17 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
         if ((config?.value ?? null) === null) {
             return null;
         }
-        const title =
-            config?.isValid === 'ROLLBACK'
-                ? 'This value will be reloaded from rules with next refresh'
-                : config?.isValid === 'UNSURE' && config?.ai?.matching
-                  ? '⚇ Validated by Charlie'
-                  : config?.ai?.value !== undefined
-                    ? `⚉ Charlie found ${config.ai.value}`
-                    : '';
+        const title = `${config?.isValid === 'ROLLBACK' ? 'This value will be reloaded from rules with next refresh.' : ''}
+        ${keysTitleValidate
+            .map((k) =>
+                config?.isValid === 'UNSURE' && config?.[k.prop]?.matching
+                    ? `⚇ Validated by ${k.label}`
+                    : config?.[k.prop]?.value !== undefined
+                      ? `⚉ ${k.label} found ${config[k.prop].value}`
+                      : ''
+            )
+            .join('\n')}
+        `;
         return (
             <div
                 className={`w-full h-full ${config?.isValid === 'ROLLBACK' ? 'line-through' : ''}`}
@@ -230,10 +238,12 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                         : config?.isValid === 'SURE'
                           ? `thin solid green`
                           : config?.isValid === 'UNSURE'
-                            ? config?.ai?.matching
+                            ? config?.ai?.matching ||
+                              config?.edgartools?.matching
                                 ? 'thin dashed orange'
                                 : 'thin solid orange'
-                            : config?.ai?.value !== undefined
+                            : config?.ai?.value !== undefined ||
+                                config?.edgartools?.value !== undefined
                               ? 'thin dashed red'
                               : 'none'
                 }}
