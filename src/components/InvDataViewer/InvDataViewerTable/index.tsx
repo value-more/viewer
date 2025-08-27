@@ -16,6 +16,8 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { InputNumber } from 'primereact/inputnumber';
 import { companyStatusEffects } from '../../../models/company/status';
 import { Search } from './Search';
+import { Sidebar } from 'primereact/sidebar';
+import { HTMLSecViewers } from '../../HTMLSecViewers';
 
 interface InvDataViewerTableProps {
     cik: number;
@@ -68,6 +70,8 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
         []
     );
     const [search, setSearch] = useState<string | null>(null);
+    const [isVisibleHTMLSecViewer, setIsVisibleHTMLSecViewer] =
+        useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
@@ -200,6 +204,9 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                 />
             </div>
             <div className="ml-auto flex gap-4">
+                <Button onClick={() => setIsVisibleHTMLSecViewer(true)}>
+                    SEC htmls
+                </Button>
                 <Search onChange={(value) => setSearch(value)} />
                 <Button
                     type="button"
@@ -415,6 +422,15 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                         ></Column>
                     ))}
             </DataTable>
+            <Sidebar
+                visible={isVisibleHTMLSecViewer}
+                onHide={() => setIsVisibleHTMLSecViewer(false)}
+                position="right"
+                className="w-4"
+                dismissable={false}
+            >
+                <HTMLSecViewers cik={cik} years={Object.keys(years || {})} />
+            </Sidebar>
         </div>
     );
 };
