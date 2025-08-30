@@ -72,6 +72,9 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     const [search, setSearch] = useState<string | null>(null);
     const [isVisibleHTMLSecViewer, setIsVisibleHTMLSecViewer] =
         useState<boolean>(false);
+    const [HTMLSecViewerPos, setHTMLSecViewerPos] = useState<'left' | 'right'>(
+        'left'
+    );
 
     useEffect(() => {
         (async () => {
@@ -204,9 +207,11 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                 />
             </div>
             <div className="ml-auto flex gap-4">
-                <Button onClick={() => setIsVisibleHTMLSecViewer(true)}>
-                    SEC htmls
-                </Button>
+                {!readonly && (
+                    <Button onClick={() => setIsVisibleHTMLSecViewer(true)}>
+                        SEC htmls
+                    </Button>
+                )}
                 <Search onChange={(value) => setSearch(value)} />
                 <Button
                     type="button"
@@ -422,15 +427,36 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                         ></Column>
                     ))}
             </DataTable>
-            <Sidebar
-                visible={isVisibleHTMLSecViewer}
-                onHide={() => setIsVisibleHTMLSecViewer(false)}
-                position="right"
-                className="w-4"
-                dismissable={false}
-            >
-                <HTMLSecViewers cik={cik} years={Object.keys(years || {})} />
-            </Sidebar>
+            {!readonly && (
+                <Sidebar
+                    visible={isVisibleHTMLSecViewer}
+                    onHide={() => setIsVisibleHTMLSecViewer(false)}
+                    position={HTMLSecViewerPos}
+                    className="w-3"
+                    modal={false}
+                    dismissable={false}
+                    icons={
+                        <div className="mr-2">
+                            <Button
+                                icon="pi pi-arrow-right-arrow-left"
+                                onClick={() =>
+                                    setHTMLSecViewerPos(
+                                        HTMLSecViewerPos === 'left'
+                                            ? 'right'
+                                            : 'left'
+                                    )
+                                }
+                            />
+                        </div>
+                    }
+                    fullScreen
+                >
+                    <HTMLSecViewers
+                        cik={cik}
+                        years={Object.keys(years || {})}
+                    />
+                </Sidebar>
+            )}
         </div>
     );
 };

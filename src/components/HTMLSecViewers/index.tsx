@@ -14,11 +14,11 @@ export const HTMLSecViewers: React.FC<HTMLSecViewerProps> = ({
     return (
         <TabView
             className="h-full flex flex-column"
-            pt={{ panelContainer: { className: 'flex-1' } }}
-            activeIndex={years.length - 1}
+            pt={{ panelContainer: { className: 'flex-1 m-0 p-0' } }}
+            activeIndex={0}
         >
-            {years.map((year) => (
-                <TabPanel key={year} header={year} className="h-full">
+            {years.reverse().map((year) => (
+                <TabPanel key={year} header={year} className="h-full w-full">
                     <HTMLSecViewer cik={cik} year={year} />
                 </TabPanel>
             ))}
