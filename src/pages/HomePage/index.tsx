@@ -56,6 +56,22 @@ export const HomePage: React.FC = () => {
                         limit={limit}
                         reloadFavList={reloadFavList}
                     />
+                    {!urs && (
+                        <>
+                            <h1 className="mt-6">
+                                {t('home.lastVisitedCompanies')}
+                            </h1>
+                            <div className="m-auto flex flex-column w-full overflow-auto">
+                                <CompaniesList
+                                    limit={limit}
+                                    reload={reloadFavList}
+                                    filter={{
+                                        lastVisited: true
+                                    }}
+                                />
+                            </div>
+                        </>
+                    )}
                     <h1 className="mt-6">{t('home.discoverMore')}</h1>
                     <div className="m-auto flex flex-column w-full overflow-auto">
                         <CompaniesList

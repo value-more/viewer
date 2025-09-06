@@ -33,7 +33,8 @@
         "recommendedCompanies": "Highlights",
         "favoritesCompanies": "Your favorites",
         "allCompanies": "Check out all companies",
-        "discoverMore": "Discover more companies"
+        "discoverMore": "Discover more companies",
+        "lastVisitedCompanies": "Already viewed"
     },
     "controls": {
         "search": "Search...",
