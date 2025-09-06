@@ -451,7 +451,8 @@
             "sure": "Genehmigt (grün)",
             "unsure": "Unsicher (gelb)",
             "years": "Jahre (F.E.)",
-            "lastYear": "Letztes Jahr (F.E.)"
+            "lastYear": "Letztes Jahr (F.E.)",
+            "sure_unsure": "Unsicher oder besser"
         }
     },
     "analysis": {
