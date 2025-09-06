@@ -447,7 +447,8 @@
             "sure": "Approved (green)",
             "unsure": "Unsure (yellow)",
             "years": "Years (M.E.)",
-            "lastYear": "Last year (M.E.)"
+            "lastYear": "Last year (M.E.)",
+            "sure_unsure": "Unsure or better"
         }
     },
     "analysis": {

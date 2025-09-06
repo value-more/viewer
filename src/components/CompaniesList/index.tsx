@@ -180,7 +180,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                 </div>
                 {showConfidencesFilter && (
                     <div className="flex gap-4 align-items-center justify-content-end">
-                        {['main', 'sure', 'unsure'].map((k) => (
+                        {['main', 'sure', 'unsure', 'sure_unsure'].map((k) => (
                             <div
                                 className="flex gap-2 align-items-center"
                                 key={k}
