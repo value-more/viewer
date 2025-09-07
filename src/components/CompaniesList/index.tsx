@@ -12,6 +12,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { useDebounce } from 'primereact/hooks';
 import { useUserRights } from '../../models/user/hooks';
 import { StatusWorkflow } from '../../models/company/status/types';
+import { SelectButton } from 'primereact/selectbutton';
 
 interface CompaniesListProps {
     withHeader?: boolean;
@@ -73,6 +74,8 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                     filter: {
                         ...(filterStateDebounced ?? {}),
                         favorites: showFavorites ? limit ?? true : undefined,
+                        withRecentData:
+                            filterStateDebounced?.withRecentData ?? true,
                         q: q?.toLocaleLowerCase()
                     }
                 })
@@ -238,6 +241,27 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                                 />
                             </div>
                         ))}
+                        <div className="flex gap-2 align-items-center">
+                            <SelectButton
+                                value={
+                                    filterStateDebounced?.withRecentData ?? true
+                                }
+                                onChange={(event) =>
+                                    setFilter({
+                                        ...filterStateDebounced,
+                                        withRecentData: event.value
+                                    })
+                                }
+                                itemTemplate={(option) => (
+                                    <i className={option.icon}></i>
+                                )}
+                                optionLabel="value"
+                                options={[
+                                    { icon: 'pi pi-check-circle', value: true },
+                                    { icon: 'pi pi-times-circle', value: false }
+                                ]}
+                            />
+                        </div>
                     </div>
                 )}
             </>

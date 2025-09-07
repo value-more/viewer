@@ -27,6 +27,7 @@ export interface Filter {
     favorites?: boolean;
     recommended?: boolean;
     recommendedDiscovery?: boolean;
+    withRecentData?: boolean;
     hasRoe?: boolean;
     random?: boolean;
     status?: StatusWorkflow;
