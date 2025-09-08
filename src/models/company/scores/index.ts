@@ -1,4 +1,10 @@
-import { attach, createEffect, createEvent, createStore, sample } from 'effector';
+import {
+    attach,
+    createEffect,
+    createEvent,
+    createStore,
+    sample
+} from 'effector';
 import { api } from '../../../api/invData';
 import { CompanyScores, MoatScores } from './types';
 
@@ -8,8 +14,10 @@ $cik.on(setCik, (_, state) => state);
 
 const getScoresForActiveCikFx = attach({
     source: $cik,
-    mapParams: ( _params: unknown, cik: number ) => ({ cik }),
-    effect: createEffect(async ({ cik }: { cik: number }) => api(`invData/companies/${cik}/scores`))
+    mapParams: (_params: unknown, cik: number) => ({ cik }),
+    effect: createEffect(async ({ cik }: { cik: number }) =>
+        api(`invData/companies/${cik}/scores`)
+    )
 });
 
 const $scores = createStore<CompanyScores | null>(null);
@@ -19,12 +27,12 @@ $scores
     .on(setScores, (_, state) => state);
 
 sample({
-    source: $cik, 
-    fn: cik => ({ cik }),
+    source: $cik,
+    fn: (cik) => ({ cik }),
     target: getScoresForActiveCikFx
 });
 
-interface SaveScoreFxReq  {
+interface SaveScoreFxReq {
     businessModel?: number;
     moat?: MoatScores;
     cik: number;
@@ -32,13 +40,19 @@ interface SaveScoreFxReq  {
 
 const saveScoresFx = attach({
     source: $cik,
-    mapParams: ( params: CompanyScores, cik: number ) => ({ businessModel: params?.businessModel?.val, moat: params.moat, cik }),
-    effect: createEffect(({ cik, ...rest }: SaveScoreFxReq): Promise<CompanyScores> => {
-        return api(`invData/companies/${cik}/scores`, {
-            method: 'PUT',
-            body: JSON.stringify(rest),
-        })
-    })
+    mapParams: (params: CompanyScores, cik: number) => ({
+        businessModel: params?.businessModel?.val,
+        moat: params.moat,
+        cik
+    }),
+    effect: createEffect(
+        ({ cik, ...rest }: SaveScoreFxReq): Promise<CompanyScores> => {
+            return api(`invData/companies/${cik}/scores`, {
+                method: 'PUT',
+                body: JSON.stringify(rest)
+            });
+        }
+    )
 });
 
 sample({
@@ -48,13 +62,13 @@ sample({
 
 export const companyScoresStores = {
     $scores
-}
+};
 
 export const companyScoresEvents = {
     setCik
-}
+};
 
 export const companyScoresEffects = {
     getScoresForActiveCikFx,
     saveScoresFx
-}
+};

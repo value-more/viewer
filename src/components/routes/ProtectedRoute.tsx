@@ -1,21 +1,30 @@
-import React, { ReactNode, useEffect, useState } from 'react'
-import { Navigate } from 'react-router'
-import { NavigateEffector } from './NavigateEffector'
+import React, { ReactNode, useEffect, useState } from 'react';
+import { Navigate } from 'react-router';
+import { useUserRights } from '../../models/user/hooks';
 
 interface ProtectedRouteProps {
-    children: ReactNode
+    right?: string;
+    children: ReactNode;
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-    const [token, setToken] = useState<string | null>()
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+    children,
+    right
+}) => {
+    const [token, setToken] = useState<string | null>();
+    const urs = useUserRights();
+
     useEffect(() => {
-        setToken(localStorage.getItem('token') || '')
-    }, [])
+        setToken(localStorage.getItem('token') || '');
+    }, []);
 
-    if (token === '') return <Navigate to="/login" />
+    if (token === '') {
+        return <Navigate to="/login" />;
+    }
 
-    return <>
-        <NavigateEffector />
-        {children}
-    </>
-}
+    if (right && !urs?.[right]) {
+        return <Navigate to="/" />;
+    }
+
+    return <>{children}</>;
+};

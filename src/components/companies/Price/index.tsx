@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react'
-import { companyPriceEvents, companyPriceStores } from '../../../models/company/price';
+import React from 'react';
+import {
+    companyPriceEffects,
+    companyPriceStores
+} from '../../../models/company/price';
 import { useUnit } from 'effector-react';
+import { Skeleton } from 'primereact/skeleton';
 
 interface PriceProps {
     ticker?: string;
@@ -8,19 +12,18 @@ interface PriceProps {
 
 export const Price: React.FC<PriceProps> = ({ ticker }) => {
     const priceData = useUnit(companyPriceStores.$priceData);
-    useEffect(() => {
-        if ( !ticker ) return;
-        companyPriceEvents.setTicker(ticker);
-    }, [ticker]);
-
-    if ( !ticker || !priceData ) {
-        return null;
-    }
+    const priceFxPending = useUnit(companyPriceEffects.priceFx.pending);
 
     return (
         <>
             <div>Last price: </div>
-            <div>{priceData.price} USD</div>
+            <div>
+                {!ticker || priceFxPending ? (
+                    <Skeleton />
+                ) : (
+                    <>{priceData?.price ?? '-'} USD</>
+                )}
+            </div>
         </>
-    )
-}
+    );
+};

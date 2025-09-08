@@ -16,6 +16,10 @@ h1, h2, h3 {
     background-color: var(--background-color);    
 }
 
+label, .p-button-label, .p-submenu-header, .cs-chat-container {
+    line-height: normal;
+}
+
 .text-warning {
     color: #c25d1a;
 }
@@ -58,6 +62,25 @@ h1, h2, h3 {
 
 .p-submenu-list {
     z-index: 10;
+}
+
+.p-dropdown {
+    align-items: center;
+}
+
+.p-dropdown-label {
+    padding: 0.1rem 0 0.1rem 0.5rem;
+}
+
+.p-button-secondary {
+    color: var(--text-color);
+    background: transparent;
+    border-color: var(--text-color);
+}
+
+.p-button-secondary:hover {
+    background: var(--highlight-bg);
+    color: white;
 }
 
 /* Style the scrollbar track */

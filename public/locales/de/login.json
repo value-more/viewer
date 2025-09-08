@@ -1,0 +1,34 @@
+{
+    "titles": {
+        "login": "Login",
+        "passwordForgotten": "Passwort vergessen?",
+        "register": "Registrieren",
+        "resetPassword": "Passwort ändern"
+    },
+    "errors": {
+        "emailRequired": "E-Mail ist erforderlich",
+        "missing": "Erforderliche Felder fehlen",
+        "passwordRequired": "Passwort ist erforderlich",
+        "confirmPasswordRequired": "Bitte bestätigen Sie Ihr Passwort",
+        "passwordNotMatch": "Passwörter stimmen nicht überein"
+    },
+    "buttons": {
+        "sendRequestPasswordForgotten": "Anfrage senden",
+        "signIn": "Anmelden",
+        "register": "Registrieren",
+        "forgotPassword": "Passwort vergessen?",
+        "updatePassword": "Aktualisieren"
+    },
+    "result": {
+        "resetPasswordEmailSent:": "E-Mail zum Zurücksetzen des Passworts wurde gesendet",
+        "confirmEmailSent": "Bestätigungs-E-Mail wurde gesendet"
+    },
+    "fields": {
+        "email": "Ihre E-Mail",
+        "username": "Benutzername",
+        "password": "Passwort",
+        "name": "Name",
+        "newPassword": "Neues Passwort",
+        "confirmPassword": "Neues Passwort bestätigen"
+    }
+}

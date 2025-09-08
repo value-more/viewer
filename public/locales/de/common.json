@@ -1,15 +1,60 @@
 {
+    "common": {
+        "showMore": "Mehr"
+    },
+    "menu": {
+        "user": "Benutzer",
+        "logout": "Abmelden",
+        "signin": "Anmelden",
+        "language": "Sprache",
+        "themes": "Themen",
+        "analysis": "Analyse",
+        "config": "Konfiguration",
+        "logs": "Protokolle",
+        "admin": "Administrator",
+        "feedback": "Rückmeldung"
+    },
+    "feedback": {
+        "name": "Name",
+        "email": "E-Mail",
+        "categories": {
+            "bug": "Fehler",
+            "suggestion": "Vorschlag",
+            "compliment": "Lob",
+            "question": "Frage oder Supportanfrage"
+        },
+        "message": "Feedback-Nachricht",
+        "messagePlaceholder": "Ihr Feedback hilft uns, besser zu werden — teilen Sie gerne Ihre Gedanken mit",
+        "submit": "Absenden",
+        "success": "Ihr Feedback wurde gesendet"
+    },
     "home": {
-        "title": "Unternehmen"
+        "title": "Unternehmen",
+        "recommendedCompanies": "Highlights",
+        "favoritesCompanies": "Deine Favoriten",
+        "allCompanies": "Informieren Sie sich über alle Unternehmen",
+        "discoverMore": "Entdecke weitere Unternehmen",
+        "lastVisitedCompanies": "Bereits gesehen"
     },
     "controls": {
         "search": "Suche...",
         "companySearch": "Firma suchen"
     },
     "ticker": {
+        "accessLimited": "Der Zugriff ist auf 3 Unternehmen pro Monat beschränkt. Weiter lesen?",
         "overview": "Übersicht",
         "loader": "Daten abrufen und überprüfen.\nHol dir einen Kaffee, es könnte ein paar Sekunden dauern.",
         "profile": "Firmenprofil",
+        "status": {
+            "INIT": "Initial",
+            "COMPANY_PROFIL_VALID": "Unternehmensprofil geprüft",
+            "DATA_APPROVED": "Daten freigegeben",
+            "DIAGRAMS_APPROVED": "Diagramme bewertet",
+            "BUSINESS_MODEL_APPROVED": "Geschäftsmodell bewertet",
+            "MOAT_APPROVED": "MOAT bewertet",
+            "VALUATED": "Bewertung durchgeführt",
+            "ASSESSED": "Aktuelle Situation beschrieben"
+        },
         "intrinsicValue": {
             "title": "Intrinsic value",
             "areas": {
@@ -44,7 +89,7 @@
                     "dataset1": "EBIT je Aktie",
                     "cagrOperatingIncome": "CAGR EBIT",
                     "cagrOperatingIncomePerShare": "CAGR EBIT je Aktie",
-                    "tenYAvgEbitPerShare": "10J-AVG EBIT je Aktie"
+                    "tenYAvgEbitPerShare": "10J-AVG EBIT je Aktie",
                     "additionalDataTitle": "Operatives Ergebnis"
                 },
                 "revenueGrowthVsCOGSGrowth": {
@@ -121,11 +166,10 @@
                     "dataset4": "Anteil Absatz",
                     "dataset5": "Anteil Verschuldung"
                 },
-
                 "dividendPayoutRatio": {
                     "title": "Verhältnis von Dividendenzahlung zu bereinigtem Gewinn",
                     "dataset1": "Ausschüttungsquote"
-                }, 
+                },
                 "roic": {
                     "title": "Rendite auf investiertes Kapital",
                     "dataset1": "ROIC"
@@ -148,7 +192,7 @@
                 "invMargin": {
                     "title": "Verhältnis von Investitionen zu EBIT",
                     "dataset1": "Investment Marge",
-                    "tenYAvgInvMargin": "10J-AVG Inv Margin"
+                    "tenYAvgInvMargin": "10J-AVG Inv Margin",
                     "additionalDataTitle": "Investment Marge"
                 },
                 "daMargin": {
@@ -166,12 +210,12 @@
                     "title": "Verhältnis von Forschung & Entwicklung zu Gewinn",
                     "dataset1": "F&E-Gewinn Marge"
                 },
-                "bookValue":{
+                "bookValue": {
                     "title": "Buchwert",
                     "dataset1": "Buchwert",
                     "additionalDataTitle": "Buchwertwachstum"
                 },
-                "operatingBookValue":{
+                "operatingBookValue": {
                     "title": "Operativer Buchwert",
                     "dataset1": "Operativer Buchwert",
                     "additionalDataTitle": "Operatives Buchwertwachstum"
@@ -239,7 +283,7 @@
                 "OTHER_PROPERTIES": "Andere Immobilien",
                 "GROSS_PROPERTY_PLANT_AND_EQUIPMENT": "Brutto-Immobilien, Anlagen und Ausrüstung",
                 "ACCUMULATED_DEPRECIATION": "Kumulierte Abschreibung",
-		"OPERATING_LEASE_ASSETS": "Operatives Leasing",
+                "OPERATING_LEASE_ASSETS": "Operatives Leasing",
                 "INVESTMENTS": "Finanzinvestitionen",
                 "INTANGIBLE_ASSETS": "Immaterielle Vermögenswerte",
                 "DEFERRED_INCOME_TAXES_NON_CURRENT_ASSETS": "Aktive latente Steuern",
@@ -250,7 +294,7 @@
                 "TOTAL_CURRENT_LIABILITIES": "Summe kurzfristiger Verbindlichkeiten",
                 "SHORT_TERM_LIABILITIES": "Kurzfristige Verbindlichkeiten",
                 "CAPITAL_LEASES_CURRENT_LIABILITIES": "Kurzfristiges Capital Leasing",
-		"OPERATING_LEASES_CURRENT_LIABILITIES": "Kurzfristiges Operating Leasing",
+                "OPERATING_LEASES_CURRENT_LIABILITIES": "Kurzfristiges Operating Leasing",
                 "ACCOUNTS_PAYABLE": "Verbindlichkeiten aus Lieferungen und Leistungen",
                 "TAXES_PAYABLE": "Steuerverbindlichkeiten",
                 "DEFERRED_INCOME_TAXES_CURRENT_LIABILITIES": "Ertragssteuerverbindlichkeiten",
@@ -260,9 +304,9 @@
                 "OTHER_CURRENT_LIABILITIES": "Übrige kurzfristige Verbindlichkeiten",
                 "TOTAL_NON_CURRENT_LIABILITIES": "Summe langfristiger Verbindlichkeiten",
                 "LONG_TERM_DEBT": "Langfristige Schulden",
-		"LONG_TERM_LIABILITIES": "Langfristige Verbindlichkeiten",
+                "LONG_TERM_LIABILITIES": "Langfristige Verbindlichkeiten",
                 "CAPITAL_LEASES_NON_CURRENT_LIABILITIES": "Langfristiges Capital Leasing",
-		"OPERATING_LEASES_NON_CURRENT_LIABILITIES": "Langfristiges Operating Leasing",
+                "OPERATING_LEASES_NON_CURRENT_LIABILITIES": "Langfristiges Operating Leasing",
                 "DEFERRED_TAXES_LIABILITIES": "Passive latente Steuern",
                 "DEFERRED_REVENUES_NON_CURRENT_LIABILITIES": "Zurückgestellte Erträge",
                 "MINORITY_INTEREST_NON_CURRENT_LIABILITIES": "Minderheitsbeteiligung",
@@ -390,9 +434,9 @@
                     "futureGrowth": "Future growth",
                     "discountRate": "Discount rate",
                     "years": "# Years",
-		    "display": {
-			"currentCAGRDividendGrowth": "Aktuelles CAGR Dividendenwachstum"
-		    }
+                    "display": {
+                        "currentCAGRDividendGrowth": "Aktuelles CAGR Dividendenwachstum"
+                    }
                 },
                 "value": {
                     "title": "Sum"
@@ -407,10 +451,12 @@
             "main": "Haupt",
             "sure": "Genehmigt (grün)",
             "unsure": "Unsicher (gelb)",
-            "years": "Jahre (fehlende Elemente)"
+            "years": "Jahre (F.E.)",
+            "lastYear": "Letztes Jahr (F.E.)",
+            "sure_unsure": "Unsicher oder besser"
         }
     },
     "analysis": {
         "title": "Unternehmen, bei denen eines der wichtigen Fundamente fehlt"
     }
-} 
+}

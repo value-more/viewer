@@ -1,10 +1,10 @@
 export interface Logs {
     version: string;
-    list: Log[]
+    list: Log[];
 }
 
 export interface Log {
     date: number;
     message: string;
-    type: 'feat'|'fix'|'improv'|'refactor';
+    type: 'feat' | 'fix' | 'improv' | 'refactor';
 }

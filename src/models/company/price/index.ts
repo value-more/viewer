@@ -13,10 +13,11 @@ const setTicker = createEvent<string>();
 $ticker.on(setTicker, (_, state) => state);
 
 const $priceData = createStore<Price | null>(null);
-const priceFx = createEffect(async({ ticker }: { ticker: string }) => {
+const priceFx = createEffect(async ({ ticker }: { ticker?: string }) => {
+    if (!ticker) return null;
     try {
         return api(`invData/tickers/${ticker}/prices`);
-    } catch(e) {
+    } catch (e) {
         return null;
     }
 });
@@ -24,16 +25,19 @@ $priceData.on(priceFx.doneData, (_, data) => data);
 
 sample({
     source: $ticker,
-    filter: ticker => !!ticker,
-    fn: ticker => ({ ticker }),
+    fn: (ticker) => ({ ticker }),
     target: priceFx
 });
 
 export const companyPriceStores = {
     $ticker,
     $priceData
-}
+};
 
 export const companyPriceEvents = {
     setTicker
-}
+};
+
+export const companyPriceEffects = {
+    priceFx
+};

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { InputTextarea } from "primereact/inputtextarea";
-import { useState } from "react";
+import { InputTextarea } from 'primereact/inputtextarea';
+import { useState } from 'react';
 import { api } from '../../../api/invData';
 import { Divider } from 'primereact/divider';
 import { toasts } from '../../../models/toast';
+import { companyStatusEffects } from '../../../models/company/status';
 
 interface MetricsAssessmentProps {
     cik: number;
@@ -12,14 +13,19 @@ interface MetricsAssessmentProps {
 
 let timeout: any = null;
 
-export const MetricsAssessment: React.FC<MetricsAssessmentProps> = ({ cik, readonly }) => {
+export const MetricsAssessment: React.FC<MetricsAssessmentProps> = ({
+    cik,
+    readonly
+}) => {
     const [data, setData] = useState<string>('');
 
     useEffect(() => {
         const getData = async () => {
-            const res = (await api(`invdata/companies/${cik}/metrics/assessments`)).value;
+            const res = (
+                await api(`invdata/companies/${cik}/metrics/assessments`)
+            ).value;
             setData(res);
-        }
+        };
         getData();
     }, [cik]);
 
@@ -30,24 +36,28 @@ export const MetricsAssessment: React.FC<MetricsAssessmentProps> = ({ cik, reado
                 method: 'POST',
                 body: JSON.stringify({ value })
             }).then(() => {
-                toasts.showToast({ severity: 'info', summary: 'Metrics assessment updated' });
-            })
+                toasts.showToast({
+                    severity: 'info',
+                    summary: 'Metrics assessment updated'
+                });
+                companyStatusEffects.getStatusForActiveCikFx();
+            });
         }, 750);
-        setData(data);
-    }
+        setData(value);
+    };
 
     return (
         <div>
             {readonly ? (
-                <>{data ? (<div>{data}</div>) : (<Divider />)}</>
+                <>{data ? <div>{data}</div> : <Divider />}</>
             ) : (
-            <InputTextarea 
-                autoResize 
-                className='w-full mt-1 h-7rem' 
-                onChange={event => save(event.target.value)} 
-                value={data}
-            />
+                <InputTextarea
+                    autoResize
+                    className="w-full mt-1 h-7rem"
+                    onChange={(event) => save(event.target.value)}
+                    value={data}
+                />
             )}
         </div>
-    )
-}
+    );
+};

@@ -1,15 +1,60 @@
 {
+    "common": {
+        "showMore": "Show more"
+    },
+    "menu": {
+        "user": "User",
+        "logout": "Logout",
+        "signin": "Sign in",
+        "language": "Language",
+        "themes": "Themes",
+        "analysis": "Analysis",
+        "config": "Config",
+        "logs": "Logs",
+        "admin": "Admin",
+        "feedback": "Feedback"
+    },
+    "feedback": {
+        "name": "Name",
+        "email": "Email",
+        "categories": {
+            "bug": "Bug",
+            "suggestion": "Suggestion",
+            "compliment": "Compliment",
+            "question": "Question or support request"
+        },
+        "message": "Feedback message",
+        "messagePlaceholder": "Your feedback helps us grow — share anything you'd like",
+        "submit": "Send",
+        "success": "Your feedback has been sent"
+    },
     "home": {
-        "title": "Companies"
+        "title": "Companies",
+        "recommendedCompanies": "Highlights",
+        "favoritesCompanies": "Your favorites",
+        "allCompanies": "Check out all companies",
+        "discoverMore": "Discover more companies",
+        "lastVisitedCompanies": "Already viewed"
     },
     "controls": {
         "search": "Search...",
         "companySearch": "Search company"
     },
     "ticker": {
+        "accessLimited": "The access is limited to 3 companies per month, continue reading ?",
         "overview": "Overview",
         "loader": "Retrieving and verifying data.\nGrab a coffee, it might take a few seconds.",
         "profile": "Company profile",
+        "status": {
+            "INIT": "Initial",
+            "COMPANY_PROFIL_VALID": "Company profil reviewed",
+            "DATA_APPROVED": "Data approved",
+            "DIAGRAMS_APPROVED": "Diagrams evaluated",
+            "BUSINESS_MODEL_APPROVED": "Business Model evaluated",
+            "MOAT_APPROVED": "MOAT evaluated",
+            "VALUATED": "Valuation evaluated",
+            "ASSESSED": "Current situation described"
+        },
         "intrinsicValue": {
             "title": "Intrinsic value",
             "areas": {
@@ -120,7 +165,7 @@
                 },
                 "decompositionOfRoe": {
                     "title": "Decomposition of ROE",
-                    "dataset1": "Taxes", 
+                    "dataset1": "Taxes",
                     "dataset2": "Financing",
                     "dataset3": "Operating Profit",
                     "dataset4": "Turnover",
@@ -161,12 +206,12 @@
                     "title": "R&D Margin",
                     "dataset1": "R&D/Net income"
                 },
-                "bookValue":{
+                "bookValue": {
                     "title": "Book Value",
                     "dataset1": "Book Value",
                     "additionalDataTitle": "Book value"
                 },
-                "operatingBookValue":{
+                "operatingBookValue": {
                     "title": "Operating Book Value",
                     "dataset1": "Operating Book Value",
                     "additionalDataTitle": "Operating book value"
@@ -402,7 +447,9 @@
             "main": "Main",
             "sure": "Approved (green)",
             "unsure": "Unsure (yellow)",
-            "years": "Years (missing elements)"
+            "years": "Years (M.E.)",
+            "lastYear": "Last year (M.E.)",
+            "sure_unsure": "Unsure or better"
         }
     },
     "analysis": {
