@@ -19,6 +19,10 @@ jobs:
         uses: borales/actions-yarn@v4
         with:
           cmd: install
+      - name: Run translations check
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: validate-locales
       - name: Run eslint
         uses: borales/actions-yarn@v4
         with:
