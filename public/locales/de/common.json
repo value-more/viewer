@@ -267,6 +267,7 @@
                 "TOTAL_CURRENT_ASSETS": "Umlaufvermögen",
                 "TOTAL_CASH": "Gesamtzahlungsmittel und Gesamtzahlungsmitteläquivalente",
                 "CASH_AND_CASH_EQUIVALENTS": "Zahlungsmittel und Zahlungsmitteläquivalente",
+                "RESTRICTED_CASH": "Gebundene liquide Mittel",
                 "SHORT_TERM_INVESTMENTS": "Kurzfristige Finanzinvestitionen",
                 "MARKETABLE_SECURITIES": "Handelbare Wertpapiere",
                 "RECEIVABLES": "Forderungen",
@@ -380,7 +381,7 @@
             }
         },
         "businessmodel": {
-            "title": "Geschaftsmodell",
+            "title": "Geschäftsmodell",
             "select": "Was passt am besten?",
             "options": {
                 "-2": "(--) nicht vorhersehbar < 1 Jahr",
