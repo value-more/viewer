@@ -24,15 +24,15 @@
             "question": "Frage oder Supportanfrage"
         },
         "message": "Feedback-Nachricht",
-        "messagePlaceholder": "Ihr Feedback hilft uns, besser zu werden — teilen Sie gerne Ihre Gedanken mit",
+        "messagePlaceholder": "Dein Feedback hilft uns, besser zu werden — teile uns gerne Deine Gedanken mit",
         "submit": "Absenden",
-        "success": "Ihr Feedback wurde gesendet"
+        "success": "Wir haben Dein Feedback erhalten"
     },
     "home": {
         "title": "Unternehmen",
         "recommendedCompanies": "Highlights",
         "favoritesCompanies": "Deine Favoriten",
-        "allCompanies": "Informieren Sie sich über alle Unternehmen",
+        "allCompanies": "Unternehmen filtern & entdecken",
         "discoverMore": "Entdecke weitere Unternehmen",
         "lastVisitedCompanies": "Bereits gesehen"
     },
@@ -43,7 +43,7 @@
     "ticker": {
         "accessLimited": "Der Zugriff ist auf 3 Unternehmen pro Monat beschränkt. Weiter lesen?",
         "overview": "Übersicht",
-        "loader": "Daten abrufen und überprüfen.\nHol dir einen Kaffee, es könnte ein paar Sekunden dauern.",
+        "loader": "Daten abrufen und überprüfen.\nHol Dir einen Kaffee, es könnte ein paar Sekunden dauern.",
         "profile": "Firmenprofil",
         "status": {
             "INIT": "Initial",
@@ -223,7 +223,7 @@
                 "chartsAdditionalData": {
                     "cagr": "CAGR",
                     "perShare": "Per share",
-                    "average": "Average",
+                    "average": "Durchschnitt",
                     "ratio": "Ratio"
                 }
             }
@@ -267,6 +267,7 @@
                 "TOTAL_CURRENT_ASSETS": "Umlaufvermögen",
                 "TOTAL_CASH": "Gesamtzahlungsmittel und Gesamtzahlungsmitteläquivalente",
                 "CASH_AND_CASH_EQUIVALENTS": "Zahlungsmittel und Zahlungsmitteläquivalente",
+                "RESTRICTED_CASH": "Gebundene liquide Mittel",
                 "SHORT_TERM_INVESTMENTS": "Kurzfristige Finanzinvestitionen",
                 "MARKETABLE_SECURITIES": "Handelbare Wertpapiere",
                 "RECEIVABLES": "Forderungen",
@@ -380,7 +381,7 @@
             }
         },
         "businessmodel": {
-            "title": "Geschaftsmodell",
+            "title": "Geschäftsmodell",
             "select": "Was passt am besten?",
             "options": {
                 "-2": "(--) nicht vorhersehbar < 1 Jahr",
