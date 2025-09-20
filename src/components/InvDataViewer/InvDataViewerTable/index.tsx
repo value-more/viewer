@@ -75,6 +75,7 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     const [HTMLSecViewerPos, setHTMLSecViewerPos] = useState<'left' | 'right'>(
         'left'
     );
+    const [viewOnlyMain, setViewOnlyMain] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
@@ -113,19 +114,22 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     useEffect(() => {
         if (!Object.keys(years || {}).length) return;
         const lowerCaseSearch = search?.toLowerCase() ?? '';
-        setFilteredStructuredData(
-            !search
-                ? structuredData
-                : structuredData.filter(
-                      (d) =>
-                          !!Object.keys(d).filter(
-                              (k) =>
-                                  typeof d[k] === 'string' &&
-                                  d[k].toLowerCase().includes(lowerCaseSearch)
-                          ).length
-                  )
-        );
-    }, [structuredData, search]);
+        let filtered = structuredData;
+        if (viewOnlyMain) {
+            filtered = filtered.filter((d) => d.main);
+        }
+        if (search) {
+            filtered = filtered.filter(
+                (d) =>
+                    !!Object.keys(d).filter(
+                        (k) =>
+                            typeof d[k] === 'string' &&
+                            d[k].toLowerCase().includes(lowerCaseSearch)
+                    ).length
+            );
+        }
+        setFilteredStructuredData(filtered);
+    }, [structuredData, search, viewOnlyMain]);
 
     if (!years) {
         return (
@@ -207,6 +211,14 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                 />
             </div>
             <div className="ml-auto flex gap-4">
+                {!readonly && (
+                    <Button
+                        onClick={() => setViewOnlyMain(!viewOnlyMain)}
+                        severity={viewOnlyMain ? 'success' : undefined}
+                    >
+                        Main
+                    </Button>
+                )}
                 {!readonly && (
                     <Button onClick={() => setIsVisibleHTMLSecViewer(true)}>
                         SEC htmls
