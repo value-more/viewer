@@ -72,9 +72,9 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     const [search, setSearch] = useState<string | null>(null);
     const [isVisibleHTMLSecViewer, setIsVisibleHTMLSecViewer] =
         useState<boolean>(false);
-    const [HTMLSecViewerPos, setHTMLSecViewerPos] = useState<'left' | 'right'>(
-        'left'
-    );
+    const [HTMLSecViewerPos, setHTMLSecViewerPos] = useState<
+        'left' | 'right' | 'bottom' | 'top'
+    >('left');
     const [viewOnlyMain, setViewOnlyMain] = useState<boolean>(false);
 
     useEffect(() => {
@@ -444,13 +444,28 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                     visible={isVisibleHTMLSecViewer}
                     onHide={() => setIsVisibleHTMLSecViewer(false)}
                     position={HTMLSecViewerPos}
-                    className="w-3"
+                    className={
+                        HTMLSecViewerPos === 'bottom' ||
+                        HTMLSecViewerPos === 'top'
+                            ? 'h-20rem'
+                            : 'w-3'
+                    }
                     modal={false}
                     dismissable={false}
                     icons={
-                        <div className="mr-2">
+                        <div className="mr-2 flex gap-2">
                             <Button
-                                icon="pi pi-arrow-right-arrow-left"
+                                icon="pi pi-arrows-v"
+                                onClick={() =>
+                                    setHTMLSecViewerPos(
+                                        HTMLSecViewerPos === 'bottom'
+                                            ? 'top'
+                                            : 'bottom'
+                                    )
+                                }
+                            />
+                            <Button
+                                icon="pi pi-arrows-h"
                                 onClick={() =>
                                     setHTMLSecViewerPos(
                                         HTMLSecViewerPos === 'left'
