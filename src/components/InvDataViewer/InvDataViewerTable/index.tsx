@@ -50,6 +50,8 @@ const keysTitleValidate = [
     { prop: 'edgartools', label: 'edgartools' }
 ];
 
+type HTMLSecViewerPosType = 'left' | 'right' | 'bottom' | 'top';
+
 export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     cik,
     dataKey,
@@ -72,9 +74,12 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     const [search, setSearch] = useState<string | null>(null);
     const [isVisibleHTMLSecViewer, setIsVisibleHTMLSecViewer] =
         useState<boolean>(false);
-    const [HTMLSecViewerPos, setHTMLSecViewerPos] = useState<
-        'left' | 'right' | 'bottom' | 'top'
-    >('left');
+    const [HTMLSecViewerPos, setHTMLSecViewerPos] =
+        useState<HTMLSecViewerPosType>(
+            (localStorage.getItem(
+                'HTMLSecViewerPos'
+            ) as HTMLSecViewerPosType) || 'left'
+        );
     const [viewOnlyMain, setViewOnlyMain] = useState<boolean>(false);
 
     useEffect(() => {
@@ -141,6 +146,11 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
             </div>
         );
     }
+
+    const changeHTMLSecViewerPos = (newPos: HTMLSecViewerPosType) => {
+        localStorage.setItem('HTMLSecViewerPos', newPos);
+        setHTMLSecViewerPos(newPos);
+    };
 
     const updateValue = async (value: {
         [year: string]: {
@@ -457,7 +467,7 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                             <Button
                                 icon="pi pi-arrows-v"
                                 onClick={() =>
-                                    setHTMLSecViewerPos(
+                                    changeHTMLSecViewerPos(
                                         HTMLSecViewerPos === 'bottom'
                                             ? 'top'
                                             : 'bottom'
@@ -467,7 +477,7 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                             <Button
                                 icon="pi pi-arrows-h"
                                 onClick={() =>
-                                    setHTMLSecViewerPos(
+                                    changeHTMLSecViewerPos(
                                         HTMLSecViewerPos === 'left'
                                             ? 'right'
                                             : 'left'
