@@ -3,20 +3,20 @@ import { api } from '../../../api/invData';
 
 interface Price {
     price: number;
-    symbol: string;
-    timestamp: number;
-    volume: number;
 }
 
-const $ticker = createStore<string>('');
-const setTicker = createEvent<string>();
-$ticker.on(setTicker, (_, state) => state);
+const $cik = createStore<number>(0);
+const setCik = createEvent<number>();
+$cik.on(setCik, (_, state) => state);
 
 const $priceData = createStore<Price | null>(null);
-const priceFx = createEffect(async ({ ticker }: { ticker?: string }) => {
-    if (!ticker) return null;
+const priceFx = createEffect(async ({ cik }: { cik?: number }) => {
+    if (!cik) return null;
     try {
-        return api(`invData/tickers/${ticker}/prices`);
+        const data = await api(`invData/companies/${cik}/prices`);
+        return {
+            price: data?.marketPrice
+        };
     } catch (e) {
         return null;
     }
@@ -24,18 +24,17 @@ const priceFx = createEffect(async ({ ticker }: { ticker?: string }) => {
 $priceData.on(priceFx.doneData, (_, data) => data);
 
 sample({
-    source: $ticker,
-    fn: (ticker) => ({ ticker }),
+    source: $cik,
+    fn: (cik) => ({ cik }),
     target: priceFx
 });
 
 export const companyPriceStores = {
-    $ticker,
     $priceData
 };
 
 export const companyPriceEvents = {
-    setTicker
+    setCik
 };
 
 export const companyPriceEffects = {

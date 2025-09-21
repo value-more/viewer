@@ -72,7 +72,7 @@ export const CompanyPage: React.FC = () => {
             urs?.['companies.value.view'] &&
                 companyValuesEvents.setCik(Number(cik));
 
-            companyPriceEvents.setTicker(data?.tickers?.[0]?.ticker);
+            companyPriceEvents.setCik(Number(cik));
         };
         fetch();
     }, [cik]);
