@@ -73,16 +73,10 @@ export const CompanyPageView: React.FC<CompanyPageViewProps> = ({
                             </div>
                         )}
                         {isXLarge && (
-                            <div className="col-3 flex align-items-center gap-3 p-0 mt-1 line-height-2">
-                                <div>
-                                    <i className="pi pi-bell text-xl" />
-                                </div>
-                                <div className="text-xs">
-                                    <Price
-                                        ticker={data?.tickers?.[0]?.ticker}
-                                    />
-                                </div>
-                            </div>
+                            <Price
+                                cik={cik}
+                                ticker={data?.tickers?.[0]?.ticker}
+                            />
                         )}
                     </>
                 )}

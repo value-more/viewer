@@ -83,6 +83,10 @@ label, .p-button-label, .p-submenu-header, .cs-chat-container {
     color: white;
 }
 
+.p-dialog .p-dialog-header, .p-dialog-footer {
+    padding: 0.5rem 1rem;
+}
+
 /* Style the scrollbar track */
 ::-webkit-scrollbar {
     width: 6px; /* Width of the vertical scrollbar */

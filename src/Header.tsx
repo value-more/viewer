@@ -14,6 +14,7 @@ import { useUser, useUserRights } from './models/user/hooks';
 import { logoutFx } from './models/user';
 import { useTranslation } from 'react-i18next';
 import { Feedback } from './components/Feedback';
+import { PriceAlerts } from './components/PriceAlerts';
 
 interface HeaderProps {
     menu?: MenuItem[];
@@ -26,6 +27,8 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
     const navigate = useNavigate();
     const [visibleChangelog, setVisibleChangelog] = useState<boolean>(false);
     const [visibleFeedback, setVisibleFeedback] = useState<boolean>(false);
+    const [visiblePriceAlerts, setVisiblePriceAlerts] =
+        useState<boolean>(false);
     const isMedium = useIsMediumScreen();
     const menuUserRef = useRef<Menu | null>(null);
     const { themeItems } = useThemeMenu();
@@ -39,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
     const items: MenuItem[] = [];
 
     if (user) {
-        items.push({
+        const userMenu = {
             label: t('menu.user'),
             items: [
                 {
@@ -51,14 +54,22 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
                     label: t('menu.feedback'),
                     icon: 'pi pi-comments',
                     command: () => setVisibleFeedback(true)
-                },
-                {
-                    label: t('menu.logout'),
-                    icon: 'pi pi-sign-out',
-                    command: () => logoutFx()
                 }
             ]
+        };
+        if (userRights?.['prices.alerts']) {
+            userMenu.items.push({
+                label: t('menu.pricealerts'),
+                icon: 'pi pi-bell',
+                command: () => setVisiblePriceAlerts(true)
+            });
+        }
+        userMenu.items.push({
+            label: t('menu.logout'),
+            icon: 'pi pi-sign-out',
+            command: () => logoutFx()
         });
+        items.push(userMenu);
     } else {
         items.push({
             label: t('menu.signin'),
@@ -171,6 +182,20 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
                             {t('menu.feedback')}
                         </h2>
                         <Feedback onSuccess={() => setVisibleFeedback(false)} />
+                    </Sidebar>
+                )}
+                {userRights?.['prices.alerts'] && visiblePriceAlerts && (
+                    <Sidebar
+                        visible={visiblePriceAlerts}
+                        modal
+                        onHide={() => setVisiblePriceAlerts(false)}
+                        position="right"
+                        className="w-3"
+                    >
+                        <h2 className="mt-0 text-center">
+                            {t('menu.pricealerts')}
+                        </h2>
+                        <PriceAlerts />
                     </Sidebar>
                 )}
             </div>
