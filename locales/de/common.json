@@ -12,7 +12,8 @@
         "config": "Konfiguration",
         "logs": "Protokolle",
         "admin": "Administrator",
-        "feedback": "Rückmeldung"
+        "feedback": "Rückmeldung",
+        "pricealerts": "Preisalarm"
     },
     "feedback": {
         "name": "Name",
@@ -459,5 +460,23 @@
     },
     "analysis": {
         "title": "Unternehmen, bei denen eines der wichtigen Fundamente fehlt"
+    },
+    "alerts": {
+        "price": {
+            "formNew": {
+                "title": "Preisalarm setzen",
+                "content": "Geben Sie einen Preis ein, bei dem Sie benachrichtigt werden möchten:",
+                "buttonCreate": "Erstellen",
+                "buttonCancel": "Abbrechen"
+            },
+            "type": {
+                "up": "Über",
+                "down": "Unter"
+            },
+            "recurrent": "Wiederkehrend",
+            "ticker": "Ticker",
+            "price": "Preis",
+            "typeLabel": "Typ"
+        }
     }
 }

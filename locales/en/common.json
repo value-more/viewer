@@ -12,7 +12,8 @@
         "config": "Config",
         "logs": "Logs",
         "admin": "Admin",
-        "feedback": "Feedback"
+        "feedback": "Feedback",
+        "pricealerts": "Price alerts"
     },
     "feedback": {
         "name": "Name",
@@ -454,5 +455,23 @@
     },
     "analysis": {
         "title": "Companies where one of important fundamentals are missing"
+    },
+    "alerts": {
+        "price": {
+            "formNew": {
+                "title": "Set price alert",
+                "content": "Enter a price you want to be notified:",
+                "buttonCreate": "Create",
+                "buttonCancel": "Cancel"
+            },
+            "type": {
+                "up": "Above",
+                "down": "Below"
+            },
+            "recurrent": "Repeat",
+            "ticker": "Ticker",
+            "price": "Price",
+            "typeLabel": "Type"
+        }
     }
 }
