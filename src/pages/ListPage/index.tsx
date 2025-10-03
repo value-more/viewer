@@ -9,7 +9,7 @@ export const ListPage = () => {
 
     return (
         <BaseLayout title="Value More">
-            <div className="p-4 m-auto flex flex-column w-full h-full overflow-auto">
+            <div className="px-4 m-auto flex flex-column w-full h-full overflow-auto">
                 <CompaniesList
                     withHeader
                     centerContent

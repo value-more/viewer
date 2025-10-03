@@ -31,10 +31,14 @@ export const TableView: React.FC<BaseViewProps> = ({
             className="h-full"
             pt={{
                 header: {
-                    style: { background: 'none', border: 'none' }
+                    style: {
+                        background: 'none',
+                        border: 'none',
+                        padding: '0 1rem'
+                    }
                 },
                 wrapper: {
-                    style: { height: 'calc(100% - 75px)' }
+                    style: { height: 'calc(100% - 120px)' }
                 }
             }}
             selectionMode="single"

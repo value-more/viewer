@@ -13,6 +13,7 @@ import { useDebounce } from 'primereact/hooks';
 import { useUserRights } from '../../models/user/hooks';
 import { StatusWorkflow } from '../../models/company/status/types';
 import { SelectButton } from 'primereact/selectbutton';
+import { SmartSearch } from './SmartSearch';
 
 interface CompaniesListProps {
     withHeader?: boolean;
@@ -47,6 +48,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     const [total, setTotal] = useState(0);
     const [totalFiltered, setTotalFiltered] = useState(0);
     const [, q, setQ] = useDebounce<string>('', 400);
+    const [smartSearch, setSmartSearch] = useState<string | null>(null);
     const [showFavorites, setShowFavorites] = useState<boolean>(
         filter?.favorites ?? false
     );
@@ -76,7 +78,8 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                         favorites: showFavorites ? limit ?? true : undefined,
                         withRecentData:
                             filterStateDebounced?.withRecentData ?? true,
-                        q: q?.toLocaleLowerCase()
+                        q: q?.toLocaleLowerCase(),
+                        smartSearch: smartSearch ?? undefined
                     }
                 })
             });
@@ -84,7 +87,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
             setTotal(data?.total);
             setTotalFiltered(data?.totalFiltered);
         })();
-    }, [opts, filterStateDebounced, showFavorites, reload, q]);
+    }, [opts, filterStateDebounced, showFavorites, reload, q, smartSearch]);
 
     useEffect(() => {
         if (limit && limit !== opts.rows) {
@@ -262,6 +265,13 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                                 ]}
                             />
                         </div>
+                    </div>
+                )}
+                {!!urs?.assistant && (
+                    <div>
+                        <SmartSearch
+                            onSubmit={(value) => setSmartSearch(value)}
+                        />
                     </div>
                 )}
             </>
