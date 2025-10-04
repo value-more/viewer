@@ -115,7 +115,11 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     }: {
         first: number;
         rows: number;
-    }) => setOpts({ first, rows });
+    }) => {
+        const e = document.getElementsByClassName('companiesTableWrapper')[0];
+        if (e) e.scrollTop = 0;
+        setOpts({ first, rows });
+    };
 
     const header = () => {
         return (
