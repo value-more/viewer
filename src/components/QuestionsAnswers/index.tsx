@@ -6,6 +6,7 @@ import { InfoIcon } from '../InfoIcon';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from 'primereact/skeleton';
 import { companyStatusEffects } from '../../models/company/status';
+import { SpeechToText } from '../SpeechToText';
 
 interface QuestionsAnswersProps {
     cik: number;
@@ -118,15 +119,29 @@ export const QuestionsAnswers: React.FC<QuestionsAnswersProps> = ({
                         {readonly ? (
                             <div>{answers[key]?.answer?.[language] || ''}</div>
                         ) : (
-                            <InputTextarea
-                                autoResize
-                                name={key}
-                                className="w-full"
-                                onChange={(event) =>
-                                    save(key, event.target.value)
-                                }
-                                value={answers[key]?.answer?.[language] || ''}
-                            />
+                            <div className="line-height-1 relative">
+                                <div className="absolute right-0">
+                                    <SpeechToText
+                                        onResult={(r) => {
+                                            save(
+                                                key,
+                                                `${answers[key]?.answer?.[language]}\n${r}`
+                                            );
+                                        }}
+                                    />
+                                </div>
+                                <InputTextarea
+                                    autoResize
+                                    name={key}
+                                    className="w-full pr-5"
+                                    onChange={(event) =>
+                                        save(key, event.target.value)
+                                    }
+                                    value={
+                                        answers[key]?.answer?.[language] || ''
+                                    }
+                                />
+                            </div>
                         )}
                     </div>
                 );
