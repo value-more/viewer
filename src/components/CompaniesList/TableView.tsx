@@ -8,7 +8,6 @@ import { CompanyFavorite } from '../CompanyFavorite';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useUserRights } from '../../models/user/hooks';
-import { classNames } from 'primereact/utils';
 
 export const TableView: React.FC<BaseViewProps> = ({
     companies,
