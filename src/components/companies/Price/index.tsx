@@ -7,6 +7,7 @@ import { useUnit } from 'effector-react';
 import { Skeleton } from 'primereact/skeleton';
 import { NewPriceAlert } from '../NewPriceAlert';
 import { useUserRights } from '../../../models/user/hooks';
+import { useTranslation } from 'react-i18next';
 
 interface PriceProps {
     cik: number;
@@ -14,6 +15,9 @@ interface PriceProps {
 }
 
 export const Price: React.FC<PriceProps> = ({ cik, ticker }) => {
+    const {
+        i18n: { language }
+    } = useTranslation();
     const priceData = useUnit(companyPriceStores.$priceData);
     const priceFxPending = useUnit(companyPriceEffects.priceFx.pending);
     const userRights = useUserRights();
@@ -38,7 +42,13 @@ export const Price: React.FC<PriceProps> = ({ cik, ticker }) => {
                         {!ticker || priceFxPending ? (
                             <Skeleton />
                         ) : (
-                            <>{priceData?.price ?? '-'} USD</>
+                            <>
+                                {priceData?.price?.toLocaleString?.(language, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                }) ?? '-'}{' '}
+                                USD
+                            </>
                         )}
                     </div>
                 </div>
