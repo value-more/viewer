@@ -289,7 +289,8 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
 
     const cellEditor = (options: ColumnEditorOptions) => {
         const conf = getConfigFromOptions(options);
-        const avoidScaling = structure[options.rowIndex]?.avoidScaling;
+        const avoidScaling =
+            filteredStructuredData[options.rowIndex]?.avoidScaling;
         const isValid = conf?.isValid;
         const value = conf?.value;
         const onClick = (isValid: string) => {
@@ -362,7 +363,7 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
             dt.current.validated = undefined;
             return;
         }
-        const config = structure[e.rowIndex];
+        const config = filteredStructuredData[e.rowIndex];
         const key = config?.name;
 
         const newObj = {
