@@ -52,7 +52,7 @@ export const SpeechToText: React.FC<SpeechToTextProps> = ({ onResult }) => {
 
         recognition.start();
         setRecognition(recognition);
-    }, []);
+    }, [language]);
 
     return (
         <>
