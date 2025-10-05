@@ -35,38 +35,50 @@ export const HTMLSecViewersSideBar: React.FC<HTMLSecViewerProps> = ({
                 className={
                     HTMLSecViewerPos === 'bottom' || HTMLSecViewerPos === 'top'
                         ? 'h-20rem'
-                        : 'w-3'
+                        : 'w-4'
                 }
                 modal={false}
                 dismissable={false}
-                icons={
-                    <div className="mr-2 flex gap-2">
-                        <Button
-                            icon="pi pi-arrows-v"
-                            onClick={() =>
-                                changeHTMLSecViewerPos(
-                                    HTMLSecViewerPos === 'bottom'
-                                        ? 'top'
-                                        : 'bottom'
-                                )
-                            }
-                        />
-                        <Button
-                            icon="pi pi-arrows-h"
-                            onClick={() =>
-                                changeHTMLSecViewerPos(
-                                    HTMLSecViewerPos === 'left'
-                                        ? 'right'
-                                        : 'left'
-                                )
-                            }
-                        />
-                    </div>
-                }
                 fullScreen
-            >
-                <HTMLSecViewers cik={cik} years={years} />
-            </Sidebar>
+                content={() => {
+                    return (
+                        <div className="flex w-full h-full">
+                            <div style={{ width: 'calc(100% - 35px)' }}>
+                                <HTMLSecViewers cik={cik} years={years} />
+                            </div>
+                            <div className="flex gap-2 flex-column flex-0">
+                                <Button
+                                    onClick={() =>
+                                        setIsVisibleHTMLSecViewer(false)
+                                    }
+                                    text
+                                    icon="pi pi-times"
+                                />
+                                <Button
+                                    icon="pi pi-arrows-v"
+                                    onClick={() =>
+                                        changeHTMLSecViewerPos(
+                                            HTMLSecViewerPos === 'bottom'
+                                                ? 'top'
+                                                : 'bottom'
+                                        )
+                                    }
+                                />
+                                <Button
+                                    icon="pi pi-arrows-h"
+                                    onClick={() =>
+                                        changeHTMLSecViewerPos(
+                                            HTMLSecViewerPos === 'left'
+                                                ? 'right'
+                                                : 'left'
+                                        )
+                                    }
+                                />
+                            </div>
+                        </div>
+                    );
+                }}
+            ></Sidebar>
         </>
     );
 };
