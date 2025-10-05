@@ -1,3 +1,4 @@
+import i18n from '../../i18n';
 import { navs } from '../../models/routes';
 import { logoutFx } from '../../models/user';
 
@@ -9,6 +10,7 @@ export const api = async (url: string, init?: RequestInit): Promise<any> => {
         ...init,
         headers: [
             ['x-token', localStorage.getItem('token') || ''],
+            ['x-language', i18n.language ?? 'en'],
             ['Content-Type', 'application/json']
         ]
     });
