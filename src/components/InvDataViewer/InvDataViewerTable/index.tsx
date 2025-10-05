@@ -16,8 +16,6 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { InputNumber } from 'primereact/inputnumber';
 import { companyStatusEffects } from '../../../models/company/status';
 import { Search } from './Search';
-import { Sidebar } from 'primereact/sidebar';
-import { HTMLSecViewers } from '../../HTMLSecViewers';
 
 interface InvDataViewerTableProps {
     cik: number;
@@ -50,8 +48,6 @@ const keysTitleValidate = [
     { prop: 'edgartools', label: 'edgartools' }
 ];
 
-type HTMLSecViewerPosType = 'left' | 'right' | 'bottom' | 'top';
-
 export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
     cik,
     dataKey,
@@ -72,14 +68,6 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
         []
     );
     const [search, setSearch] = useState<string | null>(null);
-    const [isVisibleHTMLSecViewer, setIsVisibleHTMLSecViewer] =
-        useState<boolean>(false);
-    const [HTMLSecViewerPos, setHTMLSecViewerPos] =
-        useState<HTMLSecViewerPosType>(
-            (localStorage.getItem(
-                'HTMLSecViewerPos'
-            ) as HTMLSecViewerPosType) || 'left'
-        );
     const [viewOnlyMain, setViewOnlyMain] = useState<boolean>(false);
 
     useEffect(() => {
@@ -146,11 +134,6 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
             </div>
         );
     }
-
-    const changeHTMLSecViewerPos = (newPos: HTMLSecViewerPosType) => {
-        localStorage.setItem('HTMLSecViewerPos', newPos);
-        setHTMLSecViewerPos(newPos);
-    };
 
     const updateValue = async (value: {
         [year: string]: {
@@ -227,11 +210,6 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                         severity={viewOnlyMain ? 'success' : undefined}
                     >
                         Main
-                    </Button>
-                )}
-                {!readonly && (
-                    <Button onClick={() => setIsVisibleHTMLSecViewer(true)}>
-                        SEC htmls
                     </Button>
                 )}
                 <Search onChange={(value) => setSearch(value)} />
@@ -450,51 +428,6 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                         ></Column>
                     ))}
             </DataTable>
-            {!readonly && (
-                <Sidebar
-                    visible={isVisibleHTMLSecViewer}
-                    onHide={() => setIsVisibleHTMLSecViewer(false)}
-                    position={HTMLSecViewerPos}
-                    className={
-                        HTMLSecViewerPos === 'bottom' ||
-                        HTMLSecViewerPos === 'top'
-                            ? 'h-20rem'
-                            : 'w-3'
-                    }
-                    modal={false}
-                    dismissable={false}
-                    icons={
-                        <div className="mr-2 flex gap-2">
-                            <Button
-                                icon="pi pi-arrows-v"
-                                onClick={() =>
-                                    changeHTMLSecViewerPos(
-                                        HTMLSecViewerPos === 'bottom'
-                                            ? 'top'
-                                            : 'bottom'
-                                    )
-                                }
-                            />
-                            <Button
-                                icon="pi pi-arrows-h"
-                                onClick={() =>
-                                    changeHTMLSecViewerPos(
-                                        HTMLSecViewerPos === 'left'
-                                            ? 'right'
-                                            : 'left'
-                                    )
-                                }
-                            />
-                        </div>
-                    }
-                    fullScreen
-                >
-                    <HTMLSecViewers
-                        cik={cik}
-                        years={Object.keys(years || {})}
-                    />
-                </Sidebar>
-            )}
         </div>
     );
 };

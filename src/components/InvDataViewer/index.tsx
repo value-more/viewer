@@ -10,6 +10,7 @@ import { viewerEvents, viewerStores } from './state';
 import { useUnit } from 'effector-react';
 import { ApproveButton } from '../companies/CompanyStatus/ApproveButton';
 import { StatusWorkflow } from '../../models/company/status/types';
+import { HTMLSecViewersSideBar } from '../HTMLSecViewersSideBar';
 
 interface InvDataViewerProps {
     cik: number;
@@ -17,6 +18,7 @@ interface InvDataViewerProps {
     overwriteTimestamp?: number;
     readonly?: boolean;
     withIcon?: boolean;
+    years?: string[];
 }
 
 export const InvDataViewer: React.FC<InvDataViewerProps> = ({
@@ -24,7 +26,8 @@ export const InvDataViewer: React.FC<InvDataViewerProps> = ({
     syncTimestamp,
     overwriteTimestamp,
     readonly,
-    withIcon
+    withIcon,
+    years
 }) => {
     const { t } = useTranslation();
     const [configs, setConfigs] = useState<Config[] | undefined>();
@@ -47,7 +50,7 @@ export const InvDataViewer: React.FC<InvDataViewerProps> = ({
             </div>
         );
     }
-
+    console.log(years);
     return (
         <div>
             <h2
@@ -72,6 +75,11 @@ export const InvDataViewer: React.FC<InvDataViewerProps> = ({
                     </div>
                 )}
             </h2>
+            {!readonly && !!years && (
+                <div className="text-right mb-2">
+                    <HTMLSecViewersSideBar cik={cik} years={years} />
+                </div>
+            )}
             <Accordion
                 multiple
                 activeIndex={indexes}

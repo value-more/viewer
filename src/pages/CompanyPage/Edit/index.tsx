@@ -107,6 +107,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                         syncTimestamp={data?.timestamp}
                         overwriteTimestamp={data?.overwriteTimestamp}
                         withIcon
+                        years={Object.keys(data?.years ?? {})}
                     />
                 </div>
                 <div ref={refs.diagrams} className="scrollMarginTop mb-5">

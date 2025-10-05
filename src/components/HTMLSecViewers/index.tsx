@@ -2,7 +2,7 @@ import React from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
 import { HTMLSecViewer } from './HTMLSecViewer';
 
-interface HTMLSecViewerProps {
+export interface HTMLSecViewerProps {
     cik: number;
     years: string[];
 }
