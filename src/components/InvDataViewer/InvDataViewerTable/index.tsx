@@ -226,9 +226,6 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
 
     const body = (options: ColumnBodyOptions, row: any) => {
         const config = getConfigFromOptions(options);
-        if ((config?.value ?? null) === null) {
-            return null;
-        }
         const title = `${config?.isValid === 'ROLLBACK' ? 'This value will be reloaded from rules with next refresh.' : ''}
         ${keysTitleValidate
             .map((k) =>
@@ -260,7 +257,11 @@ export const InvDataViewerTable: React.FC<InvDataViewerTableProps> = ({
                               : 'none'
                 }}
             >
-                {row?.[options.field]}
+                {(row?.[options.field] ?? '') !== '' ? (
+                    row?.[options.field]
+                ) : (
+                    <div className="py-3"></div>
+                )}
             </div>
         );
     };
