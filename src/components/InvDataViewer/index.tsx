@@ -50,7 +50,7 @@ export const InvDataViewer: React.FC<InvDataViewerProps> = ({
             </div>
         );
     }
-    console.log(years);
+
     return (
         <div>
             <h2

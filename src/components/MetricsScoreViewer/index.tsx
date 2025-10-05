@@ -62,7 +62,6 @@ export const MetricsScoreViewer: React.FC<MetricsScoreViewerProps> = ({
         );
 
     const values = chartData.datasets[0].data;
-
     return (
         <div className="flex justify-content-center gap-7 p-3">
             <Chart
@@ -70,10 +69,10 @@ export const MetricsScoreViewer: React.FC<MetricsScoreViewerProps> = ({
                 data={chartData}
                 options={chartOptions}
                 className="flex-1"
+                style={{ maxHeight: '480px', maxWidth: '480px' }}
                 pt={{
                     canvas: {
-                        className: 'w-full',
-                        style: { maxHeight: '480px' }
+                        className: 'w-full h-full'
                     }
                 }}
             />
