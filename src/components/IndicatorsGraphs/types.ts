@@ -11,6 +11,7 @@ export interface ChartOptions {
 export interface ChartDatasetsDef {
     metric?: string;
     borderColor?: string;
+    borderWidth?: number;
     data?: string;
     formula?: string;
     constant?: number;

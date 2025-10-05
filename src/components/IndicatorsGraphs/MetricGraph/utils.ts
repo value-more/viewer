@@ -167,6 +167,7 @@ const getDatasets = ({
             type: config?.type || 'line',
             label: t(`${tKeyPrefix}.dataset${index + 1}`),
             borderColor: c.borderColor,
+            borderWidth: c.borderWidth || 2,
             data: dataset,
             pointRadius: 0,
             hitRadius: 0
