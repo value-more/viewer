@@ -99,6 +99,8 @@ export const ChartsMetricsConfig: React.FC = () => {
                                         </div>
                                         <div>
                                             - <b>borderColor</b>: color of line
+                                            - <b>borderWidth</b>: thickness of
+                                            line
                                         </div>
                                     </div>
                                 </li>
