@@ -43,6 +43,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
         t
     } = useTranslation();
     const urs = useUserRights();
+    const [loading, setLoading] = useState<boolean>(true);
     const [companies, setCompanies] = useState<Company[]>([]);
     const [opts, setOpts] = useState({ first: 0, rows: limit ?? 25 });
     const [total, setTotal] = useState(0);
@@ -68,6 +69,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
     }, [companies, onReload]);
 
     useEffect(() => {
+        setLoading(true);
         (async () => {
             const data = await api(`invData/companies/search`, {
                 method: 'POST',
@@ -86,6 +88,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
             setCompanies(data?.data || []);
             setTotal(data?.total);
             setTotalFiltered(data?.totalFiltered);
+            setLoading(false);
         })();
     }, [opts, filterStateDebounced, showFavorites, reload, q, smartSearch]);
 
@@ -405,6 +408,7 @@ export const CompaniesList: React.FC<CompaniesListProps> = ({
                 header={withHeader ? header : undefined}
                 onFavoritesChange={onFavoritesChange}
                 showTimestamp={showTimestamp}
+                loading={loading}
             />
         </>
     );

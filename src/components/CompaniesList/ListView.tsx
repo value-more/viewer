@@ -8,6 +8,7 @@ import { CompanyScoreBase } from '../companies/CompanyScore/base';
 import { displayMetricField } from './utils';
 import { useTranslation } from 'react-i18next';
 import { useUserRights } from '../../models/user/hooks';
+import { Skeleton } from 'primereact/skeleton';
 
 export const ListView: React.FC<BaseViewProps> = ({
     companies,
@@ -15,7 +16,8 @@ export const ListView: React.FC<BaseViewProps> = ({
     header,
     onFavoritesChange,
     centerContent,
-    showTimestamp
+    showTimestamp,
+    loading
 }) => {
     const {
         i18n: { language }
@@ -115,17 +117,27 @@ export const ListView: React.FC<BaseViewProps> = ({
     };
 
     return (
-        <DataView
-            value={companies}
-            rows={opts.rows}
-            itemTemplate={itemTemplate}
-            pt={{
-                grid: {
-                    className: `gap-4 align-content-start overflow-auto overflow-x-hidden p-1 ${centerContent ? 'justify-content-center' : ''}`
-                },
-                header: { className: 'border-none' }
-            }}
-            header={header ? header() : null}
-        />
+        <>
+            {loading ? (
+                <div className="flex gap-4">
+                    {[...Array(opts.rows)].map((s) => (
+                        <Skeleton className="w-20rem h-8rem mr-2" key={s} />
+                    ))}
+                </div>
+            ) : (
+                <DataView
+                    value={companies}
+                    rows={opts.rows}
+                    itemTemplate={itemTemplate}
+                    pt={{
+                        grid: {
+                            className: `gap-4 align-content-start overflow-auto overflow-x-hidden p-1 ${centerContent ? 'justify-content-center' : ''}`
+                        },
+                        header: { className: 'border-none' }
+                    }}
+                    header={header ? header() : null}
+                />
+            )}
+        </>
     );
 };

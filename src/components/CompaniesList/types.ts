@@ -21,6 +21,7 @@ export interface BaseViewProps {
     onFavoritesChange?: () => void;
     centerContent?: boolean;
     showTimestamp?: boolean;
+    loading: boolean;
 }
 
 export interface Filter {
