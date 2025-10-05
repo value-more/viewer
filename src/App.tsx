@@ -13,7 +13,6 @@ import { AnalysisPage } from './pages/AnalysisPage';
 import { Toasts } from './components/Toasts';
 import { ListPage } from './pages/ListPage';
 import { NavigateEffector } from './components/routes/NavigateEffector';
-import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { ImpressumPage } from './pages/ImpressumPage';
 import { TermsAndConditionsPage } from './pages/TermsAndConditionsPage';
 import { RegisterPage } from './pages/RegisterPage';
@@ -60,10 +59,6 @@ function App() {
                     <Route
                         path="/users/password-reset/:token"
                         element={<ResetPasswordPage />}
-                    />
-                    <Route
-                        path="/privacy-policy"
-                        element={<PrivacyPolicyPage />}
                     />
                     <Route path="/impressum" element={<ImpressumPage />} />
                     <Route
