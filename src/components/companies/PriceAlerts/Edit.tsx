@@ -7,43 +7,40 @@ import { api } from '../../../api/invData';
 import { toasts } from '../../../models/toast';
 import { useTranslation } from 'react-i18next';
 import { InputSwitch } from 'primereact/inputswitch';
+import { PriceAlert } from './types';
 
-interface NewPriceAlertProps {
-    cik: number;
-    ticker: string;
-    onHide: () => void;
+interface EditPriceAlertProps {
+    data: PriceAlert;
+    onHide: (newData?: PriceAlert) => void;
+    forNew?: boolean;
 }
 
-export const NewPriceAlert: React.FC<NewPriceAlertProps> = ({
-    cik,
-    ticker,
-    onHide
+export const EditPriceAlert: React.FC<EditPriceAlertProps> = ({
+    data,
+    onHide,
+    forNew
 }) => {
     const {
         t,
         i18n: { language }
     } = useTranslation();
-    const [type, setType] = useState<'up' | 'down'>('down');
-    const [price, setPrice] = useState<number | null>(null);
-    const [recurrent, setRecurrent] = useState<boolean>(false);
+    const [row, setRow] = useState<PriceAlert>(data);
 
     const create = async () => {
-        if (!price || !type) return;
+        if (!row?.price || !row?.type) return;
         await api('invData/prices/alerts', {
             method: 'POST',
-            body: JSON.stringify({
-                cik,
-                type,
-                price,
-                ticker,
-                recurrent
-            })
+            body: JSON.stringify(row)
         });
         toasts.showToast({
             severity: 'success',
-            summary: 'Price alert has been created'
+            summary: `Price alert has been ${forNew ? 'created' : 'udpated'}`
         });
-        onHide();
+        onHide(row);
+    };
+
+    const add = (key: string, value: unknown) => {
+        setRow({ ...row, [key]: value });
     };
 
     return (
@@ -52,14 +49,16 @@ export const NewPriceAlert: React.FC<NewPriceAlertProps> = ({
                 closable
                 visible
                 header={t('alerts.price.formNew.title')}
-                onHide={onHide}
+                onHide={() => onHide()}
                 footer={
                     <div className="flex gap-2 justify-content-end">
                         <Button severity="secondary" onClick={() => onHide()}>
                             {t('alerts.price.formNew.buttonCancel')}
                         </Button>
                         <Button onClick={() => create()}>
-                            {t('alerts.price.formNew.buttonCreate')}
+                            {t(
+                                `alerts.price.formNew.${forNew ? 'buttonCreate' : 'buttonUpdate'}`
+                            )}
                         </Button>
                     </div>
                 }
@@ -68,8 +67,8 @@ export const NewPriceAlert: React.FC<NewPriceAlertProps> = ({
                     <p>{t('alerts.price.formNew.content')}</p>
                     <div className="pb-4">
                         <InputNumber
-                            value={price}
-                            onChange={(e) => setPrice(e.value)}
+                            value={row?.price}
+                            onChange={(e) => add('price', e.value)}
                             locale={language}
                             maxFractionDigits={2}
                         />
@@ -80,8 +79,8 @@ export const NewPriceAlert: React.FC<NewPriceAlertProps> = ({
                                 inputId="price-alert-type-below"
                                 name="price-alert-type"
                                 value="down"
-                                onChange={(e) => setType(e.value)}
-                                checked={type === 'down'}
+                                onChange={(e) => add('type', e.value)}
+                                checked={row?.type === 'down'}
                             />
                             <label
                                 htmlFor="price-alert-type-below"
@@ -95,8 +94,8 @@ export const NewPriceAlert: React.FC<NewPriceAlertProps> = ({
                                 inputId="price-alert-type-above"
                                 name="price-alert-type"
                                 value="up"
-                                onChange={(e) => setType(e.value)}
-                                checked={type === 'up'}
+                                onChange={(e) => add('type', e.value)}
+                                checked={row?.type === 'up'}
                             />
                             <label
                                 htmlFor="price-alert-type-above"
@@ -108,8 +107,8 @@ export const NewPriceAlert: React.FC<NewPriceAlertProps> = ({
                     </div>
                     <div className="flex align-items-center gap-2 pb-4">
                         <InputSwitch
-                            checked={recurrent}
-                            onChange={(event) => setRecurrent(event.value)}
+                            checked={row?.recurrent ?? false}
+                            onChange={(event) => add('recurrent', event.value)}
                         />
                         <label>{t('alerts.price.recurrent')}</label>
                     </div>

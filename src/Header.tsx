@@ -14,7 +14,7 @@ import { useUser, useUserRights } from './models/user/hooks';
 import { logoutFx } from './models/user';
 import { useTranslation } from 'react-i18next';
 import { Feedback } from './components/Feedback';
-import { PriceAlerts } from './components/PriceAlerts';
+import { PriceAlerts } from './components/companies/PriceAlerts';
 
 interface HeaderProps {
     menu?: MenuItem[];
@@ -190,9 +190,7 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
                         position="right"
                         className="w-3"
                     >
-                        <h2 className="mt-0 text-center">
-                            {t('menu.pricealerts')}
-                        </h2>
+                        <h2 className="mt-0">{t('menu.pricealerts')}</h2>
                         <PriceAlerts />
                     </Sidebar>
                 )}

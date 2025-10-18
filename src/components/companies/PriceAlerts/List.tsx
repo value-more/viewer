@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
-import { api } from '../../api/invData';
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from 'primereact/checkbox';
-
-interface PriceAlert {
-    uuid: string;
-    price: number;
-}
+import { api } from '../../../api/invData';
+import { EditPriceAlert } from './Edit';
+import { PriceAlert } from './types';
 
 export const PriceAlerts: React.FC = () => {
     const {
@@ -17,6 +14,8 @@ export const PriceAlerts: React.FC = () => {
         i18n: { language }
     } = useTranslation();
     const [alerts, setAlerts] = useState<PriceAlert[]>([]);
+    const [edit, setEdit] = useState<PriceAlert | null>(null);
+
     useEffect(() => {
         (async () => {
             const json = await api('invData/prices/alerts');
@@ -33,7 +32,13 @@ export const PriceAlerts: React.FC = () => {
 
     return (
         <>
-            <DataTable value={alerts} stripedRows>
+            <DataTable
+                value={alerts}
+                stripedRows
+                pt={{ wrapper: { style: { overflow: 'hidden' } } }}
+                editMode="cell"
+                onRowEditComplete={() => console.log('ok')}
+            >
                 <Column field="ticker" header={t('alerts.price.ticker')} />
                 <Column
                     field="price"
@@ -63,15 +68,43 @@ export const PriceAlerts: React.FC = () => {
                 />
                 <Column
                     field="uuid"
+                    body={(row) => (
+                        <Button
+                            icon="pi pi-pencil"
+                            onClick={() => setEdit(row)}
+                        />
+                    )}
+                    className="p-1 w-1rem"
+                />
+                <Column
+                    field="uuid"
                     body={({ uuid }) => (
                         <Button
                             icon="pi pi-trash"
                             onClick={() => deleteOne(uuid)}
                         />
                     )}
-                    className="w-1rem"
+                    className="p-1 w-1rem"
                 />
             </DataTable>
+            {!!edit && (
+                <EditPriceAlert
+                    data={edit}
+                    onHide={(row) => {
+                        if (row) {
+                            const alert = alerts.find(
+                                (a) => a.uuid === edit.uuid
+                            );
+                            if (alert) {
+                                alert.price = row.price;
+                                alert.recurrent = row.recurrent;
+                                alert.type = row.type;
+                            }
+                        }
+                        setEdit(null);
+                    }}
+                />
+            )}
         </>
     );
 };

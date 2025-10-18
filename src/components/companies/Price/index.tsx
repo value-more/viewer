@@ -5,9 +5,9 @@ import {
 } from '../../../models/company/price';
 import { useUnit } from 'effector-react';
 import { Skeleton } from 'primereact/skeleton';
-import { NewPriceAlert } from '../NewPriceAlert';
 import { useUserRights } from '../../../models/user/hooks';
 import { useTranslation } from 'react-i18next';
+import { NewPriceAlert } from '../PriceAlerts';
 
 interface PriceProps {
     cik: number;
