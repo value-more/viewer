@@ -57,9 +57,11 @@ const initConversationFx = attach({
         { $agents, $selectedAgentId }
     ) => ({
         ...params,
-        agent: $agents.find((a) => a._id === $selectedAgentId)!
+        agent: $agents.find((a) => a._id === $selectedAgentId)
     }),
-    effect: createEffect((obj: { agent: Agent; companyCik: number }) => obj)
+    effect: createEffect(
+        (obj: { agent?: Agent; companyCik: number | null }) => obj
+    )
 });
 
 $companyCik.on(
@@ -70,12 +72,12 @@ $id.on(initConversationFx.done, () => uuidv4());
 $isTyping.on(setIsTyping, (_, isTyping) => isTyping);
 
 $messages
-    .on(initConversationFx.doneData, (_, { agent: { welcomeText } }) => [
+    .on(initConversationFx.doneData, (_, { agent }) => [
         {
             direction: 'incoming',
             position: 'first',
             sender: AINAme,
-            message: welcomeText
+            message: agent?.welcomeText ?? ''
         }
     ])
     .on(appendMessage, (state, message) => [...state, message])
@@ -159,7 +161,7 @@ const resetAndNewConnexion = createEffect(
 sample({
     source: $companyCik,
     clock: $selectedAgentId.updates,
-    fn: (companyCik) => ({ companyCik: companyCik! }),
+    fn: (companyCik) => ({ companyCik }) as InitConversationData,
     target: initConversationFx
 });
 
