@@ -463,13 +463,14 @@
                 "title": "Set price alert",
                 "content": "Enter a price you want to be notified:",
                 "buttonCreate": "Create",
+                "buttonUpdate": "Update",
                 "buttonCancel": "Cancel"
             },
             "type": {
                 "up": "Above",
                 "down": "Below"
             },
-            "recurrent": "Repeat",
+            "recurrent": "Loop",
             "ticker": "Ticker",
             "price": "Price",
             "typeLabel": "Type"

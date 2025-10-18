@@ -468,13 +468,14 @@
                 "title": "Preisalarm setzen",
                 "content": "Geben Sie einen Preis ein, bei dem Sie benachrichtigt werden möchten:",
                 "buttonCreate": "Erstellen",
+                "buttonUpdate": "Aktualisieren",
                 "buttonCancel": "Abbrechen"
             },
             "type": {
                 "up": "Über",
                 "down": "Unter"
             },
-            "recurrent": "Wiederkehrend",
+            "recurrent": "Wdh.",
             "ticker": "Ticker",
             "price": "Preis",
             "typeLabel": "Typ"
