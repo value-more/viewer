@@ -23,7 +23,7 @@ export const AiAgents: React.FC = () => {
     useEffect(() => {
         if (!instanceEx) return;
         (async () => {
-            const value = await api('invData/companies/1652044');
+            const value = await api('invData/companies/1652044/full');
             instanceEx.jsonEditor.update(value);
             setDataEx(value);
         })();
