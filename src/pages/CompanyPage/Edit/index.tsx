@@ -164,10 +164,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                     showCloseIcon={true}
                     onHide={() => setIsVisibleAssistant(false)}
                 >
-                    <ChatAssistant
-                        companyCik={cik}
-                        companyName={data?.name ?? ''}
-                    />
+                    <ChatAssistant companyCik={cik} />
                 </Sidebar>
                 <Tooltip
                     target=".assistantIcon"

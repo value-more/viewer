@@ -8,6 +8,7 @@ import { BaseLayout } from '../../BaseLayout';
 import { AccessLinks } from './AccessLinks';
 import { Feedbacks } from './Feedbacks';
 import { Users } from './Users';
+import { AiAgents } from './AiAgents';
 
 export const ConfigPage: React.FC = () => {
     useEffect(() => {
@@ -80,6 +81,9 @@ export const ConfigPage: React.FC = () => {
                 </TabPanel>
                 <TabPanel header="Feedbacks">
                     <Feedbacks />
+                </TabPanel>
+                <TabPanel header="Ai agents">
+                    <AiAgents />
                 </TabPanel>
             </TabView>
         </BaseLayout>

@@ -1,6 +1,12 @@
-import { createEffect, createEvent, createStore, sample } from 'effector';
+import {
+    attach,
+    createEffect,
+    createEvent,
+    createStore,
+    sample
+} from 'effector';
 import { v4 as uuidv4 } from 'uuid';
-import { WS_HOST } from '../../../api/invData';
+import { api, WS_HOST } from '../../../api/invData';
 
 export const AINAme = 'Charlie';
 
@@ -13,7 +19,12 @@ export interface Message {
 
 export interface InitConversationData {
     companyCik: number;
-    companyName: string;
+}
+
+export interface Agent {
+    _id: string;
+    name: string;
+    welcomeText: string;
 }
 
 const $id = createStore<string | null>(null);
@@ -21,8 +32,9 @@ const $companyCik = createStore<number | null>(null);
 const $messages = createStore<Message[]>([]);
 const $isTyping = createStore<boolean>(false);
 const $webSocket = createStore<any>(null);
+const $agents = createStore<Agent[]>([]);
+const $selectedAgentId = createStore<string>('default');
 
-const initConversation = createEvent<InitConversationData>();
 const appendDataToLastMessage = createEvent<string>();
 const appendMessage = createEvent<Message>();
 const connectWebSocket = createEvent();
@@ -30,19 +42,40 @@ const disconnectWebSocket = createEvent();
 const receiveMessage = createEvent<string>();
 const sendMessage = createEvent<Message>();
 const setIsTyping = createEvent<boolean>();
+const setSelectedAgentId = createEvent<string>();
 
-$companyCik.on(initConversation, (_, { companyCik }) => companyCik);
-$id.on(initConversation, () => uuidv4());
+const loadAgentsFx = createEffect(async () =>
+    api('invData/assistants/profiles')
+);
+$agents.on(loadAgentsFx.doneData, (_, state) => state);
+$selectedAgentId.on(setSelectedAgentId, (_, state) => state);
+
+const initConversationFx = attach({
+    source: { $agents, $selectedAgentId },
+    mapParams: (
+        params: InitConversationData,
+        { $agents, $selectedAgentId }
+    ) => ({
+        ...params,
+        agent: $agents.find((a) => a._id === $selectedAgentId)!
+    }),
+    effect: createEffect((obj: { agent: Agent; companyCik: number }) => obj)
+});
+
+$companyCik.on(
+    initConversationFx.done,
+    (_, { params: { companyCik } }) => companyCik
+);
+$id.on(initConversationFx.done, () => uuidv4());
 $isTyping.on(setIsTyping, (_, isTyping) => isTyping);
 
 $messages
-    .on(initConversation, (_, { companyName }) => [
+    .on(initConversationFx.doneData, (_, { agent: { welcomeText } }) => [
         {
             direction: 'incoming',
             position: 'first',
             sender: AINAme,
-            message: `Hello my friend, please <u>ask me</u> anything you want to know about the <b>${companyName}</b>. I will do my best to help you.
-I have access to fundamentals, metrics, price, ... You could ask me if I find any <b>anomalies</b> in the <u>fundamentals</u> <i>, in the <u>calculated metrics</u> or for an analysis of the company for instance.`
+            message: welcomeText
         }
     ])
     .on(appendMessage, (state, message) => [...state, message])
@@ -84,18 +117,20 @@ const sendMessageFx = createEffect(
         socket,
         companyCik,
         uuid,
+        agentId,
         message
     }: {
         socket: any;
         companyCik: number;
         uuid: string;
+        agentId: string;
         message: string;
     }) => {
         if (socket && socket.readyState === WebSocket.OPEN) {
             socket.send(
                 JSON.stringify({
                     key: 'companyAssistant',
-                    data: { prompt: message, companyCik, uuid },
+                    data: { prompt: message, companyCik, uuid, agentId },
                     token: localStorage.getItem('token')
                 })
             );
@@ -122,8 +157,15 @@ const resetAndNewConnexion = createEffect(
 );
 
 sample({
+    source: $companyCik,
+    clock: $selectedAgentId.updates,
+    fn: (companyCik) => ({ companyCik: companyCik! }),
+    target: initConversationFx
+});
+
+sample({
     source: [$webSocket, $id],
-    clock: initConversation,
+    clock: initConversationFx.done,
     target: resetAndNewConnexion
 });
 
@@ -139,24 +181,32 @@ sample({
 });
 
 sample({
-    source: [$companyCik, $webSocket, $id],
+    source: [$companyCik, $webSocket, $id, $selectedAgentId],
     clock: sendMessage,
-    fn: ([companyCik, socket, id], data) => ({
+    fn: ([companyCik, socket, id, selectedAgentId], data) => ({
         socket,
         companyCik,
+        agentId: selectedAgentId,
         message: data.message,
         uuid: id
     }),
     target: sendMessageFx
 });
 
+export const messagesEffects = {
+    loadAgentsFx,
+    initConversationFx
+};
+
 export const messagesStores = {
     $messages,
     $isTyping,
-    $companyCik
+    $companyCik,
+    $agents,
+    $selectedAgentId
 };
 
 export const messagesEvents = {
-    initConversation,
-    sendMessage
+    sendMessage,
+    setSelectedAgentId
 };
