@@ -36,8 +36,6 @@ export const PriceAlerts: React.FC = () => {
                 value={alerts}
                 stripedRows
                 pt={{ wrapper: { style: { overflow: 'hidden' } } }}
-                editMode="cell"
-                onRowEditComplete={() => console.log('ok')}
             >
                 <Column field="ticker" header={t('alerts.price.ticker')} />
                 <Column
