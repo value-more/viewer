@@ -57,13 +57,6 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
                 }
             ]
         };
-        if (userRights?.['prices.alerts']) {
-            userMenu.items.push({
-                label: t('menu.pricealerts'),
-                icon: 'pi pi-bell',
-                command: () => setVisiblePriceAlerts(true)
-            });
-        }
         userMenu.items.push({
             label: t('menu.logout'),
             icon: 'pi pi-sign-out',
@@ -138,9 +131,14 @@ export const Header: React.FC<HeaderProps> = ({ title, menu }) => {
     const end = (
         <div className="flex align-items-center gap-2">
             <CompanySearch />
-            <div className="flex gap-3 mr-2 ml-2 align-items-center">
-                <i className="pi pi-bell"></i>
-            </div>
+            {userRights?.['prices.alerts'] && (
+                <div className="flex gap-3 mr-2 ml-2 align-items-center cursor-pointer">
+                    <i
+                        className="pi pi-bell"
+                        onClick={() => setVisiblePriceAlerts(true)}
+                    ></i>
+                </div>
+            )}
             <Avatar
                 icon="pi pi-user"
                 shape="circle"
