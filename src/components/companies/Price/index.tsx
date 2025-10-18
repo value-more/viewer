@@ -16,6 +16,7 @@ interface PriceProps {
 
 export const Price: React.FC<PriceProps> = ({ cik, ticker }) => {
     const {
+        t,
         i18n: { language }
     } = useTranslation();
     const priceData = useUnit(companyPriceStores.$priceData);
@@ -37,7 +38,7 @@ export const Price: React.FC<PriceProps> = ({ cik, ticker }) => {
                     />
                 </div>
                 <div className="text-xs">
-                    <div>Last price: </div>
+                    <div>{t('ticker.lastprice')}</div>
                     <div>
                         {!ticker || priceFxPending ? (
                             <Skeleton />
