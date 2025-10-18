@@ -456,7 +456,8 @@
             "years": "Jahre (F.E.)",
             "lastYear": "Letztes Jahr (F.E.)",
             "sure_unsure": "Unsicher oder besser"
-        }
+        },
+        "lastprice": "Letzter Preis:"
     },
     "analysis": {
         "title": "Unternehmen, bei denen eines der wichtigen Fundamente fehlt"

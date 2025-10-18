@@ -451,7 +451,8 @@
             "years": "Years (M.E.)",
             "lastYear": "Last year (M.E.)",
             "sure_unsure": "Unsure or better"
-        }
+        },
+        "lastprice": "Last price:"
     },
     "analysis": {
         "title": "Companies where one of important fundamentals are missing"
