@@ -11,6 +11,7 @@ import { useUnit } from 'effector-react';
 import { ApproveButton } from '../companies/CompanyStatus/ApproveButton';
 import { StatusWorkflow } from '../../models/company/status/types';
 import { HTMLSecViewersSideBar } from '../HTMLSecViewersSideBar';
+import { FundamentalsResolvePathSidebar } from '../FundamentalsResolvePathSidebar';
 
 interface InvDataViewerProps {
     cik: number;
@@ -77,6 +78,9 @@ export const InvDataViewer: React.FC<InvDataViewerProps> = ({
             </h2>
             {!readonly && !!years && (
                 <div className="text-right mb-2">
+                    <span className="mr-2">
+                        <FundamentalsResolvePathSidebar cik={cik} />
+                    </span>
                     <HTMLSecViewersSideBar cik={cik} years={years} />
                 </div>
             )}
