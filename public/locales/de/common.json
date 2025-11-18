@@ -385,11 +385,12 @@
             "title": "Geschäftsmodell",
             "select": "Was passt am besten?",
             "options": {
-                "-2": "(--) nicht vorhersehbar < 1 Jahr",
-                "-1": "(-) schwer vorhersehbar 1-3 Jahre",
-                "0": "(O) schwer vorhersehbar bis max. 5 Jahre",
-                "1": "(+) einfach zu verstehen und vorhersehbar für 10 Jahre",
-                "2": "(++) einfach zu verstehen und vorhersehbar für 20 Jahre"
+                "": "Das Geschäftsmodell wurde noch nicht bewertet",
+                "-2": "Nicht vorhersehbar (< 1 Jahr)",
+                "-1": "Schwer vorhersehbar (1-3 Jahre)",
+                "0": "Relativ sicher (bis max. 5 Jahre)",
+                "1": "Einfach zu verstehen und relativ sicher (bis zu 10 Jahre)",
+                "2": "Einfach zu verstehen und vorhersehbar (bis zu 20 Jahre)"
             }
         },
         "moat": {
@@ -451,7 +452,7 @@
         "confidence": {
             "title": "Vertrauen",
             "main": "Haupt",
-            "sure": "Genehmigt (grün)",
+            "sure": "Bestätigt (grün)",
             "unsure": "Unsicher (gelb)",
             "years": "Jahre (F.E.)",
             "lastYear": "Letztes Jahr (F.E.)",
@@ -460,13 +461,13 @@
         "lastprice": "Letzter Preis:"
     },
     "analysis": {
-        "title": "Unternehmen, bei denen eines der wichtigen Fundamente fehlt"
+        "title": "Unternehmen, bei denen wichtige Daten fehlen"
     },
     "alerts": {
         "price": {
             "formNew": {
-                "title": "Preisalarm setzen",
-                "content": "Geben Sie einen Preis ein, bei dem Sie benachrichtigt werden möchten:",
+                "title": "Preisalarm erstellen",
+                "content": "Gib einen Preis ein, bei dem Du benachrichtigt werden möchtest:",
                 "buttonCreate": "Erstellen",
                 "buttonUpdate": "Aktualisieren",
                 "buttonCancel": "Abbrechen"
