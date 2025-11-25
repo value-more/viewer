@@ -10,7 +10,7 @@ export const formatLargeNumber = (
     const abbreviations = ['', 'K', 'M', 'B', 'T'];
     let log1000 =
         indexAbbreviation == undefined || indexAbbreviation === -1
-            ? number !== 0
+            ? number !== 0 && (number > 1 || number < -1)
                 ? Math.floor(Math.log10(Math.abs(number)) / 3)
                 : 0
             : indexAbbreviation;

@@ -119,10 +119,7 @@ export const CompanyPageView: React.FC<CompanyPageViewProps> = ({
             {!!urs?.['companies.value.view'] && (
                 <div ref={refs.value} className="scrollMarginTop mb-5">
                     <h2>{t('ticker.value.title')}</h2>
-                    <IntrinsicValue
-                        ticker={data?.tickers[0]?.ticker || ''}
-                        displayDetails
-                    />
+                    <IntrinsicValue ticker={data?.tickers[0]?.ticker || ''} />
                 </div>
             )}
             <div ref={refs.data} className="scrollMarginTop mb-5">

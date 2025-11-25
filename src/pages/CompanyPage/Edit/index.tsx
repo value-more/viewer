@@ -61,7 +61,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
 
     if (!urs?.['companies.edit']) return <Navigate to={`/company/${cik}`} />;
 
-    const yearsKeys = Object.keys(data?.years || {});
+    const yearsKeys = Object.keys(data?.years ?? {});
 
     const saveCompanyName = async () => {
         await api(`invData/companies/${cik}`, {
@@ -107,7 +107,7 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                         syncTimestamp={data?.timestamp}
                         overwriteTimestamp={data?.overwriteTimestamp}
                         withIcon
-                        years={Object.keys(data?.years ?? {})}
+                        years={yearsKeys}
                     />
                 </div>
                 <div ref={refs.diagrams} className="scrollMarginTop mb-5">
@@ -125,7 +125,9 @@ export const CompanyPageEdit: React.FC<CompanyPageEditProps> = ({
                     <CompanyValue
                         cik={cik}
                         metrics={data.metrics}
+                        lyFunds={data?.years?.[yearsKeys[yearsKeys.length - 1]]}
                         withSummary
+                        withProfileSelector
                         withConfig
                         withIcon
                     />

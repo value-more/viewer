@@ -37,6 +37,7 @@ export interface GlobalMetrics {
 export interface IncomeStatement {
     REVENUE?: number;
     OPERATING_INCOME?: number;
+    WEIGHTED_AVERAGE_SHARES_OUTSTANDING_DILUTED?: number;
 }
 
 export interface BalanceSheet {
@@ -44,6 +45,11 @@ export interface BalanceSheet {
     TOTAL_CURRENT_LIABILITIES?: number;
     LONG_TERM_DEBT?: number;
     TOTAL_CURRENT_ASSETS?: number;
+    TOTAL_ASSETS?: number;
+    GOODWILL?: number;
+    INTANGIBLE_ASSETS?: number;
+    OTHER_LONG_TERM_ASSETS?: number;
+    TOTAL_LIABILITIES?: number;
 }
 
 export interface CashFlow {

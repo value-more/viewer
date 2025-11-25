@@ -9,7 +9,8 @@ export const CompanyValueSummary: React.FC = () => {
         t,
         i18n: { language }
     } = useTranslation();
-    const values = useUnit(companyValuesStores.$values)?.values || [];
+    const values =
+        (useUnit(companyValuesStores.$values)?.values as CompanyValue[]) || [];
 
     const valuesByKey = values.reduce(
         (prev: { [key: string]: number[] }, v: CompanyValue) => {
@@ -45,7 +46,9 @@ export const CompanyValueSummary: React.FC = () => {
                                 <td
                                     className={`${keys.length - 1 === ik ? 'font-bold' : ''}`}
                                 >
-                                    {t(`ticker.value.categories.${k}.title`)}
+                                    {t(
+                                        `ticker.value.default.categories.${k}.title`
+                                    )}
                                 </td>
                                 {valuesByKey[k].map((v, i) => (
                                     <td

@@ -58,21 +58,6 @@ export const ConfigPage: React.FC = () => {
                         <ConfigEditor endpoint="companies/moat/questions" />
                     </div>
                 </TabPanel>
-                <TabPanel header="Company value">
-                    <div className="m-0">
-                        <div className="mb-2">
-                            Each formula are executed for each level. Usually 4.
-                            For each new element it is possible to create
-                            configs with default value for each level (therefore
-                            array of 4 values).
-                            <br />
-                            Configs can be used in formula with{' '}
-                            <b>configs.keyName</b> it will use the value of the
-                            level 0 to 3 automatically.
-                        </div>
-                        <ConfigEditor endpoint="companies/values/rules" />
-                    </div>
-                </TabPanel>
                 <TabPanel header="Users">
                     <Users />
                 </TabPanel>

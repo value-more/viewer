@@ -26,7 +26,7 @@ export const FundamentalsResolvePathSidebar: React.FC<
     const [conf, setConf] = useState<PathHistoryItemByKey | null>(null);
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
-    console.log(conf);
+
     const load = async () => {
         setLoading(true);
         const json = await api(

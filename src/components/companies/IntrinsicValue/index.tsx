@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IntrinsicValueGraph } from '../../IntrinsicValueGraph';
 import { useUnit } from 'effector-react';
@@ -9,7 +9,6 @@ import {
 } from '../../../models/company/values';
 import { downloadSvg, downloadSvgAsPng } from './utils';
 import { InfoIcon } from '../../InfoIcon';
-import { CompanyValueSummary } from '../CompanyValue/Summary';
 import { TabMenu } from 'primereact/tabmenu';
 import { companyPriceStores } from '../../../models/company/price';
 import { Dropdown } from 'primereact/dropdown';
@@ -19,14 +18,12 @@ import { StatusWorkflow } from '../../../models/company/status/types';
 
 interface IntrinsicValueProps {
     ticker: string;
-    displayDetails?: boolean;
     withTitle?: boolean;
     defaultLevelSelector?: boolean;
 }
 
 export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
     ticker,
-    displayDetails,
     withTitle,
     defaultLevelSelector
 }) => {
@@ -39,7 +36,6 @@ export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
     const { timestamp } = useUnit(companyValuesStores.$timestamps);
     const priceData = useUnit(companyPriceStores.$priceData);
     const level = useUnit(companyValuesStores.$level);
-    const [detailsVisible, setDetailsVisible] = useState<boolean>(false);
 
     const areas = companyValues?.areas?.[level];
     const items = companyValues?.areas?.map((_, i) => ({
@@ -118,14 +114,6 @@ export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
                                     )
                                 }
                             ></i>
-                            {!!displayDetails && (
-                                <i
-                                    className="ml-3 pi pi-table cursor-pointer hover:text-primary"
-                                    onClick={() =>
-                                        setDetailsVisible(!detailsVisible)
-                                    }
-                                ></i>
-                            )}
                         </div>
                     </div>
 
@@ -138,8 +126,6 @@ export const IntrinsicValue: React.FC<IntrinsicValueProps> = ({
                             />
                         }
                     </div>
-
-                    {detailsVisible && <CompanyValueSummary />}
                 </>
             )}
         </div>

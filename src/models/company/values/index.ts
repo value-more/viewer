@@ -42,6 +42,22 @@ const updateDefaultLevelForActiveCikFx = attach({
     )
 });
 
+const updateProfileActiveCikFx = attach({
+    source: $cik,
+    mapParams: ({ profile }: { profile: string }, cik: number) => ({
+        cik,
+        profile
+    }),
+    effect: createEffect(
+        async ({ cik, profile }: { cik: number; profile: string }) => {
+            await api(`invData/companies/${cik}/values`, {
+                method: 'PUT',
+                body: JSON.stringify({ profile })
+            });
+        }
+    )
+});
+
 const $values = createStore<CompanyValues | null>(null);
 const setValues = createEvent<CompanyValues>();
 $values
@@ -59,6 +75,16 @@ $level
     .on(
         getValuesForActiveCikFx.doneData,
         (_, state) => state?.preselectedLevel ?? 0
+    );
+
+const $profile = createStore<string>('default');
+const setProfile = createEvent<string>();
+$profile
+    .on(setProfile, (_, state) => state)
+    .on(updateProfileActiveCikFx.done, (_, state) => state.params.profile)
+    .on(
+        getValuesForActiveCikFx.doneData,
+        (_, state) => state?.profile ?? 'default'
     );
 
 const $timestamps = createStore<{
@@ -82,19 +108,27 @@ sample({
     target: getValuesForActiveCikFx
 });
 
+sample({
+    source: updateProfileActiveCikFx.done,
+    target: refresh
+});
+
 export const companyValuesStores = {
     $values,
     $timestamps,
-    $level
+    $level,
+    $profile
 };
 
 export const companyValuesEvents = {
     setCik,
     refresh,
-    setLevel
+    setLevel,
+    setProfile
 };
 
 export const companyValuesEffects = {
     updateDefaultLevelForActiveCikFx,
-    getValuesForActiveCikFx
+    getValuesForActiveCikFx,
+    updateProfileActiveCikFx
 };
