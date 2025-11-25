@@ -407,45 +407,61 @@
                 "2": "Wahrscheinlich",
                 "3": "Optimistisch"
             },
-            "categories": {
-                "netTangiblesAssets": {
-                    "title": "Net tangible assets",
-                    "cash": "Cash",
-                    "accountsReceivable": "Accounts receivable",
-                    "inventories": "Inventories",
-                    "propertyAndEquipment": "Property and equipment",
-                    "others": "Others"
-                },
-                "adjustedIntagibles": {
-                    "title": "Adj. Intangible Assets",
-                    "goodwill": "Goodwill",
-                    "intangibleAssets": "Intagible assets",
-                    "others": "Others"
-                },
-                "bookvalueGrowth": {
-                    "title": "Szenarien book value growth",
-                    "futureGrowthRate": "Future growth rate",
-                    "discountRate": "Discount rate",
-                    "years": "# Years",
-                    "display": {
-                        "currentCAGRBookValue": "Aktuelles CAGR Buchwertwachstum"
+            "default": {
+                "categories": {
+                    "netTangiblesAssets": {
+                        "title": "Net tangible assets",
+                        "cash": "Cash",
+                        "accountsReceivable": "Accounts receivable",
+                        "inventories": "Inventories",
+                        "propertyAndEquipment": "Property and equipment",
+                        "others": "Others"
+                    },
+                    "adjustedIntagibles": {
+                        "title": "Adj. Intangible Assets",
+                        "goodwill": "Goodwill",
+                        "intangibleAssets": "Intagible assets",
+                        "others": "Others"
+                    },
+                    "bookvalueGrowth": {
+                        "title": "Szenarien book value growth",
+                        "futureGrowthRate": "Future growth rate",
+                        "discountRate": "Discount rate",
+                        "years": "# Years",
+                        "display": {
+                            "currentCAGRBookValue": "Aktuelles CAGR Buchwertwachstum"
+                        }
+                    },
+                    "dividendGrowth": {
+                        "title": "Szenarien Dividenden Growth",
+                        "futureGrowth": "Future growth",
+                        "discountRate": "Discount rate",
+                        "years": "# Years",
+                        "display": {
+                            "currentCAGRDividendGrowth": "Aktuelles CAGR Dividendenwachstum"
+                        }
+                    },
+                    "value": {
+                        "title": "Sum"
                     }
-                },
-                "dividendGrowth": {
-                    "title": "Szenarien Dividenden Growth",
-                    "futureGrowth": "Future growth",
-                    "discountRate": "Discount rate",
-                    "years": "# Years",
-                    "display": {
-                        "currentCAGRDividendGrowth": "Aktuelles CAGR Dividendenwachstum"
-                    }
-                },
-                "value": {
-                    "title": "Sum"
                 }
             },
+            "assets": {
+                "header": {
+                    "originalValue": "Ursprünglicher Wert",
+                    "adjustement": "Anpassung",
+                    "result": "Ergebnis"
+                },
+                "adjustedAssetsValue": "Angepasster Vermögenswert",
+                "numberOfSharesOutstanding": "Anzahl der ausstehenden Aktien",
+                "assetValuePerShare": "Vermögenswert pro Aktie",
+                "marginSafetyStarRating": "Sicherheitsmarge für Sternebewertung",
+                "priceInclSafetyMargin": "Preis inkl. Sicherheitsmarge"
+            },
             "config": {
-                "title": "Konfiguration"
+                "title": "Konfiguration",
+                "default": "Default",
+                "assets": "Assets"
             }
         },
         "confidence": {
