@@ -7,12 +7,14 @@ import { Checkbox } from 'primereact/checkbox';
 import { api } from '../../../api/invData';
 import { EditPriceAlert } from './Edit';
 import { PriceAlert } from './types';
+import { useNavigate } from 'react-router';
 
 export const PriceAlerts: React.FC = () => {
     const {
         t,
         i18n: { language }
     } = useTranslation();
+    const navigate = useNavigate();
     const [alerts, setAlerts] = useState<PriceAlert[]>([]);
     const [edit, setEdit] = useState<PriceAlert | null>(null);
 
@@ -37,7 +39,18 @@ export const PriceAlerts: React.FC = () => {
                 stripedRows
                 pt={{ wrapper: { style: { overflow: 'hidden' } } }}
             >
-                <Column field="ticker" header={t('alerts.price.ticker')} />
+                <Column
+                    field="ticker"
+                    header={t('alerts.price.ticker')}
+                    body={({ cik, ticker }) => (
+                        <div
+                            onClick={() => navigate(`/company/${cik}`)}
+                            className="cursor-pointer"
+                        >
+                            {ticker}
+                        </div>
+                    )}
+                />
                 <Column
                     field="price"
                     header={t('alerts.price.price')}
